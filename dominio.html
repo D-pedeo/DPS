@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domínio - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Layout de domínios */
+        .domain-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .domain-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .domain-section {
+            margin-bottom: 2rem;
+        }
+
+        .domain-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Filtros e busca */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 40px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Cards de domínio */
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .domain-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .domain-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .domain-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .domain-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .domain-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .domain-description {
+            color: #666;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .domain-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .domain-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .status-active {
+            background: #e6f4ee;
+            color: var(--success-color);
+        }
+
+        .status-pending {
+            background: #fef7e0;
+            color: var(--warning-color);
+        }
+
+        .status-expired {
+            background: #fce8e6;
+            color: var(--danger-color);
+        }
+
+        .domain-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        /* Cores para tipos de domínio */
+        .type-primary {
+            background: linear-gradient(135deg, #3b5998, #1877f2);
+        }
+
+        .type-secondary {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+        }
+
+        .type-alias {
+            background: linear-gradient(135deg, #833ab4, #fd1d1d);
+        }
+
+        .type-parked {
+            background: linear-gradient(135deg, #ea4335, #fbbc05);
+        }
+
+        .type-redirect {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+        }
+
+        /* Área de registro de domínio */
+        .domain-registration {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .registration-form {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .registration-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Status de conexão */
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f8f9fa;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success-color);
+        }
+
+        .status-indicator.offline {
+            background: var(--danger-color);
+        }
+
+        /* Tabela de DNS */
+        .dns-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .dns-table th, .dns-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dns-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .dns-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .domains-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .badge {
+            padding: 0.35rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .badge-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-globe"></i>
+                    Gerenciamento de Domínios
+                </h1>
+            </div>
+            <div class="connection-status">
+                <div class="status-indicator" id="connectionStatus"></div>
+                <span id="statusText">Conectado</span>
+            </div>
+        </div>
+
+        <!-- Filtros e busca -->
+        <div class="card">
+            <div class="filters-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar domínios...">
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="active">Ativos</button>
+                    <button class="filter-btn" data-filter="pending">Pendentes</button>
+                    <button class="filter-btn" data-filter="expired">Expirados</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid de domínios -->
+        <div class="domains-grid" id="domainsList">
+            <!-- Domínio Principal -->
+            <div class="domain-card" data-status="active">
+                <div class="domain-icon type-primary">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="domain-content">
+                    <h3 class="domain-title">dpedrosolucoes.com.br</h3>
+                    <p class="domain-description">Domínio principal da empresa. Utilizado para site institucional e e-mails corporativos.</p>
+                    <div class="domain-info">
+                        <div>
+                            <strong>Expira em:</strong> 12/08/2024
+                        </div>
+                        <span class="domain-status status-active">Ativo</span>
+                    </div>
+                    <div class="domain-actions">
+                        <button class="btn btn-primary" onclick="manageDomain('dpedrosolucoes.com.br')">
+                            <i class="fas fa-cog"></i> Gerenciar
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewDetails('dpedrosolucoes.com.br')">
+                            <i class="fas fa-info-circle"></i> Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Domínio de Redirect -->
+            <div class="domain-card" data-status="active">
+                <div class="domain-icon type-redirect">
+                    <i class="fas fa-forward"></i>
+                </div>
+                <div class="domain-content">
+                    <h3 class="domain-title">dpsolutions.com.br</h3>
+                    <p class="domain-description">Redirect para o domínio principal. Facilita o acesso através de nome mais curto.</p>
+                    <div class="domain-info">
+                        <div>
+                            <strong>Expira em:</strong> 22/11/2024
+                        </div>
+                        <span class="domain-status status-active">Ativo</span>
+                    </div>
+                    <div class="domain-actions">
+                        <button class="btn btn-primary" onclick="manageDomain('dpsolutions.com.br')">
+                            <i class="fas fa-cog"></i> Gerenciar
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewDetails('dpsolutions.com.br')">
+                            <i class="fas fa-info-circle"></i> Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Domínio para Marketing -->
+            <div class="domain-card" data-status="active">
+                <div class="domain-icon type-alias">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="domain-content">
+                    <h3 class="domain-title">dpedro.marketing</h3>
+                    <p class="domain-description">Utilizado para campanhas de marketing e landing pages específicas.</p>
+                    <div class="domain-info">
+                        <div>
+                            <strong>Expira em:</strong> 05/03/2024
+                        </div>
+                        <span class="domain-status status-active">Ativo</span>
+                    </div>
+                    <div class="domain-actions">
+                        <button class="btn btn-primary" onclick="manageDomain('dpedro.marketing')">
+                            <i class="fas fa-cog"></i> Gerenciar
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewDetails('dpedro.marketing')">
+                            <i class="fas fa-info-circle"></i> Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Domínio Expirado -->
+            <div class="domain-card" data-status="expired">
+                <div class="domain-icon type-parked">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="domain-content">
+                    <h3 class="domain-title">dpedrotech.net</h3>
+                    <p class="domain-description">Domínio anteriormente utilizado para projetos de tecnologia. Expirado aguardando renovação.</p>
+                    <div class="domain-info">
+                        <div>
+                            <strong>Expirou em:</strong> 15/06/2023
+                        </div>
+                        <span class="domain-status status-expired">Expirado</span>
+                    </div>
+                    <div class="domain-actions">
+                        <button class="btn btn-success" onclick="renewDomain('dpedrotech.net')">
+                            <i class="fas fa-sync-alt"></i> Renovar
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewDetails('dpedrotech.net')">
+                            <i class="fas fa-info-circle"></i> Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Domínio Pendente -->
+            <div class="domain-card" data-status="pending">
+                <div class="domain-icon type-secondary">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="domain-content">
+                    <h3 class="domain-title">dpscloud.io</h3>
+                    <p class="domain-description">Novo domínio para serviços de cloud. Aguardando configuração de DNS.</p>
+                    <div class="domain-info">
+                        <div>
+                            <strong>Expira em:</strong> 18/10/2024
+                        </div>
+                        <span class="domain-status status-pending">Pendente</span>
+                    </div>
+                    <div class="domain-actions">
+                        <button class="btn btn-primary" onclick="configureDomain('dpscloud.io')">
+                            <i class="fas fa-wrench"></i> Configurar
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewDetails('dpscloud.io')">
+                            <i class="fas fa-info-circle"></i> Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Domínio para Blog -->
+            <div class="domain-card" data-status="active">
+                <div class="domain-icon type-alias">
+                    <i class="fas fa-blog"></i>
+                </div>
+                <div class="domain-content">
+                    <h3 class="domain-title">blog.dpedro.com.br</h3>
+                    <p class="domain-description">Subdomínio dedicado para o blog corporativo e artigos técnicos.</p>
+                    <div class="domain-info">
+                        <div>
+                            <strong>Expira em:</strong> 12/08/2024
+                        </div>
+                        <span class="domain-status status-active">Ativo</span>
+                    </div>
+                    <div class="domain-actions">
+                        <button class="btn btn-primary" onclick="manageDomain('blog.dpedro.com.br')">
+                            <i class="fas fa-cog"></i> Gerenciar
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewDetails('blog.dpedro.com.br')">
+                            <i class="fas fa-info-circle"></i> Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área de registro de domínio -->
+        <div class="domain-registration">
+            <h2><i class="fas fa-plus-circle"></i> Registrar Novo Domínio</h2>
+            <p>Pesquise e registre um novo domínio para sua empresa.</p>
+            
+            <div class="registration-form">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="domainSearch" placeholder="Digite o nome do domínio...">
+                </div>
+                <button class="btn btn-primary" onclick="searchDomain()">
+                    <i class="fas fa-search"></i> Verificar Disponibilidade
+                </button>
+            </div>
+
+            <div id="domainResults" style="display: none; margin-top: 1.5rem;">
+                <h4>Resultados da Pesquisa</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 id="resultDomain">exemplo.com.br</h5>
+                                <p id="resultStatus" class="mb-0">Disponível para registro</p>
+                            </div>
+                            <div>
+                                <span id="resultPrice" class="badge badge-primary">R$ 49,90/ano</span>
+                                <button class="btn btn-success ms-2" onclick="registerDomain()">
+                                    <i class="fas fa-shopping-cart"></i> Registrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detalhes do Domínio (inicialmente oculto) -->
+        <div id="domainDetails" style="display: none; margin-top: 2rem;">
+            <h2>Detalhes do Domínio: <span id="detailDomainName"></span></h2>
+            
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Informações do Registro</h4>
+                            <table class="table">
+                                <tr>
+                                    <th>Registrante:</th>
+                                    <td>D.Pedro Soluções LTDA</td>
+                                </tr>
+                                <tr>
+                                    <th>Data de Registro:</th>
+                                    <td id="detailRegDate">12/08/2022</td>
+                                </tr>
+                                <tr>
+                                    <th>Data de Expiração:</th>
+                                    <td id="detailExpDate">12/08/2024</td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td id="detailStatus"><span class="domain-status status-active">Ativo</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Configurações DNS</h4>
+                            <button class="btn btn-primary mb-3" onclick="editDNS()">
+                                <i class="fas fa-edit"></i> Editar DNS
+                            </button>
+                            <div class="table-responsive">
+                                <table class="dns-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <th>Nome</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dnsRecords">
+                                        <tr>
+                                            <td>A</td>
+                                            <td>@</td>
+                                            <td>192.168.1.1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MX</td>
+                                            <td>@</td>
+                                            <td>mail.dpedrosolucoes.com.br</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CNAME</td>
+                                            <td>www</td>
+                                            <td>dpedrosolucoes.com.br</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-secondary" onclick="closeDetails()">
+                    <i class="fas fa-times"></i> Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // =============================================
+        // VARIÁVEIS E ESTADO DO SISTEMA
+        // =============================================
+        let domains = [
+            {
+                name: 'dpedrosolucoes.com.br',
+                expiry: '12/08/2024',
+                status: 'active',
+                type: 'primary',
+                description: 'Domínio principal da empresa. Utilizado para site institucional e e-mails corporativos.'
+            },
+            {
+                name: 'dpsolutions.com.br',
+                expiry: '22/11/2024',
+                status: 'active',
+                type: 'redirect',
+                description: 'Redirect para o domínio principal. Facilita o acesso através de nome mais curto.'
+            },
+            {
+                name: 'dpedro.marketing',
+                expiry: '05/03/2024',
+                status: 'active',
+                type: 'alias',
+                description: 'Utilizado para campanhas de marketing e landing pages específicas.'
+            },
+            {
+                name: 'dpedrotech.net',
+                expiry: '15/06/2023',
+                status: 'expired',
+                type: 'parked',
+                description: 'Domínio anteriormente utilizado para projetos de tecnologia. Expirado aguardando renovação.'
+            },
+            {
+                name: 'dpscloud.io',
+                expiry: '18/10/2024',
+                status: 'pending',
+                type: 'secondary',
+                description: 'Novo domínio para serviços de cloud. Aguardando configuração de DNS.'
+            },
+            {
+                name: 'blog.dpedro.com.br',
+                expiry: '12/08/2024',
+                status: 'active',
+                type: 'alias',
+                description: 'Subdomínio dedicado para o blog corporativo e artigos técnicos.'
+            }
+        ];
+
+        // =============================================
+        // INICIALIZAÇÃO DO SISTEMA
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar event listeners
+            document.getElementById('searchInput').addEventListener('input', filterDomains);
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    filterDomains();
+                });
+            });
+
+            // Verificar status de conexão
+            setInterval(() => {
+                const isOnline = Math.random() > 0.1; // 90% de chance de estar online
+                updateConnectionStatus(isOnline);
+            }, 10000);
+        });
+
+        // =============================================
+        // FILTRAGEM E BUSCA
+        // =============================================
+        function filterDomains() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filter = document.querySelector('.filter-btn.active').dataset.filter;
+            
+            document.querySelectorAll('.domain-card').forEach(card => {
+                const title = card.querySelector('.domain-title').textContent.toLowerCase();
+                const description = card.querySelector('.domain-description').textContent.toLowerCase();
+                const status = card.dataset.status;
+                
+                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                const matchesFilter = filter === 'all' || status === filter;
+                
+                card.style.display = (matchesSearch && matchesFilter) ? 'flex' : 'none';
+            });
+        }
+
+        // =============================================
+        // FUNÇÕES DE GERENCIAMENTO DE DOMÍNIO
+        // =============================================
+        function manageDomain(domainName) {
+            alert(`Abrindo painel de gerenciamento para: ${domainName}`);
+            // Aqui iria a lógica real de redirecionamento para o painel de controle
+        }
+
+        function viewDetails(domainName) {
+            const domain = domains.find(d => d.name === domainName);
+            if (!domain) return;
+            
+            // Preencher detalhes
+            document.getElementById('detailDomainName').textContent = domain.name;
+            document.getElementById('detailExpDate').textContent = domain.expiry;
+            document.getElementById('detailRegDate').textContent = getRegistrationDate(domain.expiry);
+            
+            // Atualizar status
+            const statusElement = document.getElementById('detailStatus');
+            statusElement.innerHTML = '';
+            const statusSpan = document.createElement('span');
+            statusSpan.className = `domain-status status-${domain.status}`;
+            statusSpan.textContent = getStatusText(domain.status);
+            statusElement.appendChild(statusSpan);
+            
+            // Mostrar painel de detalhes
+            document.getElementById('domainDetails').style.display = 'block';
+            
+            // Rolar para os detalhes
+            document.getElementById('domainDetails').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeDetails() {
+            document.getElementById('domainDetails').style.display = 'none';
+        }
+
+        function renewDomain(domainName) {
+            if (confirm(`Deseja renovar o domínio ${domainName}?`)) {
+                alert(`Processando renovação de: ${domainName}`);
+                // Aqui iria a lógica real de renovação de domínio
+            }
+        }
+
+        function configureDomain(domainName) {
+            alert(`Abrindo configurações para: ${domainName}`);
+            // Aqui iria a lógica real de configuração de domínio
+        }
+
+        function searchDomain() {
+            const domainQuery = document.getElementById('domainSearch').value.trim();
+            if (!domainQuery) {
+                alert('Por favor, digite um domínio para pesquisar.');
+                return;
+            }
+            
+            // Simular pesquisa de domínio
+            const isAvailable = Math.random() > 0.3;
+            const price = (Math.random() * 50 + 30).toFixed(2);
+            
+            // Mostrar resultados
+            document.getElementById('resultDomain').textContent = domainQuery;
+            
+            if (isAvailable) {
+                document.getElementById('resultStatus').textContent = 'Disponível para registro';
+                document.getElementById('resultStatus').className = 'text-success';
+                document.getElementById('resultPrice').textContent = `R$ ${price}/ano`;
+                document.getElementById('domainResults').style.display = 'block';
+            } else {
+                document.getElementById('resultStatus').textContent = 'Domínio indisponível';
+                document.getElementById('resultStatus').className = 'text-danger';
+                document.getElementById('resultPrice').textContent = '';
+                document.getElementById('domainResults').style.display = 'block';
+            }
+        }
+
+        function registerDomain() {
+            const domain = document.getElementById('resultDomain').textContent;
+            alert(`Iniciando registro do domínio: ${domain}`);
+            // Aqui iria a lógica real de registro de domínio
+        }
+
+        function editDNS() {
+            alert('Editando configurações DNS...');
+            // Aqui iria a lógica real de edição de DNS
+        }
+
+        // =============================================
+        // FUNÇÕES AUXILIARES
+        // =============================================
+        function getRegistrationDate(expiryDate) {
+            // Simular data de registro (2 anos antes da expiração)
+            const parts = expiryDate.split('/');
+            const day = parts[0];
+            const month = parts[1];
+            const year = parseInt(parts[2]) - 2;
+            return `${day}/${month}/${year}`;
+        }
+
+        function getStatusText(status) {
+            switch(status) {
+                case 'active': return 'Ativo';
+                case 'pending': return 'Pendente';
+                case 'expired': return 'Expirado';
+                default: return status;
+            }
+        }
+
+        function updateConnectionStatus(isOnline) {
+            const statusIndicator = document.getElementById('connectionStatus');
+            const statusText = document.getElementById('statusText');
+            
+            if (isOnline) {
+                statusIndicator.style.backgroundColor = 'var(--success-color)';
+                statusText.textContent = 'Conectado';
+            } else {
+                statusIndicator.style.backgroundColor = 'var(--danger-color)';
+                statusText.textContent = 'Offline';
+                statusIndicator.classList.add('offline');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Modelos - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #229954;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-info {
+            background-color: var(--info-color);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #1c6b9c;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Layout de editor */
+        .editor-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Painel de controle */
+        .control-panel {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .control-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Área de edição */
+        .editor-area {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            min-height: 600px;
+        }
+
+        .editor-content {
+            min-height: 500px;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+        }
+
+        .editable {
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px dashed transparent;
+            border-radius: 4px;
+            transition: all var(--transition-speed);
+            min-height: 50px;
+        }
+
+        .editable:hover {
+            border-color: #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .editable:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            background-color: #f0f8ff;
+        }
+
+        /* Customização */
+        .custom-option {
+            margin-bottom: 1rem;
+        }
+
+        .custom-option label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .color-option.active {
+            border-color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Ações */
+        .actions-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        /* Preview personalizado */
+        .custom-preview {
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            min-height: 200px;
+            transition: all var(--transition-speed);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .actions-container {
+                flex-direction: column;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Estilos para o conteúdo editável */
+        .section-title {
+            color: var(--primary-color);
+            margin: 1.5rem 0 0.5rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .content-area {
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-item {
+            margin-bottom: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        
+        .section-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
+        
+        .media-placeholder {
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+        
+        .media-placeholder:hover {
+            border-color: var(--secondary-color);
+            background-color: #f0f8ff;
+        }
+        
+        .media-preview {
+            margin: 1rem 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .media-preview img, .media-preview video {
+            max-width: 100%;
+            display: block;
+        }
+        
+        .media-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .export-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .export-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+        
+        .export-option:hover {
+            background-color: #f0f8ff;
+            border-color: var(--secondary-color);
+        }
+        
+        .export-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-edit"></i>
+                    Editor de Modelos
+                </h1>
+            </div>
+            <div>
+                <button class="btn btn-secondary" id="backBtn">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+                <button class="btn btn-success" id="saveBtn">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+            </div>
+        </div>
+
+        <!-- Área principal de edição -->
+        <div class="editor-container">
+            <!-- Painel de controle -->
+            <div class="control-panel">
+                <div class="control-section">
+                    <h3>Configurações do Modelo</h3>
+                    <div class="custom-option">
+                        <label for="modelName">Nome do Modelo</label>
+                        <input type="text" class="form-control" id="modelName" value="Relatório Anual Profissional">
+                    </div>
+                    
+                    <div class="custom-option">
+                        <label for="modelCategory">Categoria</label>
+                        <select class="form-control" id="modelCategory">
+                            <option value="relatorios" selected>Relatórios</option>
+                            <option value="documentos">Documentos</option>
+                            <option value="apresentacoes">Apresentações</option>
+                            <option value="planilhas">Planilhas</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="control-section">
+                    <h3>Personalizar Cores</h3>
+                    <div class="custom-option">
+                        <label>Cor Principal</label>
+                        <div class="color-options">
+                            <div class="color-option active" style="background-color: #3498db;" data-color="#3498db"></div>
+                            <div class="color-option" style="background-color: #2c3e50;" data-color="#2c3e50"></div>
+                            <div class="color-option" style="background-color: #e74c3c;" data-color="#e74c3c"></div>
+                            <div class="color-option" style="background-color: #2ecc71;" data-color="#2ecc71"></div>
+                            <div class="color-option" style="background-color: #9b59b6;" data-color="#9b59b6"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="custom-option">
+                        <label for="fontSelect">Fonte</label>
+                        <select class="form-control" id="fontSelect">
+                            <option value="Arial">Arial</option>
+                            <option value="Helvetica">Helvetica</option>
+                            <option value="Times New Roman" selected>Times New Roman</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Courier New">Courier New</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="control-section">
+                    <h3>Gerenciar Seções</h3>
+                    <div class="custom-option">
+                        <div id="sectionsList">
+                            <!-- Seções serão adicionadas dinamicamente -->
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="addNewSection()">
+                            <i class="fas fa-plus"></i> Adicionar Seção
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="control-section">
+                    <h3>Adicionar Mídia</h3>
+                    <div class="custom-option">
+                        <button class="btn btn-info" style="width: 100%;" onclick="addImage()">
+                            <i class="fas fa-image"></i> Adicionar Imagem
+                        </button>
+                        <button class="btn btn-info" style="width: 100%; margin-top: 10px;" onclick="addVideo()">
+                            <i class="fas fa-video"></i> Adicionar Vídeo
+                        </button>
+                        <input type="file" id="mediaUpload" accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(this.files)">
+                    </div>
+                </div>
+                
+                <div class="control-section">
+                    <h3>Exportar Modelo</h3>
+                    <div class="export-options">
+                        <label class="export-option">
+                            <input type="checkbox" id="exportHTML" checked>
+                            <span>HTML</span>
+                        </label>
+                        <label class="export-option">
+                            <input type="checkbox" id="exportCSS" checked>
+                            <span>CSS</span>
+                        </label>
+                        <label class="export-option">
+                            <input type="checkbox" id="exportJS" checked>
+                            <span>JavaScript</span>
+                        </label>
+                    </div>
+                    <button class="btn btn-success" style="width: 100%; margin-top: 10px;" onclick="exportProject()">
+                        <i class="fas fa-download"></i> Exportar Projeto
+                    </button>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="useAsTemplate()">
+                        <i class="fas fa-clone"></i> Usar como Template
+                    </button>
+                </div>
+            </div>
+
+            <!-- Área de edição -->
+            <div class="editor-area">
+                <h2>Editando: <span id="currentModelName">Relatório Anual Profissional</span></h2>
+                <p class="text-muted">Clique em qualquer texto abaixo para editar o conteúdo diretamente.</p>
+                
+                <div class="editor-content" id="editorContent">
+                    <!-- Conteúdo editável -->
+                    <div class="content-area">
+                        <h3 class="section-title" style="color: #3498db;">Introdução</h3>
+                        <div class="editable" contenteditable="true" id="introContent">
+                            Este é um exemplo de como ficará seu Relatório personalizado. O conteúdo real será preenchido de acordo com suas necessidades.
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <h3 class="section-title" style="color: #3498db;">Seções Principais</h3>
+                        <ul id="sectionsContent">
+                            <li class="section-item editable" contenteditable="true">Seção personalizável 1</li>
+                            <li class="section-item editable" contenteditable="true">Seção personalizável 2</li>
+                            <li class="section-item editable" contenteditable="true">Seção personalizável 3</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="content-area">
+                        <h3 class="section-title" style="color: #3498db;">Conclusão</h3>
+                        <div class="editable" contenteditable="true" id="conclusionContent">
+                            Esta seção de conclusão pode ser personalizada para resumir os pontos principais do seu relatório.
+                        </div>
+                        
+                        <div class="media-placeholder" onclick="addMediaToConclusion()">
+                            <i class="fas fa-plus-circle" style="font-size: 2rem; color: #ccc; margin-bottom: 10px;"></i>
+                            <p>Clique para adicionar imagem ou vídeo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="actions-container">
+                    <button class="btn btn-danger" onclick="resetContent()">
+                        <i class="fas fa-trash"></i> Limpar Conteúdo
+                    </button>
+                    <button class="btn btn-secondary" onclick="previewContent()">
+                        <i class="fas fa-eye"></i> Visualizar
+                    </button>
+                    <button class="btn btn-success" onclick="saveContent()">
+                        <i class="fas fa-save"></i> Salvar Alterações
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Visualização -->
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Visualização do Modelo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="previewContent">
+                        <!-- Conteúdo de preview será inserido aqui -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="printPreview()">
+                        <i class="fas fa-print"></i> Imprimir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // VARIÁVEIS E INICIALIZAÇÃO
+    // =============================================
+    let currentColor = '#3498db';
+    let currentFont = 'Times New Roman';
+    let sections = [
+        "Seção personalizável 1",
+        "Seção personalizável 2", 
+        "Seção personalizável 3"
+    ];
+    let mediaElements = [];
+
+    // =============================================
+    // INICIALIZAÇÃO DO EDITOR
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configurar event listeners
+        document.getElementById('backBtn').addEventListener('click', goBack);
+        document.getElementById('saveBtn').addEventListener('click', saveContent);
+        document.getElementById('modelName').addEventListener('input', updateModelName);
+        document.getElementById('fontSelect').addEventListener('change', updateFont);
+        
+        // Configurar opções de cor
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+                currentColor = this.dataset.color;
+                updateStyles();
+            });
+        });
+        
+        // Carregar seções
+        renderSections();
+    });
+
+    // =============================================
+    // FUNÇÕES DE CONTROLE
+    // =============================================
+    function goBack() {
+        if (confirm('Tem certeza que deseja voltar? Todas as alterações não salvas serão perdidas.')) {
+            window.history.back();
+        }
+    }
+
+    function updateModelName() {
+        const modelName = document.getElementById('modelName').value;
+        document.getElementById('currentModelName').textContent = modelName;
+    }
+
+    function updateFont() {
+        currentFont = document.getElementById('fontSelect').value;
+        updateStyles();
+    }
+
+    function updateStyles() {
+        // Atualizar cores dos títulos
+        document.querySelectorAll('.section-title').forEach(title => {
+            title.style.color = currentColor;
+        });
+        
+        // Atualizar fontes
+        document.getElementById('editorContent').style.fontFamily = currentFont;
+    }
+
+    // =============================================
+    // GERENCIAMENTO DE SEÇÕES
+    // =============================================
+    function renderSections() {
+        const sectionsList = document.getElementById('sectionsList');
+        sectionsList.innerHTML = '';
+        
+        sections.forEach((section, index) => {
+            const sectionElement = document.createElement('div');
+            sectionElement.className = 'd-flex align-items-center justify-content-between mb-2';
+            sectionElement.innerHTML = `
+                <span class="text-truncate" style="max-width: 70%;">${section}</span>
+                <div>
+                    <button class="btn btn-sm btn-outline-danger" onclick="removeSection(${index})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            sectionsList.appendChild(sectionElement);
+        });
+        
+        // Atualizar também a lista de seções no conteúdo editável
+        updateSectionsContent();
+    }
+
+    function addNewSection() {
+        const newSectionName = prompt('Digite o nome da nova seção:');
+        if (newSectionName && newSectionName.trim() !== '') {
+            sections.push(newSectionName.trim());
+            renderSections();
+            
+            // Adicionar à visualização editável
+            const newListItem = document.createElement('li');
+            newListItem.className = 'section-item editable';
+            newListItem.contentEditable = true;
+            newListItem.textContent = newSectionName.trim();
+            document.getElementById('sectionsContent').appendChild(newListItem);
+        }
+    }
+
+    function removeSection(index) {
+        if (confirm('Tem certeza que deseja remover esta seção?')) {
+            sections.splice(index, 1);
+            renderSections();
+        }
+    }
+
+    function updateSectionsContent() {
+        const sectionsContent = document.getElementById('sectionsContent');
+        sectionsContent.innerHTML = '';
+        
+        sections.forEach(section => {
+            const listItem = document.createElement('li');
+            listItem.className = 'section-item editable';
+            listItem.contentEditable = true;
+            listItem.textContent = section;
+            sectionsContent.appendChild(listItem);
+        });
+    }
+
+    // =============================================
+    // GERENCIAMENTO DE MÍDIA
+    // =============================================
+    function addImage() {
+        document.getElementById('mediaUpload').setAttribute('accept', 'image/*');
+        document.getElementById('mediaUpload').click();
+    }
+
+    function addVideo() {
+        document.getElementById('mediaUpload').setAttribute('accept', 'video/*');
+        document.getElementById('mediaUpload').click();
+    }
+
+    function addMediaToConclusion() {
+        document.getElementById('mediaUpload').setAttribute('accept', 'image/*,video/*');
+        document.getElementById('mediaUpload').click();
+    }
+
+    function handleMediaUpload(files) {
+        if (files.length === 0) return;
+        
+        const file = files[0];
+        const fileType = file.type.split('/')[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const mediaElement = {
+                type: fileType,
+                content: e.target.result,
+                id: 'media-' + Date.now()
+            };
+            
+            mediaElements.push(mediaElement);
+            renderMediaElements();
+        };
+        
+        reader.readAsDataURL(file);
+    }
+
+    function renderMediaElements() {
+        // Remover placeholders existentes
+        const placeholders = document.querySelectorAll('.media-placeholder');
+        placeholders.forEach(placeholder => placeholder.remove());
+        
+        // Adicionar mídias à conclusão
+        const conclusionArea = document.querySelector('.content-area:last-child');
+        
+        mediaElements.forEach(media => {
+            let mediaHTML = '';
+            
+            if (media.type === 'image') {
+                mediaHTML = `
+                    <div class="media-preview" id="${media.id}">
+                        <img src="${media.content}" alt="Imagem uploadada">
+                        <div class="media-actions">
+                            <button class="btn btn-sm btn-danger" onclick="removeMedia('${media.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (media.type === 'video') {
+                mediaHTML = `
+                    <div class="media-preview" id="${media.id}">
+                        <video controls>
+                            <source src="${media.content}" type="video/mp4">
+                            Seu navegador não suporta o elemento de vídeo.
+                        </video>
+                        <div class="media-actions">
+                            <button class="btn btn-sm btn-danger" onclick="removeMedia('${media.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            conclusionArea.insertAdjacentHTML('beforeend', mediaHTML);
+        });
+        
+        // Adicionar placeholder novamente se não houver mídia
+        if (mediaElements.length === 0) {
+            const placeholderHTML = `
+                <div class="media-placeholder" onclick="addMediaToConclusion()">
+                    <i class="fas fa-plus-circle" style="font-size: 2rem; color: #ccc; margin-bottom: 10px;"></i>
+                    <p>Clique para adicionar imagem ou vídeo</p>
+                </div>
+            `;
+            conclusionArea.insertAdjacentHTML('beforeend', placeholderHTML);
+        }
+    }
+
+    function removeMedia(id) {
+        mediaElements = mediaElements.filter(media => media.id !== id);
+        document.getElementById(id).remove();
+        renderMediaElements();
+    }
+
+    // =============================================
+    // GERENCIAMENTO DE CONTEÚDO
+    // =============================================
+    function saveContent() {
+        // Coletar conteúdo editável
+        const introContent = document.getElementById('introContent').innerHTML;
+        const conclusionContent = document.getElementById('conclusionContent').innerHTML;
+        
+        // Coletar seções
+        const sectionItems = document.querySelectorAll('#sectionsContent .editable');
+        sections = Array.from(sectionItems).map(item => item.textContent);
+        
+        // Atualizar a lista de seções no painel de controle
+        renderSections();
+        
+        // Simular salvamento
+        alert('Conteúdo salvo com sucesso!');
+        
+        // Em um sistema real, isso salvaria no servidor
+        console.log('Conteúdo salvo:', {
+            intro: introContent,
+            sections: sections,
+            conclusion: conclusionContent,
+            media: mediaElements,
+            color: currentColor,
+            font: currentFont
+        });
+    }
+
+    function resetContent() {
+        if (confirm('Tem certeza que deseja limpar todo o conteúdo? Esta ação não pode ser desfeita.')) {
+            document.getElementById('introContent').innerHTML = '';
+            document.getElementById('conclusionContent').innerHTML = '';
+            
+            sections = ['Nova seção'];
+            mediaElements = [];
+            renderSections();
+            renderMediaElements();
+        }
+    }
+
+    function previewContent() {
+        const previewContent = document.getElementById('previewContent');
+        const introContent = document.getElementById('introContent').innerHTML;
+        const conclusionContent = document.getElementById('conclusionContent').innerHTML;
+        
+        // Coletar seções
+        const sectionItems = document.querySelectorAll('#sectionsContent .editable');
+        const sectionsHTML = Array.from(sectionItems).map(item => 
+            `<li class="section-item">${item.innerHTML}</li>`
+        ).join('');
+        
+        // Construir preview com mídia
+        let mediaHTML = '';
+        mediaElements.forEach(media => {
+            if (media.type === 'image') {
+                mediaHTML += `<div class="media-preview"><img src="${media.content}" alt="Imagem" style="max-width: 100%;"></div>`;
+            } else if (media.type === 'video') {
+                mediaHTML += `
+                    <div class="media-preview">
+                        <video controls style="max-width: 100%;">
+                            <source src="${media.content}" type="video/mp4">
+                        </video>
+                    </div>
+                `;
+            }
+        });
+        
+        // Construir preview
+        previewContent.innerHTML = `
+            <div style="font-family: ${currentFont};">
+                <div class="content-area">
+                    <h3 class="section-title" style="color: ${currentColor};">Introdução</h3>
+                    <div>${introContent}</div>
+                </div>
+                
+                <div class="content-area">
+                    <h3 class="section-title" style="color: ${currentColor};">Seções Principais</h3>
+                    <ul>${sectionsHTML}</ul>
+                </div>
+                
+                <div class="content-area">
+                    <h3 class="section-title" style="color: ${currentColor};">Conclusão</h3>
+                    <div>${conclusionContent}</div>
+                    ${mediaHTML}
+                </div>
+            </div>
+        `;
+        
+        // Mostrar modal
+        const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
+        previewModal.show();
+    }
+
+    function printPreview() {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Imprimir Modelo</title>
+                <style>
+                    body { font-family: ${currentFont}; padding: 20px; }
+                    .section-title { color: ${currentColor}; border-bottom: 2px solid ${currentColor}; }
+                    .section-item:before { content: "•"; color: ${currentColor}; margin-right: 5px; }
+                    img, video { max-width: 100%; }
+                </style>
+            </head>
+            <body>
+                ${document.getElementById('previewContent').innerHTML}
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+    }
+
+    // =============================================
+    // EXPORTAÇÃO DO PROJETO
+    // =============================================
+    function exportProject() {
+        const modelName = document.getElementById('modelName').value;
+        const exportHTML = document.getElementById('exportHTML').checked;
+        const exportCSS = document.getElementById('exportCSS').checked;
+        const exportJS = document.getElementById('exportJS').checked;
+        
+        if (!exportHTML && !exportCSS && !exportJS) {
+            alert('Selecione pelo menos um formato para exportar.');
+            return;
+        }
+        
+        // Coletar conteúdo
+        const introContent = document.getElementById('introContent').innerHTML;
+        const conclusionContent = document.getElementById('conclusionContent').innerHTML;
+        
+        // Coletar seções
+        const sectionItems = document.querySelectorAll('#sectionsContent .editable');
+        const sectionsHTML = Array.from(sectionItems).map(item => 
+            `<li class="section-item">${item.innerHTML}</li>`
+        ).join('');
+        
+        // Construir HTML completo
+        let mediaHTML = '';
+        mediaElements.forEach(media => {
+            if (media.type === 'image') {
+                mediaHTML += `<div class="media-preview"><img src="${media.content}" alt="Imagem" style="max-width: 100%;"></div>`;
+            } else if (media.type === 'video') {
+                mediaHTML += `
+                    <div class="media-preview">
+                        <video controls style="max-width: 100%;">
+                            <source src="${media.content}" type="video/mp4">
+                        </video>
+                    </div>
+                `;
+            }
+        });
+        
+        const fullHTML = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${modelName}</title>
+    <style>
+        body {
+            font-family: ${currentFont};
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section-title {
+            color: ${currentColor};
+            border-bottom: 2px solid ${currentColor};
+            padding-bottom: 5px;
+        }
+        .section-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .section-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: ${currentColor};
+        }
+        .media-preview {
+            margin: 20px 0;
+            text-align: center;
+        }
+        img, video {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-area">
+        <h2 class="section-title">Introdução</h2>
+        <div>${introContent}</div>
+    </div>
+    
+    <div class="content-area">
+        <h2 class="section-title">Seções Principais</h2>
+        <ul>${sectionsHTML}</ul>
+    </div>
+    
+    <div class="content-area">
+        <h2 class="section-title">Conclusão</h2>
+        <div>${conclusionContent}</div>
+        ${mediaHTML}
+    </div>
+</body>
+</html>`;
+        
+        // Criar arquivos para download
+        if (exportHTML) {
+            downloadFile(fullHTML, `${modelName}.html`, 'text/html');
+        }
+        
+        if (exportCSS) {
+            const cssContent = extractCSS(fullHTML);
+            downloadFile(cssContent, `${modelName}.css`, 'text/css');
+        }
+        
+        if (exportJS) {
+            // Para este exemplo, vamos criar um JS básico
+            const jsContent = `// JavaScript para ${modelName}
+console.log('Modelo ${modelName} carregado com sucesso!');
+
+// Adicione aqui qualquer interatividade desejada
+document.addEventListener('DOMContentLoaded', function() {
+    // Seu código JavaScript aqui
+});`;
+            downloadFile(jsContent, `${modelName}.js`, 'text/javascript');
+        }
+        
+        alert(`Projeto "${modelName}" exportado com sucesso!`);
+    }
+
+    function extractCSS(html) {
+        // Extrair conteúdo CSS da tag style
+        const styleMatch = html.match(/<style>([\s\S]*?)<\/style>/);
+        if (styleMatch && styleMatch[1]) {
+            return styleMatch[1];
+        }
+        return "/* CSS extraído do modelo */";
+    }
+
+    function downloadFile(content, fileName, contentType) {
+        const blob = new Blob([content], { type: contentType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function useAsTemplate() {
+        const modelName = document.getElementById('modelName').value;
+        alert(`O modelo "${modelName}" foi aplicado como template. Redirecionando para o editor...`);
+        
+        // Em um sistema real, isso abriria o editor com o template
+    }
+    </script>
+</body>
+</html>

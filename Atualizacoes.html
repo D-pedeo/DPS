@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizações/Postagens - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Filtros e busca */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 40px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Layout de postagens */
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .post-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .post-card:hover .post-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-category {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .post-excerpt {
+            color: #666;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #888;
+            cursor: pointer;
+            transition: color var(--transition-speed);
+        }
+
+        .post-action:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Visualização de post */
+        .post-view {
+            display: none;
+        }
+
+        .post-view .post-header {
+            margin-bottom: 2rem;
+        }
+
+        .post-view .post-category {
+            margin-bottom: 1rem;
+        }
+
+        .post-view .post-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-view .post-meta {
+            margin-bottom: 2rem;
+        }
+
+        .post-view .post-image {
+            height: 400px;
+            margin-bottom: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .post-view .post-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .post-view .post-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .back-btn {
+            margin-bottom: 2rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .posts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+            }
+            
+            .post-view .post-image {
+                height: 250px;
+            }
+            
+            .post-view .post-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Cores para categorias */
+        .category-system {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .category-update {
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--success-color);
+        }
+
+        .category-news {
+            background: rgba(155, 89, 182, 0.1);
+            color: #9b59b6;
+        }
+
+        .category-event {
+            background: rgba(241, 196, 15, 0.1);
+            color: #f1c40f;
+        }
+
+        .category-maintenance {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+		<div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-sync-alt"></i>
+                Atualizações e Postagens
+            </h1>
+            <button class="btn btn-primary" id="newPostBtn">
+                <i class="fas fa-plus"></i> Nova Postagem
+            </button>
+        </div>
+
+        <!-- Filtros e busca -->
+        <div class="card">
+            <div class="filters-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar postagens...">
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="system">Sistema</button>
+                    <button class="filter-btn" data-filter="update">Atualizações</button>
+                    <button class="filter-btn" data-filter="news">Notícias</button>
+                    <button class="filter-btn" data-filter="event">Eventos</button>
+                    <button class="filter-btn" data-filter="maintenance">Manutenção</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de postagens -->
+        <div class="posts-container" id="postsList">
+            <!-- Postagens serão carregadas via JavaScript -->
+        </div>
+
+        <!-- Visualização de postagem -->
+        <div id="postView" class="post-view">
+            <button class="btn btn-secondary back-btn" id="backToListBtn">
+                <i class="fas fa-arrow-left"></i> Voltar para a lista
+            </button>
+            
+            <div class="card">
+                <div class="post-header">
+                    <span class="post-category category-system" id="viewCategory">Sistema</span>
+                    <h1 class="post-title" id="viewTitle">Título da Postagem</h1>
+                    <div class="post-meta">
+                        <span id="viewAuthor">Por Admin</span>
+                        <span id="viewDate">01 Jan 2023</span>
+                    </div>
+                </div>
+                
+                <div class="post-image">
+                    <img id="viewImage" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Post image">
+                </div>
+                
+                <div class="post-content" id="viewContent">
+                    <p>Conteúdo da postagem será carregado aqui...</p>
+                </div>
+                
+                <div class="post-meta">
+                    <span id="viewLikes">0 curtidas</span>
+                    <div class="post-actions">
+                        <div class="post-action" id="likeButton">
+                            <i class="far fa-heart"></i>
+                            <span>Curtir</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="far fa-bookmark"></i>
+                            <span>Salvar</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="far fa-share-square"></i>
+                            <span>Compartilhar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Comentários -->
+            <div class="card">
+                <h3>Comentários</h3>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Adicione um comentário..."></textarea>
+                </div>
+                <button class="btn btn-primary">Comentar</button>
+                
+                <div id="commentsList" style="margin-top: 1.5rem;">
+                    <!-- Comentários serão carregados aqui -->
+                    <div style="text-align: center; padding: 2rem; color: #888;">
+                        <i class="far fa-comments" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <p>Nenhum comentário ainda. Seja o primeiro a comentar!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para nova postagem -->
+        <div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="postModalTitle">Nova Postagem</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="postForm">
+                            <input type="hidden" id="postId">
+                            <div class="form-group">
+                                <label for="postTitle" class="form-label">Título</label>
+                                <input type="text" class="form-control" id="postTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="postCategory" class="form-label">Categoria</label>
+                                <select class="form-control" id="postCategory" required>
+                                    <option value="system">Sistema</option>
+                                    <option value="update">Atualização</option>
+                                    <option value="news">Notícia</option>
+                                    <option value="event">Evento</option>
+                                    <option value="maintenance">Manutenção</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="postImage" class="form-label">URL da Imagem</label>
+                                <input type="text" class="form-control" id="postImage" placeholder="https://...">
+                            </div>
+                            <div class="form-group">
+                                <label for="postContent" class="form-label">Conteúdo</label>
+                                <textarea class="form-control" id="postContent" rows="6" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="savePostBtn">Publicar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // DADOS DE EXEMPLO E ARMAZENAMENTO
+    // =============================================
+    let posts = JSON.parse(localStorage.getItem('dps_posts')) || [
+        {
+            id: 1,
+            title: "Nova atualização do sistema disponível",
+            category: "system",
+            content: "Acabamos de lançar uma nova versão do sistema com diversas melhorias de performance e novas funcionalidades. Entre as novidades, destacamos o novo painel de analytics e a integração com APIs de pagamento.",
+            image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+            author: "Daniel Pedro",
+            date: "2023-08-20",
+            likes: 12
+        },
+        {
+            id: 2,
+            title: "Evento de capacitação para usuários",
+            category: "event",
+            content: "No próximo dia 25, realizaremos um evento online para capacitação de usuários. Mostraremos as melhores práticas para utilização do sistema e tiraremos todas as dúvidas.",
+            image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+            author: "Carlos Silva",
+            date: "2023-08-15",
+            likes: 8
+        },
+        {
+            id: 3,
+            title: "Manutenção programada para o próximo fim de semana",
+            category: "maintenance",
+            content: "Informamos que no próximo fim de semana (26-27/08) realizaremos uma manutenção programada do sistema. O serviço ficará indisponível das 22h de sábado até as 06h de domingo.",
+            image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+            author: "Admin",
+            date: "2023-08-10",
+            likes: 5
+        },
+        {
+            id: 4,
+            title: "Novos recursos de marketing digital",
+            category: "update",
+            content: "A partir de hoje, nosso sistema conta com novos recursos de marketing digital, incluindo automação de campanhas e análise de ROI. Confira as novidades!",
+            image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+            author: "Ana Souza",
+            date: "2023-08-05",
+            likes: 15
+        },
+        {
+            id: 5,
+            title: "Expansão para novos mercados",
+            category: "news",
+            content: "Temos o prazer de anunciar que estamos expandindo nossos serviços para Angola e Moçambique. Em breve, empresas desses países poderão utilizar nossa plataforma.",
+            image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+            author: "Daniel Pedro",
+            date: "2023-07-28",
+            likes: 21
+        },
+        {
+            id: 6,
+            title: "Otimização de performance implementada",
+            category: "system",
+            content: "Implementamos diversas otimizações que tornam o sistema até 40% mais rápido. Os usuários já podem perceber a melhoria na velocidade de carregamento.",
+            image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+            author: "Admin",
+            date: "2023-07-22",
+            likes: 9
+        }
+    ];
+
+    // =============================================
+    // FUNÇÕES DE INICIALIZAÇÃO
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carregar postagens
+        renderPosts();
+        
+        // Configurar event listeners
+        document.getElementById('newPostBtn').addEventListener('click', openPostModal);
+        document.getElementById('savePostBtn').addEventListener('click', savePost);
+        document.getElementById('backToListBtn').addEventListener('click', showPostList);
+        
+        // Filtros
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterPosts(this.dataset.filter);
+            });
+        });
+        
+        // Busca
+        document.getElementById('searchInput').addEventListener('input', function() {
+            filterPosts(document.querySelector('.filter-btn.active').dataset.filter, this.value);
+        });
+        
+        // Like button
+        document.getElementById('likeButton').addEventListener('click', function() {
+            const heartIcon = this.querySelector('i');
+            if (heartIcon.classList.contains('far')) {
+                heartIcon.classList.remove('far');
+                heartIcon.classList.add('fas');
+                this.querySelector('span').textContent = 'Curtido';
+            } else {
+                heartIcon.classList.remove('fas');
+                heartIcon.classList.add('far');
+                this.querySelector('span').textContent = 'Curtir';
+            }
+        });
+    });
+
+    // =============================================
+    // RENDERIZAÇÃO DE POSTAGENS
+    // =============================================
+    function renderPosts(postsToRender = posts) {
+        const postsList = document.getElementById('postsList');
+        postsList.innerHTML = '';
+        
+        if (postsToRender.length === 0) {
+            postsList.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-newspaper" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                    <h3>Nenhuma postagem encontrada</h3>
+                    <p>Tente ajustar os filtros ou termos de busca</p>
+                </div>
+            `;
+            return;
+        }
+        
+        postsToRender.forEach(post => {
+            const postElement = document.createElement('div');
+            postElement.className = 'post-card';
+            postElement.innerHTML = `
+                <div class="post-image">
+                    <img src="${post.image || 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'}" alt="${post.title}">
+                </div>
+                <div class="post-content">
+                    <span class="post-category category-${post.category}">${getCategoryName(post.category)}</span>
+                    <h3 class="post-title">${post.title}</h3>
+                    <p class="post-excerpt">${post.content.substring(0, 100)}...</p>
+                    <div class="post-meta">
+                        <span>${formatDate(post.date)}</span>
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <i class="far fa-heart"></i>
+                                <span>${post.likes || 0}</span>
+                            </div>
+                            <div class="post-action">
+                                <i class="far fa-comment"></i>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            postElement.addEventListener('click', () => viewPost(post.id));
+            postsList.appendChild(postElement);
+        });
+    }
+
+    // =============================================
+    // FILTRAGEM E BUSCA
+    // =============================================
+    function filterPosts(category, searchTerm = '') {
+        let filteredPosts = posts;
+        
+        // Filtrar por categoria
+        if (category !== 'all') {
+            filteredPosts = filteredPosts.filter(post => post.category === category);
+        }
+        
+        // Filtrar por termo de busca
+        if (searchTerm) {
+            const term = searchTerm.toLowerCase();
+            filteredPosts = filteredPosts.filter(post => 
+                post.title.toLowerCase().includes(term) || 
+                post.content.toLowerCase().includes(term) ||
+                getCategoryName(post.category).toLowerCase().includes(term)
+            );
+        }
+        
+        // Ordenar por data (mais recente primeiro)
+        filteredPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        renderPosts(filteredPosts);
+    }
+
+    // =============================================
+    // VISUALIZAÇÃO DE POSTAGEM
+    // =============================================
+    function viewPost(postId) {
+        const post = posts.find(p => p.id === postId);
+        if (!post) return;
+        
+        // Preencher dados da postagem
+        document.getElementById('viewCategory').className = `post-category category-${post.category}`;
+        document.getElementById('viewCategory').textContent = getCategoryName(post.category);
+        document.getElementById('viewTitle').textContent = post.title;
+        document.getElementById('viewAuthor').textContent = `Por ${post.author}`;
+        document.getElementById('viewDate').textContent = formatDate(post.date);
+        document.getElementById('viewImage').src = post.image || 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80';
+        document.getElementById('viewContent').innerHTML = `<p>${post.content}</p>`;
+        document.getElementById('viewLikes').textContent = `${post.likes || 0} curtidas`;
+        
+        // Alternar visualização
+        document.getElementById('postsList').style.display = 'none';
+        document.getElementById('postView').style.display = 'block';
+    }
+
+    function showPostList() {
+        document.getElementById('postsList').style.display = 'grid';
+        document.getElementById('postView').style.display = 'none';
+    }
+
+    // =============================================
+    // GERENCIAMENTO DE POSTAGENS (CRUD)
+    // =============================================
+    function openPostModal() {
+        document.getElementById('postModalTitle').textContent = 'Nova Postagem';
+        document.getElementById('postForm').reset();
+        document.getElementById('postId').value = '';
+        
+        const modal = new bootstrap.Modal(document.getElementById('postModal'));
+        modal.show();
+    }
+
+    function savePost() {
+        const form = document.getElementById('postForm');
+        const postId = document.getElementById('postId').value;
+        
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        
+        const postData = {
+            title: document.getElementById('postTitle').value,
+            category: document.getElementById('postCategory').value,
+            content: document.getElementById('postContent').value,
+            image: document.getElementById('postImage').value,
+            author: 'Daniel Pedro',
+            date: new Date().toISOString().split('T')[0],
+            likes: 0
+        };
+        
+        if (postId) {
+            // Editar postagem existente
+            const index = posts.findIndex(p => p.id === parseInt(postId));
+            if (index !== -1) {
+                postData.id = parseInt(postId);
+                posts[index] = postData;
+            }
+        } else {
+            // Adicionar nova postagem
+            postData.id = posts.length > 0 ? Math.max(...posts.map(p => p.id)) + 1 : 1;
+            posts.unshift(postData);
+        }
+        
+        // Salvar no localStorage
+        localStorage.setItem('dps_posts', JSON.stringify(posts));
+        
+        // Fechar modal e recarregar
+        bootstrap.Modal.getInstance(document.getElementById('postModal')).hide();
+        renderPosts();
+        
+        // Mostrar mensagem de sucesso
+        alert(`Postagem ${postId ? 'atualizada' : 'publicada'} com sucesso!`);
+    }
+
+    // =============================================
+    // FUNÇÕES AUXILIARES
+    // =============================================
+    function getCategoryName(category) {
+        const categories = {
+            'system': 'Sistema',
+            'update': 'Atualização',
+            'news': 'Notícia',
+            'event': 'Evento',
+            'maintenance': 'Manutenção'
+        };
+        return categories[category] || 'Geral';
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    }
+    </script>
+</body>
+</html>

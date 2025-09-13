@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ===== VARIÁVEIS DE CORES E ESTILOS ===== */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        /* ===== ESTILOS GERAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-speed);
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - var(--header-height));
+            padding-top: var(--header-height);
+        }
+
+        /* ===== CABEÇALHO ===== */
+        .kanawa-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .top-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .top-icons .menu-item {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+        }
+
+        .top-icons .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* ===== BARRA LATERAL ===== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--box-shadow);
+            overflow-y: auto;
+            transition: all var(--transition-speed);
+            z-index: 900;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            color: #555;
+            transition: all var(--transition-speed);
+            border-left: 4px solid transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .menu-item:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+
+        .menu-item.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        /* ===== CONTEÚDO PRINCIPAL ===== */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        /* ===== WIDGETS DO DASHBOARD ===== */
+        .dashboard-widget {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform var(--transition-speed);
+        }
+
+        .dashboard-widget:hover {
+            transform: translateY(-5px);
+        }
+
+        .widget-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.3rem;
+        }
+
+        .widget-icon i {
+            color: white;
+        }
+
+        .widget-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .widget-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* ===== TABELAS ===== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* ===== BADGES DE STATUS ===== */
+        .status-badge {
+            padding: 0.35rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-available {
+            background-color: rgba(39, 174, 96, 0.15);
+            color: var(--success-color);
+        }
+
+        .status-limited {
+            background-color: rgba(243, 156, 18, 0.15);
+            color: var(--warning-color);
+        }
+
+        .status-unavailable {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+        }
+
+        /* ===== BARRAS DE PROGRESSO ===== */
+        .progress-container {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* ===== BOTÕES ===== */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        /* ===== NOTIFICAÇÕES ===== */
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== ASSISTENTE DE IA ===== */
+        .ai-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* ===== BOTÃO DE MODO ESCURO ===== */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        /* ===== GRÁFICOS ===== */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* ===== DROPDOWNS ===== */
+        #notificationsDropdown, #userMenuDropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            width: 320px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        #userMenuDropdown {
+            width: 200px;
+        }
+
+        .notification-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ===== FORMULÁRIOS ===== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        /* ===== CHAT ===== */
+        .chat-container {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            max-width: 80%;
+            position: relative;
+        }
+
+        .bot-message {
+            background-color: white;
+            align-self: flex-start;
+            border: 1px solid #eee;
+        }
+
+        .user-message {
+            background-color: var(--secondary-color);
+            color: white;
+            align-self: flex-end;
+        }
+
+        /* ===== RECURSOS GRID ===== */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .resource-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: white;
+        }
+
+        .resource-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .resource-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        /* ===== MODO ESCURO ===== */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .sidebar,
+        body.dark-mode .card,
+        body.dark-mode .dashboard-widget,
+        body.dark-mode .data-table th,
+        body.dark-mode .resource-card {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .data-table tr:hover,
+        body.dark-mode .menu-item:hover {
+            background-color: #3d3d3d;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #3d3d3d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .menu-item {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode h1, 
+        body.dark-mode h2, 
+        body.dark-mode h3, 
+        body.dark-mode h4, 
+        body.dark-mode h5, 
+        body.dark-mode h6 {
+            color: #e0e0e0;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 1200px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                height: calc(100vh - var(--header-height));
+                top: var(--header-height);
+                z-index: 999;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kanawa-header {
+                padding: 0 1rem;
+            }
+            
+            .top-icons .menu-item span {
+                display: none;
+            }
+            
+            .top-icons .menu-item {
+                font-size: 1.2rem;
+                padding: 0.5rem;
+            }
+            
+            .logo span {
+                font-size: 1.1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .dashboard-widget {
+                min-width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ai-assistant, .dark-mode-toggle {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .dark-mode-toggle {
+                bottom: 6rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .kanawa-header {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding-top: 90px;
+            }
+            
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="kanawa-header">
+        <div class="logo">
+            <a href='DPS.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+            <span>D.Pedro Soluções</span>
+        </div>
+        <div class="top-icons">
+            <a href="index.html" class="menu-item"><i class="fas fa-home"></i> <span>Página Principal</span></a>
+            <a href="martketing/marketing.html" class="menu-item"><i class="fas fa-users"></i> <span>MARKETING DIGITAL</span></a>
+            <a href="contratos.html" class="menu-item"><i class="fas fa-file-contract"></i> <span>Contratos</span></a>
+            <a href="cursos.html" class="menu-item"><i class="fas fa-graduation-cap"></i> <span>Cursos</span></a>
+            <a href="servicos.html" class="menu-item"><i class="fas fa-briefcase"></i> <span>Serviços</span></a>
+            <a href="lojas.html" class="menu-item"><i class="fas fa-store"></i> <span>Lojas</span></a>
+            <a href="download.html" class="menu-item"><i class="fas fa-download"></i> <span>Aplicativos</span></a>
+            
+            <div style="position:relative;">
+                <a href="#" id="notificationsBtn" style="color:white;position:relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                <div id="notificationsDropdown">
+                    <h5 style="margin-bottom:1rem;">Notificações</h5>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Novo recurso disponível</strong></p>
+                        <small>Há 2 horas</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Atualização de sistema disponível</strong></p>
+                        <small>Hoje, 09:30</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Recurso em manutenção</strong></p>
+                        <small>Ontem, 16:45</small>
+                    </div>
+                    <a href="#" style="display:block;text-align:center;margin-top:1rem;color:var(--secondary-color);">Ver todas</a>
+                </div>
+            </div>
+            
+            <div style="position:relative;">
+                <a href="#" id="userMenuBtn" style="color:white;display:flex;align-items:center;">
+                    <img src="https://i.postimg.cc/7YQvLZxX/user-avatar.jpg" alt="User" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
+                    <span>Daniel Pedro</span>
+                </a>
+                <div id="userMenuDropdown">
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-user"></i> Perfil</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-cog"></i> Configurações</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <a href="tokens-ia.html" class="menu-item"><i class="fas fa-robot"></i> Tokens de IA</a>
+            <a href="recursos.html" class="menu-item active"><i class="fas fa-box-open"></i> Recursos Disponíveis</a>
+            <a href="atualizacoes.html" class="menu-item"><i class="fas fa-sync-alt"></i> Atualizações/Postagens</a>
+            <a href="notificacoes.html" class="menu-item"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="loja-virtual.html" class="menu-item"><i class="fas fa-shopping-cart"></i> Loja</a>
+            <a href="comunicacao.html" class="menu-item"><i class="fas fa-comments"></i> Meios de comunicação</a>
+            <a href="seo.html" class="menu-item"><i class="fas fa-search-plus"></i> Otimização SEO</a>
+            <a href="recursos-indisponiveis.html" class="menu-item"><i class="fas fa-ban"></i> Recursos Indisponíveis</a>
+            <a href="modelos.html" class="menu-item"><i class="fas fa-clone"></i> Modelos</a>
+            <a href="cardapio.html" class="menu-item"><i class="fas fa-utensils"></i> Cardápio</a>
+            <a href="analise.html" class="menu-item"><i class="fas fa-chart-bar"></i> Análise</a>
+            <a href="assinantes.html" class="menu-item"><i class="fas fa-users"></i> Assinantes</a>
+            <a href="dominio.html" class="menu-item"><i class="fas fa-globe"></i> Domínio</a>
+            <a href="integracao.html" class="menu-item"><i class="fas fa-plug"></i> Integração</a>
+            <a href="manutencao.html" class="menu-item"><i class="fas fa-tools"></i> Manutenção</a>
+            <a href="indicar.html" class="menu-item"><i class="fas fa-gift"></i> Indique e ganhe</a>
+            <a href="ajuda.html" class="menu-item"><i class="fas fa-question-circle"></i> Sobre e ajuda</a>
+            <a href="sair.html" class="menu-item"><i class="fas fa-sign-out-alt"></i> Produtos</a>
+        </aside>
+
+        <main class="content">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-box-open"></i>
+                    Recursos Disponíveis
+                </h1>
+                <div>
+                    <button class="btn btn-primary" id="refreshResourcesBtn">
+                        <i class="fas fa-sync-alt"></i> Atualizar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Dashboard Widgets -->
+            <div class="row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--success-color);">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="widget-value" id="availableResources">0</div>
+                    <div class="widget-title">Disponíveis</div>
+                    <small style="color: var(--success-color);">
+                        <i class="fas fa-arrow-up"></i> <span id="availableGrowth">0</span>% este mês
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--warning-color);">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="widget-value" id="limitedResources">0</div>
+                    <div class="widget-title">Limitados</div>
+                    <small style="color: var(--warning-color);">
+                        <i class="fas fa-arrow-down"></i> <span id="limitedGrowth">0</span>% este mês
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--danger-color);">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="widget-value" id="unavailableResources">0</div>
+                    <div class="widget-title">Indisponíveis</div>
+                    <small style="color: var(--danger-color);">
+                        <i class="fas fa-arrow-down"></i> <span id="unavailableGrowth">0</span>% este mês
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--info-color);">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="widget-value" id="totalResources">0</div>
+                    <div class="widget-title">Total de Recursos</div>
+                    <small style="color: var(--info-color);">
+                        <i class="fas fa-arrow-up"></i> <span id="totalGrowth">0</span>% este mês
+                    </small>
+                </div>
+            </div>
+            
+            <!-- Filtros -->
+            <div class="card">
+                <h2>Filtros</h2>
+                <div class="row" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <div class="form-group">
+                            <label for="categoryFilter" class="form-label">Categoria</label>
+                            <select class="form-control" id="categoryFilter">
+                                <option value="all">Todas</option>
+                                <option value="design">Design</option>
+                                <option value="development">Desenvolvimento</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="analytics">Análise</option>
+                                <option value="ai">Inteligência Artificial</option>
+                                <option value="storage">Armazenamento</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <div class="form-group">
+                            <label for="statusFilter" class="form-label">Status</label>
+                            <select class="form-control" id="statusFilter">
+                                <option value="all">Todos</option>
+                                <option value="available">Disponível</option>
+                                <option value="limited">Limitado</option>
+                                <option value="unavailable">Indisponível</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <div class="form-group">
+                            <label for="searchResource" class="form-label">Buscar</label>
+                            <input type="text" class="form-control" id="searchResource" placeholder="Nome do recurso...">
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 200px; display: flex; align-items: flex-end;">
+                        <button class="btn btn-primary" id="applyFiltersBtn" style="width: 100%;">
+                            <i class="fas fa-filter"></i> Aplicar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grid de Recursos -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2>Recursos do Sistema</h2>
+                    <div>
+                        <button class="btn btn-secondary" id="exportResourcesBtn">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="resources-grid" id="resourcesGrid">
+                    <!-- Recursos serão carregados via JavaScript -->
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+                    <div style="color: #666; font-size: 0.9rem;">
+                        Mostrando <span id="resourcesShowing">0</span> de <span id="totalResourcesCount">0</span> recursos
+                    </div>
+                    <div>
+                        <button class="btn btn-sm" id="prevPageBtn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="btn btn-sm" id="page1Btn" style="margin-left: 0.3rem; background-color: var(--secondary-color); color: white;">
+                            1
+                        </button>
+                        <button class="btn btn-sm" id="page2Btn" style="margin-left: 0.3rem;">
+                            2
+                        </button>
+                        <button class="btn btn-sm" id="page3Btn" style="margin-left: 0.3rem;">
+                            3
+                        </button>
+                        <button class="btn btn-sm" id="nextPageBtn" style="margin-left: 0.3rem;">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recursos em Destaque -->
+            <div class="card">
+                <h2>Recursos em Destaque</h2>
+                <div class="resources-grid" id="featuredResourcesGrid">
+                    <!-- Recursos em destaque serão carregados via JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Assistant Button -->
+    <div class="ai-assistant">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Modal de Detalhes do Recurso -->
+    <div class="modal fade" id="resourceDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resourceDetailModalTitle">Detalhes do Recurso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div id="resourceDetailIcon" style="font-size: 4rem; text-align: center; margin-bottom: 1.5rem;"></div>
+                            <div id="resourceDetailStatus" class="status-badge" style="text-align: center; margin-bottom: 1.5rem;"></div>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 id="resourceDetailName"></h3>
+                            <p id="resourceDetailDescription" class="text-muted"></p>
+                            
+                            <div class="resource-meta">
+                                <div>
+                                    <strong>Categoria:</strong> <span id="resourceDetailCategory"></span>
+                                </div>
+                                <div>
+                                    <strong>Versão:</strong> <span id="resourceDetailVersion"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="resource-meta">
+                                <div>
+                                    <strong>Disponibilidade:</strong> <span id="resourceDetailAvailability"></span>
+                                </div>
+                                <div>
+                                    <strong>Última atualização:</strong> <span id="resourceDetailLastUpdate"></span>
+                                </div>
+                            </div>
+                            
+                            <div id="resourceDetailUsage" style="margin-top: 1.5rem;">
+                                <h5>Uso do Recurso</h5>
+                                <div class="progress-container" style="margin-bottom: 0.5rem;">
+                                    <div class="progress-bar" id="resourceUsageBar" style="width: 0%;"></div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span id="resourceUsageText">0% utilizado</span>
+                                    <span id="resourceLimitText">Limite: 0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="resourceActions" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #eee;">
+                        <h5>Ações</h5>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button class="btn btn-primary" id="resourceAccessBtn">
+                                <i class="fas fa-external-link-alt"></i> Acessar Recurso
+                            </button>
+                            <button class="btn btn-secondary" id="resourceConfigureBtn">
+                                <i class="fas fa-cog"></i> Configurar
+                            </button>
+                            <button class="btn btn-secondary" id="resourceHistoryBtn">
+                                <i class="fas fa-history"></i> Histórico
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Chat Modal -->
+    <div class="modal fade" id="aiAssistantModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-robot"></i> Assistente de IA - Recursos
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="chat-container" id="aiChatContainer">
+                        <div class="message bot-message">
+                            Olá! Sou seu assistente de IA para recursos do sistema. Posso ajudar a encontrar recursos, explicar funcionalidades ou resolver problemas. Como posso ajudá-lo hoje?
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="aiChatInput" placeholder="Digite sua pergunta...">
+                        <button class="btn btn-primary" id="aiSendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dados de exemplo para demonstração
+        const sampleResources = [
+            {
+                id: 1,
+                name: "Editor de Imagens AI",
+                description: "Edição avançada de imagens com inteligência artificial para ajustes automáticos e remoção de fundo.",
+                category: "design",
+                status: "available",
+                icon: "fas fa-image",
+                iconColor: "#3498db",
+                version: "2.3.1",
+                availability: "24/7",
+                lastUpdate: "2023-10-15",
+                usage: 35,
+                limit: 100,
+                featured: true
+            },
+            {
+                id: 2,
+                name: "Gerador de Código",
+                description: "Gera código HTML, CSS e JavaScript automaticamente com base em descrições textuais.",
+                category: "development",
+                status: "available",
+                icon: "fas fa-code",
+                iconColor: "#e74c3c",
+                version: "1.7.0",
+                availability: "24/7",
+                lastUpdate: "2023-10-10",
+                usage: 70,
+                limit: 100,
+                featured: true
+            },
+            {
+                id: 3,
+                name: "Analisador de SEO",
+                description: "Analisa páginas web e fornece recomendações para melhorar o posicionamento em mecanismos de busca.",
+                category: "marketing",
+                status: "limited",
+                icon: "fas fa-search",
+                iconColor: "#27ae60",
+                version: "3.2.4",
+                availability: "19/7",
+                lastUpdate: "2023-10-12",
+                usage: 90,
+                limit: 100,
+                featured: true
+            },
+            {
+                id: 4,
+                name: "Dashboard Analytics",
+                description: "Visualize dados e métricas importantes do seu negócio com gráficos interativos e relatórios detalhados.",
+                category: "analytics",
+                status: "available",
+                icon: "fas fa-chart-bar",
+                iconColor: "#f39c12",
+                version: "4.1.0",
+                availability: "24/7",
+                lastUpdate: "2023-10-05",
+                usage: 45,
+                limit: 100,
+                featured: false
+            },
+            {
+                id: 5,
+                name: "Assistente Virtual IA",
+                description: "Chatbot inteligente que responde perguntas e auxilia usuários 24 horas por dia.",
+                category: "ai",
+                status: "available",
+                icon: "fas fa-robot",
+                iconColor: "#9b59b6",
+                version: "2.0.3",
+                availability: "24/7",
+                lastUpdate: "2023-10-08",
+                usage: 60,
+                limit: 100,
+                featured: false
+            },
+            {
+                id: 6,
+                name: "Armazenamento em Nuvem",
+                description: "Armazene e acesse seus arquivos de qualquer lugar com segurança e alta disponibilidade.",
+                category: "storage",
+                status: "limited",
+                icon: "fas fa-cloud",
+                iconColor: "#2980b9",
+                version: "5.2.1",
+                availability: "20/7",
+                lastUpdate: "2023-10-03",
+                usage: 85,
+                limit: 100,
+                featured: false
+            },
+            {
+                id: 7,
+                name: "Tradutor Multilíngue",
+                description: "Traduza textos em mais de 50 idiomas com alta precisão usando IA avançada.",
+                category: "ai",
+                status: "available",
+                icon: "fas fa-language",
+                iconColor: "#16a085",
+                version: "1.5.2",
+                availability: "24/7",
+                lastUpdate: "2023-09-28",
+                usage: 40,
+                limit: 100,
+                featured: false
+            },
+            {
+                id: 8,
+                name: "Gerador de Conteúdo",
+                description: "Crie textos, artigos e descrições automaticamente com base em palavras-chave.",
+                category: "marketing",
+                status: "unavailable",
+                icon: "fas fa-file-alt",
+                iconColor: "#c0392b",
+                version: "2.1.0",
+                availability: "0/7",
+                lastUpdate: "2023-10-01",
+                usage: 0,
+                limit: 100,
+                featured: false
+            }
+        ];
+
+        // Funções de inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carregar recursos
+            loadResources();
+            loadFeaturedResources();
+            updateDashboard();
+            
+            // Inicializar eventos
+            initEvents();
+            
+            // Verificar preferência de modo escuro
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('.dark-mode-toggle i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        });
+
+        // Inicializar eventos
+        function initEvents() {
+            // Botão de atualizar
+            document.getElementById('refreshResourcesBtn').addEventListener('click', function() {
+                loadResources();
+                loadFeaturedResources();
+                updateDashboard();
+                alert('Recursos atualizados com sucesso!');
+            });
+            
+            // Botão de filtros
+            document.getElementById('applyFiltersBtn').addEventListener('click', function() {
+                loadResources();
+            });
+            
+            // Busca em tempo real
+            document.getElementById('searchResource').addEventListener('input', function() {
+                loadResources();
+            });
+            
+            // Botão de exportar
+            document.getElementById('exportResourcesBtn').addEventListener('click', function() {
+                alert('Funcionalidade de exportação será implementada em breve!');
+            });
+            
+            // Notificações dropdown
+            document.getElementById('notificationsBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('notificationsDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Fechar outros dropdowns
+                document.getElementById('userMenuDropdown').style.display = 'none';
+            });
+            
+            // User menu dropdown
+            document.getElementById('userMenuBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('userMenuDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Fechar outros dropdowns
+                document.getElementById('notificationsDropdown').style.display = 'none';
+            });
+            
+            // Fechar dropdowns ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#notificationsBtn') && !e.target.closest('#notificationsDropdown')) {
+                    document.getElementById('notificationsDropdown').style.display = 'none';
+                }
+                
+                if (!e.target.closest('#userMenuBtn') && !e.target.closest('#userMenuDropdown')) {
+                    document.getElementById('userMenuDropdown').style.display = 'none';
+                }
+            });
+            
+            // Dark mode toggle
+            document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                const icon = this.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // AI Assistant
+            document.querySelector('.ai-assistant').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('aiAssistantModal'));
+                modal.show();
+            });
+            
+            // Enviar mensagem para o assistente de IA
+            document.getElementById('aiSendBtn').addEventListener('click', function() {
+                sendAIMessage();
+            });
+            
+            document.getElementById('aiChatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendAIMessage();
+                }
+            });
+        }
+
+        // Carregar recursos na grid
+        function loadResources() {
+            const resourcesGrid = document.getElementById('resourcesGrid');
+            resourcesGrid.innerHTML = '';
+            
+            // Obter filtros
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const searchTerm = document.getElementById('searchResource').value.toLowerCase();
+            
+            // Aplicar filtros
+            let filteredResources = sampleResources;
+            
+            if (categoryFilter !== 'all') {
+                filteredResources = filteredResources.filter(r => r.category === categoryFilter);
+            }
+            
+            if (statusFilter !== 'all') {
+                filteredResources = filteredResources.filter(r => r.status === statusFilter);
+            }
+            
+            if (searchTerm) {
+                filteredResources = filteredResources.filter(r => 
+                    r.name.toLowerCase().includes(searchTerm) || 
+                    r.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Atualizar contadores
+            document.getElementById('resourcesShowing').textContent = filteredResources.length;
+            document.getElementById('totalResourcesCount').textContent = sampleResources.length;
+            
+            // Preencher grid
+            filteredResources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                
+                // Determinar classe de status
+                let statusClass = '';
+                let statusText = '';
+                
+                switch(resource.status) {
+                    case 'available':
+                        statusClass = 'status-available';
+                        statusText = 'Disponível';
+                        break;
+                    case 'limited':
+                        statusClass = 'status-limited';
+                        statusText = 'Limitado';
+                        break;
+                    case 'unavailable':
+                        statusClass = 'status-unavailable';
+                        statusText = 'Indisponível';
+                        break;
+                }
+                
+                // Determinar texto da categoria
+                let categoryText = '';
+                switch(resource.category) {
+                    case 'design': categoryText = 'Design'; break;
+                    case 'development': categoryText = 'Desenvolvimento'; break;
+                    case 'marketing': categoryText = 'Marketing'; break;
+                    case 'analytics': categoryText = 'Análise'; break;
+                    case 'ai': categoryText = 'Inteligência Artificial'; break;
+                    case 'storage': categoryText = 'Armazenamento'; break;
+                }
+                
+                resourceCard.innerHTML = `
+                    <div class="resource-header">
+                        <div class="resource-icon" style="background-color: ${resource.iconColor};">
+                            <i class="${resource.icon}"></i>
+                        </div>
+                        <div>
+                            <div class="resource-title">${resource.name}</div>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                    </div>
+                    <div class="resource-description">
+                        ${resource.description}
+                    </div>
+                    <div class="resource-meta">
+                        <div><i class="fas fa-folder"></i> ${categoryText}</div>
+                        <div><i class="fas fa-info-circle"></i> v${resource.version}</div>
+                    </div>
+                `;
+                
+                // Adicionar evento de clique para abrir modal de detalhes
+                resourceCard.addEventListener('click', function() {
+                    openResourceDetailModal(resource);
+                });
+                
+                resourcesGrid.appendChild(resourceCard);
+            });
+        }
+
+        // Carregar recursos em destaque
+        function loadFeaturedResources() {
+            const featuredGrid = document.getElementById('featuredResourcesGrid');
+            featuredGrid.innerHTML = '';
+            
+            // Obter recursos em destaque
+            const featuredResources = sampleResources.filter(r => r.featured);
+            
+            // Preencher grid de destaques
+            featuredResources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                
+                // Determinar classe de status
+                let statusClass = '';
+                let statusText = '';
+                
+                switch(resource.status) {
+                    case 'available':
+                        statusClass = 'status-available';
+                        statusText = 'Disponível';
+                        break;
+                    case 'limited':
+                        statusClass = 'status-limited';
+                        statusText = 'Limitado';
+                        break;
+                    case 'unavailable':
+                        statusClass = 'status-unavailable';
+                        statusText = 'Indisponível';
+                        break;
+                }
+                
+                // Determinar texto da categoria
+                let categoryText = '';
+                switch(resource.category) {
+                    case 'design': categoryText = 'Design'; break;
+                    case 'development': categoryText = 'Desenvolvimento'; break;
+                    case 'marketing': categoryText = 'Marketing'; break;
+                    case 'analytics': categoryText = 'Análise'; break;
+                    case 'ai': categoryText = 'Inteligência Artificial'; break;
+                    case 'storage': categoryText = 'Armazenamento'; break;
+                }
+                
+                resourceCard.innerHTML = `
+                    <div class="resource-header">
+                        <div class="resource-icon" style="background-color: ${resource.iconColor};">
+                            <i class="${resource.icon}"></i>
+                        </div>
+                        <div>
+                            <div class="resource-title">${resource.name}</div>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                    </div>
+                    <div class="resource-description">
+                        ${resource.description}
+                    </div>
+                    <div class="resource-meta">
+                        <div><i class="fas fa-folder"></i> ${categoryText}</div>
+                        <div><i class="fas fa-star" style="color: #f39c12;"></i> Em Destaque</div>
+                    </div>
+                `;
+                
+                // Adicionar evento de clique para abrir modal de detalhes
+                resourceCard.addEventListener('click', function() {
+                    openResourceDetailModal(resource);
+                });
+                
+                featuredGrid.appendChild(resourceCard);
+            });
+        }
+
+        // Atualizar dashboard
+        function updateDashboard() {
+            // Contar recursos por status
+            const availableCount = sampleResources.filter(r => r.status === 'available').length;
+            const limitedCount = sampleResources.filter(r => r.status === 'limited').length;
+            const unavailableCount = sampleResources.filter(r => r.status === 'unavailable').length;
+            const totalCount = sampleResources.length;
+            
+            // Atualizar contadores
+            document.getElementById('availableResources').textContent = availableCount;
+            document.getElementById('limitedResources').textContent = limitedCount;
+            document.getElementById('unavailableResources').textContent = unavailableCount;
+            document.getElementById('totalResources').textContent = totalCount;
+            
+            // Atualizar crescimento (valores aleatórios para demonstração)
+            document.getElementById('availableGrowth').textContent = Math.floor(Math.random() * 15) + 5;
+            document.getElementById('limitedGrowth').textContent = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('unavailableGrowth').textContent = Math.floor(Math.random() * 5) + 1;
+            document.getElementById('totalGrowth').textContent = Math.floor(Math.random() * 20) + 5;
+        }
+
+        // Abrir modal de detalhes do recurso
+        function openResourceDetailModal(resource) {
+            // Preencher modal com dados do recurso
+            document.getElementById('resourceDetailModalTitle').textContent = resource.name;
+            document.getElementById('resourceDetailName').textContent = resource.name;
+            document.getElementById('resourceDetailDescription').textContent = resource.description;
+            
+            // Definir ícone e cor
+            const iconElement = document.getElementById('resourceDetailIcon');
+            iconElement.innerHTML = `<i class="${resource.icon}" style="color: ${resource.iconColor};"></i>`;
+            
+            // Definir status
+            let statusClass = '';
+            let statusText = '';
+            
+            switch(resource.status) {
+                case 'available':
+                    statusClass = 'status-available';
+                    statusText = 'Disponível';
+                    break;
+                case 'limited':
+                    statusClass = 'status-limited';
+                    statusText = 'Limitado';
+                    break;
+                case 'unavailable':
+                    statusClass = 'status-unavailable';
+                    statusText = 'Indisponível';
+                    break;
+            }
+            
+            const statusElement = document.getElementById('resourceDetailStatus');
+            statusElement.className = `status-badge ${statusClass}`;
+            statusElement.textContent = statusText;
+            
+            // Definir categoria
+            let categoryText = '';
+            switch(resource.category) {
+                case 'design': categoryText = 'Design'; break;
+                case 'development': categoryText = 'Desenvolvimento'; break;
+                case 'marketing': categoryText = 'Marketing'; break;
+                case 'analytics': categoryText = 'Análise'; break;
+                case 'ai': categoryText = 'Inteligência Artificial'; break;
+                case 'storage': categoryText = 'Armazenamento'; break;
+            }
+            
+            document.getElementById('resourceDetailCategory').textContent = categoryText;
+            document.getElementById('resourceDetailVersion').textContent = resource.version;
+            document.getElementById('resourceDetailAvailability').textContent = resource.availability;
+            document.getElementById('resourceDetailLastUpdate').textContent = formatDate(resource.lastUpdate);
+            
+            // Definir uso
+            document.getElementById('resourceUsageBar').style.width = `${resource.usage}%`;
+            document.getElementById('resourceUsageText').textContent = `${resource.usage}% utilizado`;
+            document.getElementById('resourceLimitText').textContent = `Limite: ${resource.limit}`;
+            
+            // Configurar ações baseadas no status
+            const accessBtn = document.getElementById('resourceAccessBtn');
+            const configureBtn = document.getElementById('resourceConfigureBtn');
+            
+            if (resource.status === 'available') {
+                accessBtn.disabled = false;
+                configureBtn.disabled = false;
+                accessBtn.className = 'btn btn-primary';
+                configureBtn.className = 'btn btn-secondary';
+            } else if (resource.status === 'limited') {
+                accessBtn.disabled = false;
+                configureBtn.disabled = false;
+                accessBtn.className = 'btn btn-warning';
+                configureBtn.className = 'btn btn-secondary';
+            } else {
+                accessBtn.disabled = true;
+                configureBtn.disabled = true;
+                accessBtn.className = 'btn btn-secondary';
+                configureBtn.className = 'btn btn-secondary';
+            }
+            
+            // Abrir modal
+            const modal = new bootstrap.Modal(document.getElementById('resourceDetailModal'));
+            modal.show();
+        }
+
+        // Formatar data
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        // Enviar mensagem para o assistente de IA
+        function sendAIMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Adicionar mensagem do usuário ao chat
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            document.getElementById('aiChatContainer').appendChild(userMessage);
+            
+            // Limpar input
+            input.value = '';
+            
+            // Simular resposta da IA após um pequeno delay
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot-message';
+                
+                // Respostas pré-definidas baseadas em palavras-chave
+                if (message.toLowerCase().includes('recurso') || message.toLowerCase().includes('funcionalidade')) {
+                    botMessage.textContent = 'Temos diversos recursos disponíveis, incluindo Editor de Imagens AI, Gerador de Código, Analisador de SEO e mais. Qual recurso específico você gostaria de conhecer?';
+                } else if (message.toLowerCase().includes('indisponível') || message.toLowerCase().includes('fora do ar')) {
+                    botMessage.textContent = 'Atualmente, o Gerador de Conteúdo está em manutenção e indisponível. Nossa equipe está trabalhando para normalizar o serviço o mais rápido possível.';
+                } else if (message.toLowerCase().includes('limite') || message.toLowerCase().includes('uso')) {
+                    botMessage.textContent = 'Alguns recursos têm limites de uso para garantir a qualidade do serviço para todos os usuários. Você pode verificar o uso atual de cada recurso em seus detalhes.';
+                } else if (message.toLowerCase().includes('como usar') || message.toLowerCase().includes('tutorial')) {
+                    botMessage.textContent = 'Para acessar tutoriais sobre como usar nossos recursos, visite a seção "Ajuda" no menu principal. Lá você encontrará guias passo a passo para cada funcionalidade.';
+                } else {
+                    botMessage.textContent = 'Como assistente de IA de recursos, posso ajudar com informações sobre disponibilidade, uso, funcionalidades e problemas técnicos. Sobre qual recurso você gostaria de saber mais?';
+                }
+                
+                document.getElementById('aiChatContainer').appendChild(botMessage);
+                
+                // Rolagem automática para a última mensagem
+                document.getElementById('aiChatContainer').scrollTop = document.getElementById('aiChatContainer').scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto – D.Pedro Soluções</title>
+  <style>
+    body{margin:0;font-family:sans-serif;background:#0f172a;color:#e5e7eb}
+    header{background:#0b1225;padding:1rem 0}
+    .container{width:min(1100px,92vw);margin:auto}
+    .logo{display:flex;align-items:center;gap:.5rem;font-weight:700;color:#e5e7eb}
+    .logo img{width:36px;height:36px;border-radius:8px}
+    nav a{margin-left:1rem;color:#94a3b8;text-decoration:none}
+    section{padding:2rem 0}
+    h1,h2{margin-bottom:1rem}
+    form{background:#111827;padding:2rem;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+    form input, form textarea{width:100%;padding:.8rem;margin:.5rem 0;border:none;border-radius:8px;background:#1e293b;color:#e5e7eb}
+    form button{padding:.8rem 1.5rem;border:none;border-radius:8px;background:#22c55e;color:#fff;font-weight:700;cursor:pointer;margin-top:1rem}
+    form button:hover{background:#16a34a}
+    .info{margin-top:2rem;line-height:1.8}
+    .info p{margin:.3rem 0}
+    .map{margin-top:2rem}
+    iframe{width:100%;height:350px;border:0;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.5)}
+    footer{padding:2rem 0;color:#94a3b8;text-align:center;border-top:1px solid rgba(255,255,255,.1)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center">
+      <div class="logo">
+        <a href='index.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+        <span>D.Pedro Soluções</span>
+      </div>
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="servicos.html">Serviços</a>
+        <a href="candidatos.html">Candidatos</a>
+        <a href="oferecemos.html">Oferecemos</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h1>Contacto</h1>
+      <p>Entre em contacto connosco preenchendo o formulário abaixo ou pelos nossos números de telefone/WhatsApp.</p>
+      <form id="contactForm">
+        <input type="text" id="nome" placeholder="Seu Nome" required>
+        <input type="email" id="email" placeholder="Seu Email" required>
+        <input type="tel" id="telefone" placeholder="Seu Telefone" required>
+        <textarea id="mensagem" rows="5" placeholder="Escreva a sua mensagem..." required></textarea>
+        <button type="submit">Enviar para WhatsApp</button>
+      </form>
+
+      <div class="info">
+        <h2>Outros Canais</h2>
+        <p>📞 926 536 480</p>
+        <p>📞 959 777 301</p>
+        <p>📞 946 299 834</p>
+        <p>📍 Luanda – Kilamba – Vila Flor – Muculangola</p>
+      </div>
+
+      <div class="map">
+        <h2>Localização</h2>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.195991708759!2d13.2362!3d-8.9959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a51f3f9a92f1b23%3A0x0!2zOMKwNTknNDUuMiJTIDEzwrAxNCcyOS4yIlc!5e0!3m2!1spt-PT!2sao!4v1693176440000!5m2!1spt-PT!2sao" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> D.Pedro Soluções – Serviços Domésticos 24/7</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const telefone = document.getElementById('telefone').value;
+      const mensagem = document.getElementById('mensagem').value;
+
+      const texto = `Olá, meu nome é ${nome}.%0AEmail: ${email}%0ATelefone: ${telefone}%0AMensagem: ${mensagem}`;
+      const url = `https://wa.me/244926536480?text=${texto}`;
+
+      window.open(url, '_blank');
+    });
+  </script>
+</body>
+</html>

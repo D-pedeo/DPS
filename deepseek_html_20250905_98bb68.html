@@ -1,0 +1,1718 @@
+atualiza js para editar e atualizar data e hora em tempo real automatico o botão Projetos Recentes
+ Adicionar Projeto
+Projeto	Cliente	Status	Progresso	Prazo	Ações
+Sistema de Segurança
+Empresa A	Em Andamento	
+75%
+15/08/2023	 
+PDV Completo
+Loja B	Em Andamento	
+45%
+25/08/2023	 
+CFTV Empresarial
+Empresa C	Em Andamento	
+90%
+05/08/2023	 
+Controle de Acesso
+Condomínio D	Pendente	
+10%
+10/09/2023	 
+Mostrando 4 de 24 projetos
+ 1 2 3 
+Atividades Recentes
+Novo cliente adicionado - Empresa E
+
+Hoje, 10:45 AM
+Fatura #2456 foi paga - Loja B
+
+Ontem, 15:30 PM
+Manutenção agendada para Sistema de Segurança - Empresa A
+
+Ontem, 11:20 AM
+Novo comentário no projeto CFTV Empresarial
+
+10/1/2025, 09:15 AM
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.Pedro Soluções - Sistema Integrado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Efeito de água animado */
+        .water-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(125deg, #0a0a1a, #1a1a3a, #2a2a5a);
+            background-size: 400% 400%;
+            animation: waterAnimation 15s ease infinite;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .water-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79, 143, 255, 0.1) 0%, transparent 70%);
+            animation: waterRipple 10s infinite linear;
+        }
+        
+        .water-effect::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 220%;
+            height: 220%;
+            background: radial-gradient(circle, rgba(100, 180, 255, 0.05) 0%, transparent 65%);
+            animation: waterRipple 15s infinite linear reverse;
+        }
+        
+        @keyframes waterAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes waterRipple {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tela de abertura */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .splash-logo {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+        }
+        
+        .splash-logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+        }
+        
+        .splash-text {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            width: 280px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: white;
+            border-radius: 3px;
+            animation: loading 3s ease-in-out forwards;
+        }
+        
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Header Styles */
+        .kanawa-header {
+            background-color: rgba(44, 62, 80, 0.9);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .logo img {
+            height: 38px;
+            width: auto;
+            margin-right: 10px;
+            vertical-align: middle;
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.067);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem 0;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 900;
+        }
+
+        .menu-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--dark-color);
+            text-decoration: none;
+            border-left: 4px solid transparent;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: var(--secondary-color);
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: calc(1.5rem - 4px);
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background-color: rgba(245, 247, 250, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 5;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        /* Common Card Styles */
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Button Styles */
+        .btn {
+            border-radius: 6px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #217dbb;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-sm {
+            font-size: 0.85rem;
+            padding: 0.3rem 0.8rem;
+        }
+
+        .status-badge {
+            border-radius: 12px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: var(--success-color);
+            color: #fff;
+        }
+
+        .status-inactive {
+            background: var(--danger-color);
+            color: #fff;
+        }
+
+        /* Dashboard Widgets */
+        .dashboard-widget {
+            background: rgba(236, 240, 241, 0.8);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .dashboard-widget:hover {
+            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.13);
+        }
+
+        .widget-icon {
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+        }
+
+        .widget-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .widget-title {
+            font-size: 1rem;
+            color: var(--dark-color);
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.2rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: var(--light-color);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background: #f0f4fa;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #eee;
+            border-radius: 8px;
+            height: 18px;
+            width: 100%;
+            margin: 0.7rem 0;
+        }
+
+        .progress-bar {
+            background: var(--secondary-color);
+            height: 100%;
+            border-radius: 8px;
+            transition: width 0.4s;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 200px;
+            }
+            .content {
+                padding: 1rem;
+            }
+        }
+
+        /* Modern Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.7s;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            z-index: 1200;
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            position: fixed;
+            bottom: 32px;
+            left: 32px;
+            background: var(--accent-color);
+            color: #fff;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            z-index: 1200;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 2rem auto;
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            background: var(--danger-color);
+            color: #fff;
+            border-radius: 50%;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+        }
+
+        /* Menu lateral responsivo */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                height: 100vh;
+                z-index: 999;
+                transition: left 0.3s ease;
+            }
+            
+            .sidebar.open {
+                left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(5px);
+                z-index: 99;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kanawa-header {
+                padding: 1rem;
+            }
+            
+            .top-icons {
+                gap: 10px;
+            }
+            
+            .top-icons .menu-item {
+                display: none;
+            }
+            
+            .top-icons .menu-item:first-child,
+            .top-icons .menu-item:nth-child(2) {
+                display: flex;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .dashboard-widget {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo span {
+                display: none;
+            }
+            
+            .top-icons .menu-item span {
+                display: none;
+            }
+            
+            .top-icons .menu-item i {
+                margin-right: 0;
+            }
+            
+            .page-title {
+                font-size: 1.3rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            .splash-text {
+                font-size: 2rem;
+            }
+            
+            .splash-logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .splash-logo img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de abertura -->
+    <div class="splash-screen" id="splash-screen">
+        <div class="splash-logo">
+            <img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/>
+        </div>
+        <h1 class="splash-text">D.Pedro Soluções</h1>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+    
+    <!-- Efeito de água animado -->
+    <div class="water-effect"></div>
+    
+    <!-- Overlay para fechar o menu em mobile -->
+    <div class="overlay" id="overlay"></div>
+    
+    <header class="kanawa-header">
+        <div class="logo-toggle" id="logo-toggle">
+            <div class="logo">
+                <a href='DPS.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+                <span>D.Pedro Soluções</span>
+            </div>
+        </div>
+        
+        <button class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="top-icons" style="display:flex;align-items:center;gap:16px;">
+            <a href="index.html" class="menu-item"><i class="fas fa-home"></i> <span>Página Principal</span></a>
+            <a href="martketing/marketing.html" class="menu-item"><i class="fas fa-users"></i> <span>MARKETING DIGITAL</span></a>
+            <a href="contratos.html" class="menu-item"><i class="fas fa-file-contract"></i> <span>Contratos</span></a>
+            <a href="cursos.html" class="menu-item"><i class="fas fa-graduation-cap"></i> <span>Cursos</span></a>
+            <a href="servicos.html" class="menu-item"><i class="fas fa-briefcase"></i> <span>Serviços</span></a>
+            <a href="lojas.html" class="menu-item"><i class="fas fa-store"></i> <span>Lojas</span></a>
+            <a href="download.html" class="menu-item"><i class="fas fa-download"></i> <span>Aplicativos</span></a>
+            
+            <div style="position:relative;">
+                <a href="#" id="notificationsBtn" style="color:white;position:relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                <div id="notificationsDropdown" style="display:none;position:absolute;right:0;background:white;width:300px;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.2);z-index:1000;padding:1rem;">
+                    <h5 style="margin-bottom:1rem;">Notificações</h5>
+                    <div class="notification-item" style="padding:0.5rem 0;border-bottom:1px solid #eee;">
+                        <p style="margin-bottom:0.2rem;"><strong>Novo contrato assinado</strong></p>
+                        <small style="color:#666;">Há 2 horas</small>
+                    </div>
+                    <div class="notification-item" style="padding:0.5rem 0;border-bottom:1px solid #eee;">
+                        <p style="margin-bottom:0.2rem;"><strong>Atualização do sistema disponível</strong></p>
+                        <small style="color:#666;">Hoje, 09:30</small>
+                    </div>
+                    <div class="notification-item" style="padding:0.5rem 0;">
+                        <p style="margin-bottom:0.2rem;"><strong>Novo lead capturado</strong></p>
+                        <small style="color:#666;">Ontem, 16:45</small>
+                    </div>
+                    <a href="#" style="display:block;text-align:center;margin-top:1rem;color:var(--secondary-color);">Ver todas</a>
+                </div>
+            </div>
+            
+            <div style="position:relative;">
+                <a href="#" id="userMenuBtn" style="color:white;display:flex;align-items:center;">
+                    <img src="https://i.postimg.cc/7YQvLZxX/user-avatar.jpg" alt="User" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
+                    <span>Daniel Pedro</span>
+                </a>
+                <div id="userMenuDropdown" style="display:none;position:absolute;right:0;background:white;width:200px;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.2);z-index:1000;padding:1rem;">
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-user"></i> Perfil</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-cog"></i> Configurações</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar" id="sidebar">
+            <a href="tokens-ia.html" class="menu-item"><i class="fas fa-robot"></i> Tokens de IA</a>
+            <a href="recursos.html" class="menu-item"><i class="fas fa-box-open"></i> Recursos Disponíveis</a>
+            <a href="atualizacoes.html" class="menu-item"><i class="fas fa-sync-alt"></i> Atualizações/Postagens</a>
+            <a href="notificacoes.html" class="menu-item"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="loja-virtual.html" class="menu-item"><i class="fas fa-shopping-cart"></i> Loja</a>
+            <a href="comunicacao.html" class="menu-item"><i class="fas fa-comments"></i> Meios de comunicação</a>
+            <a href="seo.html" class="menu-item"><i class="fas fa-search-plus"></i> Otimização SEO</a>
+            <a href="recursos-indisponiveis.html" class="menu-item"><i class="fas fa-ban"></i> Recursos Indisponíveis</a>
+            <a href="modelos.html" class="menu-item"><i class="fas fa-clone"></i> Modelos</a>
+            <a href="cardapio.html" class="menu-item"><i class="fas fa-utensils"></i> Cardápio</a>
+            <a href="analise.html" class="menu-item"><i class="fas fa-chart-bar"></i> Análise</a>
+            <a href="assinantes.html" class="menu-item"><i class="fas fa-users"></i> Assinantes</a>
+            <a href="dominio.html" class="menu-item"><i class="fas fa-globe"></i> Domínio</a>
+            <a href="integracao.html" class="menu-item"><i class="fas fa-plug"></i> Integração</a>
+            <a href="manutencao.html" class="menu-item"><i class="fas fa-tools"></i> Manutenção</a>
+            <a href="indicar.html" class="menu-item"><i class="fas fa-gift"></i> Indique e ganhe</a>
+            <a href="ajuda.html" class="menu-item"><i class="fas fa-question-circle"></i> Sobre e ajuda</a>
+            <a href="sair.html" class="menu-item"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </aside>
+
+        <main class="content">
+            <div id="dynamic-content">
+                <!-- Conteúdo dinâmico será carregado aqui -->
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-home"></i>
+                        Bem-vindo ao D.Pedro Soluções
+                    </h1>
+                    <div>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Novo Projeto
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Widgets -->
+                <div class="row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div class="dashboard-widget" style="flex: 1; min-width: 200px;">
+                        <div class="widget-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="widget-value">1,248</div>
+                        <div class="widget-title">Clientes Ativos</div>
+                        <small style="color: var(--success-color);">
+                            <i class="fas fa-arrow-up"></i> 12% este mês
+                        </small>
+                    </div>
+                    
+                    <div class="dashboard-widget" style="flex: 1; min-width: 200px;">
+                        <div class="widget-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="widget-value">AOA 248,750</div>
+                        <div class="widget-title">Vendas Mensais</div>
+                        <small style="color: var(--success-color);">
+                            <i class="fas fa-arrow-up"></i> 8% este mês
+                        </small>
+                    </div>
+                    
+                    <div class="dashboard-widget" style="flex: 1; min-width: 200px;">
+                        <div class="widget-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="widget-value">78%</div>
+                        <div class="widget-title">Meta Anual</div>
+                        <small style="color: var(--success-color);">
+                            <i class="fas fa-arrow-up"></i> 5% este mês
+                        </small>
+                    </div>
+                    
+                    <div class="dashboard-widget" style="flex: 1; min-width: 200px;">
+                        <div class="widget-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="widget-value">24/36</div>
+                        <div class="widget-title">Projetos Concluídos</div>
+                        <small style="color: var(--warning-color);">
+                            <i class="fas fa-arrow-down"></i> 2 pendentes
+                        </small>
+                    </div>
+                </div>
+                
+                <!-- Links Rápidos com Ícones -->
+                <div class="card">
+                    <h2>Links Rápidos</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                        <a href="https://www.facebook.com/dpedrosolucoes.net" class="btn btn-primary" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        <a href="https://wa.me/244923456789" class="btn btn-success" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="https://www.instagram.com/dpedrosolucoes" class="btn btn-danger" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
+                        <a href="mailto:contato@dpedrosolucoes.net" class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fas fa-envelope"></i> E-mail
+                        </a>
+                        <a href="tel:+244923456789" class="btn btn-warning" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fas fa-phone"></i> Telefone
+                        </a>
+                        <a href="https://goo.gl/maps/example" class="btn btn-info" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fas fa-map-marker-alt"></i> Localização
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Gráficos e Tabelas -->
+                <div class="row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div class="card" style="flex: 2; min-width: 300px;">
+                        <h2>Desempenho Mensal</h2>
+                        <div class="chart-container">
+                            <canvas id="monthlyPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="flex: 1; min-width: 300px;">
+                        <h2>Distribuição por Categoria</h2>
+                        <div class="chart-container">
+                            <canvas id="categoryDistributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2>Projetos Recentes</h2>
+                        <div>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Adicionar Projeto
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Projeto</th>
+                                    <th>Cliente</th>
+                                    <th>Status</th>
+                                    <th>Progresso</th>
+                                    <th>Prazo</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <i class="fas fa-project-diagram" style="margin-right: 10px; color: var(--secondary-color);"></i>
+                                            Sistema de Segurança
+                                        </div>
+                                    </td>
+                                    <td>Empresa A</td>
+                                    <td><span class="status-badge status-active">Em Andamento</span></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 60px; margin-right: 10px;">
+                                                <div class="progress-container">
+                                                    <div class="progress-bar" style="width: 75%;"></div>
+                                                </div>
+                                            </div>
+                                            <span>75%</span>
+                                        </div>
+                                    </td>
+                                    <td>15/08/2023</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-secondary" style="margin-left: 5px;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <i class="fas fa-cash-register" style="margin-right: 10px; color: var(--secondary-color);"></i>
+                                            PDV Completo
+                                        </div>
+                                    </td>
+                                    <td>Loja B</td>
+                                    <td><span class="status-badge status-active">Em Andamento</span></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 60px; margin-right: 10px;">
+                                                <div class="progress-container">
+                                                    <div class="progress-bar" style="width: 45%;"></div>
+                                                </div>
+                                            </div>
+                                            <span>45%</span>
+                                        </div>
+                                    </td>
+                                    <td>25/08/2023</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-secondary" style="margin-left: 5px;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <i class="fas fa-video" style="margin-right: 10px; color: var(--secondary-color);"></i>
+                                            CFTV Empresarial
+                                        </div>
+                                    </td>
+                                    <td>Empresa C</td>
+                                    <td><span class="status-badge status-active">Em Andamento</span></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 60px; margin-right: 10px;">
+                                                <div class="progress-container">
+                                                    <div class="progress-bar" style="width: 90%;"></div>
+                                                </div>
+                                            </div>
+                                            <span>90%</span>
+                                        </div>
+                                    </td>
+                                    <td>05/08/2023</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-secondary" style="margin-left: 5px;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <i class="fas fa-fingerprint" style="margin-right: 10px; color: var(--secondary-color);"></i>
+                                            Controle de Acesso
+                                        </div>
+                                    </td>
+                                    <td>Condomínio D</td>
+                                    <td><span class="status-badge status-inactive">Pendente</span></td>
+                                    <td>
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 60px; margin-right: 10px;">
+                                                <div class="progress-container">
+                                                    <div class="progress-bar" style="width: 10%;"></div>
+                                                </div>
+                                            </div>
+                                            <span>10%</span>
+                                        </div>
+                                    </td>
+                                    <td>10/09/2023</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-secondary" style="margin-left: 5px;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+                        <div style="color: #666; font-size: 0.9rem;">
+                            Mostrando 4 de 24 projetos
+                        </div>
+                        <div>
+                            <button class="btn btn-sm" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="btn btn-sm" style="margin-left: 0.3rem; background-color: var(--secondary-color); color: white;">
+                                1
+                            </button>
+                            <button class="btn btn-sm" style="margin-left: 0.3rem;">
+                                2
+                            </button>
+                            <button class="btn btn-sm" style="margin-left: 0.3rem;">
+                                3
+                            </button>
+                            <button class="btn btn-sm" style="margin-left: 0.3rem;">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Atividades Recentes -->
+                <div class="card">
+                    <h2>Atividades Recentes</h2>
+                    <div style="margin-top: 1.5rem;">
+                        <div style="display: flex; padding: 1rem 0; border-bottom: 1px solid #eee;">
+                            <div style="width: 40px; height: 40px; background-color: var(--light-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-user-check" style="color: var(--success-color);"></i>
+                            </div>
+                            <div>
+                                <p style="margin-bottom: 0.2rem;"><strong>Novo cliente adicionado</strong> - Empresa E</p>
+                                <small style="color: #666;">Hoje, 10:45 AM</small>
+                            </div>
+                        </div>
+                        <div style="display: flex; padding: 1rem 0; border-bottom: 1px solid #eee;">
+                            <div style="width: 40px; height: 40px; background-color: var(--light-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-file-invoice-dollar" style="color: var(--secondary-color);"></i>
+                            </div>
+                            <div>
+                                <p style="margin-bottom: 0.2rem;"><strong>Fatura #2456</strong> foi paga - Loja B</p>
+                                <small style="color: #666;">Ontem, 15:30 PM</small>
+                            </div>
+                        </div>
+                        <div style="display: flex; padding: 1rem 0; border-bottom: 1px solid #eee;">
+                            <div style="width: 40px; height: 40px; background-color: var(--light-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-tools" style="color: var(--warning-color);"></i>
+                            </div>
+                            <div>
+                                <p style="margin-bottom: 0.2rem;"><strong>Manutenção agendada</strong> para Sistema de Segurança - Empresa A</p>
+                                <small style="color: #666;">Ontem, 11:20 AM</small>
+                            </div>
+                        </div>
+                        <div style="display: flex; padding: 1rem 0;">
+                            <div style="width: 40px; height: 40px; background-color: var(--light-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-comment-alt" style="color: var(--primary-color);"></i>
+                            </div>
+                            <div>
+                                <p style="margin-bottom: 0.2rem;"><strong>Novo comentário</strong> no projeto CFTV Empresarial</p>
+                                <small style="color: #666;">10/1/2025, 09:15 AM</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Assistant Button -->
+    <div class="ai-assistant">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // =============================================
+    // ANIMAÇÃO DE ABERTURA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const splashScreen = document.getElementById('splash-screen');
+        const mainContainer = document.querySelector('.main-container');
+        
+        // Simular tempo de carregamento
+        setTimeout(() => {
+            // Esconder a tela de abertura
+            splashScreen.style.opacity = '0';
+            splashScreen.style.transform = 'scale(1.1)';
+            
+            // Mostrar o conteúdo principal
+            mainContainer.style.opacity = '1';
+            mainContainer.style.transform = 'translateY(0)';
+            
+            // Remover a tela de abertura do DOM após a animação
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+                
+                // Inicializar o restante das funcionalidades
+                initCharts();
+                setupUIEvents();
+                initializeAPIs();
+                checkForUpdates();
+                loadInitialData();
+                checkMobileDevice();
+                
+                // Iniciar atualização de data e hora em tempo real
+                initializeDateTimeUpdater();
+            }, 800);
+        }, 3000); // 3 segundos para a animação de abertura
+    });
+
+    // =============================================
+    // SISTEMA DE ATUALIZAÇÃO DE DATA E HORA EM TEMPO REAL
+    // =============================================
+    function initializeDateTimeUpdater() {
+        // Atualizar todas as datas relativas imediatamente e a cada minuto
+        updateAllRelativeDates();
+        setInterval(updateAllRelativeDates, 60000); // Atualizar a cada minuto
+        
+        // Configurar a edição de prazos dos projetos
+        setupDeadlineEditors();
+    }
+
+    // Função para atualizar todas as datas relativas na página
+    function updateAllRelativeDates() {
+        updateActivityDates();
+        updateProjectDeadlines();
+    }
+
+    // Atualizar datas nas atividades recentes
+    function updateActivityDates() {
+        const activityItems = document.querySelectorAll('.activity-item');
+        
+        activityItems.forEach(item => {
+            const dateElement = item.querySelector('.activity-date');
+            if (dateElement && dateElement.dataset.originalDate) {
+                const originalDate = new Date(dateElement.dataset.originalDate);
+                dateElement.textContent = formatRelativeDate(originalDate);
+            }
+        });
+    }
+
+    // Atualizar prazos dos projetos com indicador de tempo restante
+    function updateProjectDeadlines() {
+        const deadlineCells = document.querySelectorAll('.deadline-cell');
+        
+        deadlineCells.forEach(cell => {
+            const deadlineDate = new Date(cell.dataset.deadline);
+            const today = new Date();
+            const timeDiff = deadlineDate - today;
+            const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            
+            // Adicionar ou atualizar indicador de dias restantes
+            let daysIndicator = cell.querySelector('.days-indicator');
+            if (!daysIndicator) {
+                daysIndicator = document.createElement('span');
+                daysIndicator.className = 'days-indicator';
+                cell.appendChild(daysIndicator);
+            }
+            
+            if (daysDiff < 0) {
+                daysIndicator.textContent = ` (Atrasado ${Math.abs(daysDiff)} dias)`;
+                daysIndicator.style.color = 'var(--danger-color)';
+                cell.style.color = 'var(--danger-color)';
+            } else if (daysDiff === 0) {
+                daysIndicator.textContent = ' (Vence hoje!)';
+                daysIndicator.style.color = 'var(--warning-color)';
+                cell.style.color = 'var(--warning-color)';
+            } else if (daysDiff <= 7) {
+                daysIndicator.textContent = ` (Faltam ${daysDiff} dias)`;
+                daysIndicator.style.color = 'var(--warning-color)';
+            } else {
+                daysIndicator.textContent = ` (Faltam ${daysDiff} dias)`;
+                daysIndicator.style.color = 'var(--success-color)';
+            }
+            
+            // Atualizar a data formatada
+            cell.querySelector('.date-display').textContent = formatDate(deadlineDate);
+        });
+    }
+
+    // Formatar data relativa (hoje, ontem, etc.)
+    function formatRelativeDate(date) {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        
+        const inputDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        
+        if (inputDate.getTime() === today.getTime()) {
+            return `Hoje, ${formatTime(date)}`;
+        } else if (inputDate.getTime() === yesterday.getTime()) {
+            return `Ontem, ${formatTime(date)}`;
+        } else {
+            return `${formatDate(date)}, ${formatTime(date)}`;
+        }
+    }
+
+    // Formatar data no formato DD/MM/AAAA
+    function formatDate(date) {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
+    // Formatar hora no formato HH:MM
+    function formatTime(date) {
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    // Configurar a funcionalidade de edição de prazos
+    function setupDeadlineEditors() {
+        const deadlineCells = document.querySelectorAll('.deadline-cell');
+        
+        deadlineCells.forEach(cell => {
+            cell.addEventListener('dblclick', function() {
+                enableDeadlineEditing(this);
+            });
+        });
+        
+        // Adicionar botão de edição para cada projeto
+        const actionButtons = document.querySelectorAll('.project-actions');
+        actionButtons.forEach(actionsCell => {
+            const editButton = document.createElement('button');
+            editButton.className = 'btn btn-sm btn-secondary edit-deadline-btn';
+            editButton.innerHTML = '<i class="fas fa-calendar-alt"></i>';
+            editButton.title = 'Editar prazo';
+            editButton.addEventListener('click', function() {
+                const row = this.closest('tr');
+                const deadlineCell = row.querySelector('.deadline-cell');
+                enableDeadlineEditing(deadlineCell);
+            });
+            
+            actionsCell.appendChild(editButton);
+        });
+    }
+
+    // Habilitar edição de prazo
+    function enableDeadlineEditing(cell) {
+        // Salvar o valor atual
+        const currentDate = cell.dataset.deadline;
+        
+        // Criar input de data
+        const dateInput = document.createElement('input');
+        dateInput.type = 'date';
+        dateInput.value = formatDateForInput(currentDate);
+        dateInput.className = 'date-input';
+        
+        // Substituir o conteúdo da célula pelo input
+        cell.innerHTML = '';
+        cell.appendChild(dateInput);
+        dateInput.focus();
+        
+        // Evento para salvar quando perder o foco ou pressionar Enter
+        dateInput.addEventListener('blur', saveDeadline);
+        dateInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                saveDeadline.call(this);
+            } else if (e.key === 'Escape') {
+                cancelDeadlineEdit(cell, currentDate);
+            }
+        });
+    }
+
+    // Formatar data para input type="date" (YYYY-MM-DD)
+    function formatDateForInput(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // Salvar edição do prazo
+    function saveDeadline() {
+        const cell = this.parentElement;
+        const newDate = this.value;
+        
+        if (newDate) {
+            // Formatar a data para o padrão brasileiro
+            const [year, month, day] = newDate.split('-');
+            const formattedDate = `${day}/${month}/${year}`;
+            
+            // Atualizar os dados
+            cell.dataset.deadline = `${year}-${month}-${day}`;
+            
+            // Restaurar o conteúdo da célula
+            cell.innerHTML = `<span class="date-display">${formattedDate}</span>`;
+            
+            // Atualizar o indicador de dias restantes
+            updateProjectDeadlines();
+            
+            // Aqui você normalmente faria uma requisição para salvar no servidor
+            console.log('Prazo atualizado para:', formattedDate);
+            
+            // Mostrar mensagem de sucesso
+            showNotification('Prazo atualizado com sucesso!', 'success');
+        } else {
+            cancelDeadlineEdit(cell, cell.dataset.deadline);
+        }
+    }
+
+    // Cancelar edição do prazo
+    function cancelDeadlineEdit(cell, originalDate) {
+        const date = new Date(originalDate);
+        cell.innerHTML = `<span class="date-display">${formatDate(date)}</span>`;
+        updateProjectDeadlines();
+    }
+
+    // Mostrar notificação
+    function showNotification(message, type = 'info') {
+        // Criar elemento de notificação
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <span>${message}</span>
+            <button class="close-notification">&times;</button>
+        `;
+        
+        // Estilos para a notificação
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 300px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            animation: slideIn 0.3s ease;
+        `;
+        
+        if (type === 'success') {
+            notification.style.background = 'var(--success-color)';
+        } else if (type === 'error') {
+            notification.style.background = 'var(--danger-color)';
+        } else {
+            notification.style.background = 'var(--secondary-color)';
+        }
+        
+        // Botão para fechar
+        const closeBtn = notification.querySelector('.close-notification');
+        closeBtn.style.cssText = `
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 15px;
+        `;
+        
+        closeBtn.addEventListener('click', function() {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        });
+        
+        // Adicionar ao documento
+        document.body.appendChild(notification);
+        
+        // Remover automaticamente após 5 segundos
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }
+        }, 5000);
+        
+        // Adicionar estilos de animação se não existirem
+        if (!document.querySelector('#notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'notification-styles';
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    // =============================================
+    // CONFIGURAÇÃO DAS PERMISSÕES E APIS
+    // =============================================
+    
+    // Configuração das APIs e permissões
+    const API_CONFIG = {
+        // API do sistema principal
+        MAIN_API: {
+            url: 'https://api.dpedrosolucoes.com/v1',
+            permissions: ['read', 'write', 'delete']
+        },
+        
+        // API de integração com Facebook
+        FACEBOOK_API: {
+            appId: 'YOUR_FACEBOOK_APP_ID',
+            version: 'v15.0',
+            permissions: ['email', 'public_profile', 'pages_show_list', 'pages_read_engagement']
+        },
+        
+        // API de integração com WhatsApp Business
+        WHATSAPP_API: {
+            businessAccountId: 'YOUR_WHATSAPP_BUSINESS_ID',
+            phoneNumberId: 'YOUR_PHONE_NUMBER_ID',
+            permissions: ['whatsapp_business_messaging', 'whatsapp_business_management']
+        },
+        
+        // API de analytics
+        ANALYTICS_API: {
+            googleAnalyticsId: 'UA-XXXXX-Y',
+            googleTagManagerId: 'GTM-XXXX'
+        },
+        
+        // APIs de pagamento
+        PAYMENT_APIS: {
+            paypal: {
+                clientId: 'YOUR_PAYPAL_CLIENT_ID',
+                sandbox: true
+            },
+            stripe: {
+                publishableKey: 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'
+            }
+        },
+        
+        // APIs de terceiros
+        THIRD_PARTY_APIS: {
+            googleMaps: {
+                apiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
+                libraries: ['places']
+            },
+            youtube: {
+                apiKey: 'YOUR_YOUTUBE_API_KEY'
+            }
+        }
+    };
+
+    // Inicialização dos gráficos com Chart.js
+    function initCharts() {
+        // Gráfico de desempenho mensal
+        const monthlyCtx = document.getElementById('monthlyPerformanceChart');
+        if (monthlyCtx) {
+            new Chart(monthlyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    datasets: [{
+                        label: 'Vendas (em mil AOA)',
+                        data: [120, 150, 180, 90, 130, 160, 190, 210, 180, 200, 230, 250],
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Gráfico de distribuição por categoria
+        const categoryCtx = document.getElementById('categoryDistributionChart');
+        if (categoryCtx) {
+            new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sistemas de Segurança', 'PDV', 'CFTV', 'Controle de Acesso'],
+                    datasets: [{
+                        data: [35, 25, 20, 20],
+                        backgroundColor: [
+                            '#3498db',
+                            '#2ecc71',
+                            '#e74c3c',
+                            '#f39c12'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // Configuração dos eventos de interface do usuário
+    function setupUIEvents() {
+        // Dropdown de notificações
+        const notificationsBtn = document.getElementById('notificationsBtn');
+        if (notificationsBtn) {
+            notificationsBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('notificationsDropdown');
+                if (dropdown) {
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                    
+                    // Fechar outros dropdowns abertos
+                    const userMenuDropdown = document.getElementById('userMenuDropdown');
+                    if (userMenuDropdown) userMenuDropdown.style.display = 'none';
+                }
+            });
+        }
+        
+        // Dropdown do menu do usuário
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        if (userMenuBtn) {
+            userMenuBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('userMenuDropdown');
+                if (dropdown) {
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                    
+                    // Fechar outros dropdowns abertos
+                    const notificationsDropdown = document.getElementById('notificationsDropdown');
+                    if (notificationsDropdown) notificationsDropdown.style.display = 'none';
+                }
+            });
+        }
+        
+        // Fechar dropdowns ao clicar fora deles
+        document.addEventListener('click', function(e) {
+            const notificationsBtn = document.getElementById('notificationsBtn');
+            const notificationsDropdown = document.getElementById('notificationsDropdown');
+            const userMenuBtn = document.getElementById('userMenuBtn');
+            const userMenuDropdown = document.getElementById('userMenuDropdown');
+            
+            if (notificationsBtn && notificationsDropdown && !e.target.closest('#notificationsBtn') && !e.target.closest('#notificationsDropdown')) {
+                notificationsDropdown.style.display = 'none';
+            }
+            
+            if (userMenuBtn && userMenuDropdown && !e.target.closest('#userMenuBtn') && !e.target.closest('#userMenuDropdown')) {
+                userMenuDropdown.style.display = 'none';
+            }
+        });
+        
+        // Botão do assistente de IA
+        const aiAssistant = document.querySelector('.ai-assistant');
+        if (aiAssistant) {
+            aiAssistant.addEventListener('click', function() {
+                alert('Assistente de IA será aberto em breve!');
+            });
+        }
+        
+        // Alternar modo escuro
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+        }
+        
+        // Verificar preferência de modo escuro salva
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            const darkModeIcon = document.querySelector('.dark-mode-toggle i');
+            if (darkModeIcon) {
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            }
+        }
+        
+        // Menu toggle para mobile
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const logoToggle = document.getElementById('logo-toggle');
+        
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+            
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        }
+        
+        // Logo como interruptor do menu
+        if (logoToggle && sidebar && overlay) {
+            logoToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+        }
+    }
+
+    // Inicialização das APIs
+    function initializeAPIs() {
+        console.log('Inicializando APIs com as seguintes configurações:', API_CONFIG);
+    }
+
+    // Verificar atualizações
+    function checkForUpdates() {
+        // Simulação de verificação de atualizações
+        setTimeout(() => {
+            console.log('Sistema verificado. Nenhuma atualização disponível.');
+        }, 2000);
+    }
+
+    // Carregar dados iniciais
+    function loadInitialData() {
+        // Preparar os dados das datas para o sistema de atualização em tempo real
+        prepareDateTimeData();
+        
+        // Simulação de carregamento de dados
+        console.log('Carregando dados iniciais...');
+        
+        // Dados seriam carregados da API
+        setTimeout(() => {
+            console.log('Dados iniciais carregados com sucesso.');
+        }, 1500);
+    }
+
+    // Preparar dados de data e hora para o sistema de atualização
+    function prepareDateTimeData() {
+        // Adicionar data original às atividades recentes
+        const activityDates = document.querySelectorAll('.activity-item small');
+        activityDates.forEach(dateElement => {
+            const text = dateElement.textContent;
+            let originalDate;
+            
+            if (text.includes('Hoje')) {
+                originalDate = new Date();
+            } else if (text.includes('Ontem')) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                originalDate = yesterday;
+            } else {
+                // Formato: DD/MM/AAAA, HH:MM AM/PM
+                const [datePart, timePart] = text.split(', ');
+                const [day, month, year] = datePart.split('/');
+                let [time, modifier] = timePart.split(' ');
+                let [hours, minutes] = time.split(':');
+                
+                if (modifier === 'PM' && hours !== '12') {
+                    hours = parseInt(hours) + 12;
+                } else if (modifier === 'AM' && hours === '12') {
+                    hours = '00';
+                }
+                
+                originalDate = new Date(year, month - 1, day, hours, minutes);
+            }
+            
+            // Adicionar como data attribute
+            dateElement.dataset.originalDate = originalDate.toISOString();
+            dateElement.textContent = formatRelativeDate(originalDate);
+        });
+        
+        // Adicionar data original aos prazos dos projetos
+        const deadlineCells = document.querySelectorAll('tbody td:nth-child(5)');
+        deadlineCells.forEach(cell => {
+            const dateText = cell.textContent.trim();
+            const [day, month, year] = dateText.split('/');
+            const deadlineDate = new Date(year, month - 1, day);
+            
+            // Adicionar como data attribute
+            cell.dataset.deadline = deadlineDate.toISOString();
+            cell.className = 'deadline-cell';
+            
+            // Adicionar elemento para exibição da data
+            cell.innerHTML = `<span class="date-display">${dateText}</span>`;
+        });
+        
+        // Adicionar classe às linhas de atividades para identificação
+        const activityItems = document.querySelectorAll('.card > div > div');
+        activityItems.forEach(item => {
+            item.classList.add('activity-item');
+        });
+    }
+
+    // Verificar se é dispositivo móvel
+    function checkMobileDevice() {
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // Ajustar layout conforme o dispositivo
+        if (isMobile()) {
+            document.body.classList.add('mobile');
+        } else {
+            document.body.classList.add('desktop');
+        }
+    }
+</script>
+</body>
+</html>

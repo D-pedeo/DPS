@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelos - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #229954;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Filtros e busca */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 40px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Layout de modelos */
+        .models-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .models-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Categorias */
+        .categories-sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .categories-list {
+            list-style: none;
+        }
+
+        .categories-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .categories-list li:last-child {
+            border-bottom: none;
+        }
+
+        .categories-list li:hover {
+            color: var(--secondary-color);
+        }
+
+        .categories-list li.active {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        /* Modelos */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .model-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .model-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .model-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .model-card:hover .model-image img {
+            transform: scale(1.05);
+        }
+
+        .model-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-new {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .badge-popular {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .badge-premium {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .model-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .model-category {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+
+        .model-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+            flex-grow: 1;
+        }
+
+        .model-description {
+            color: #666;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .model-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .model-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        /* Visualização de modelo */
+        .model-view {
+            display: none;
+        }
+
+        .back-btn {
+            margin-bottom: 2rem;
+        }
+
+        .model-preview {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .model-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .model-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.6rem;
+            background: #f0f5ff;
+            color: var(--secondary-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* Customização de modelo */
+        .customization-panel {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .custom-option {
+            margin-bottom: 1rem;
+        }
+
+        .custom-option label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .color-option.active {
+            border-color: var(--primary-color);
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Preview personalizado */
+        .custom-preview {
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            min-height: 200px;
+            transition: all var(--transition-speed);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .models-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .model-code {
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-clone"></i>
+                    Modelos
+                </h1>
+            </div>
+            <button class="btn btn-primary" id="uploadBtn">
+                <i class="fas fa-upload"></i> Enviar Modelo
+            </button>
+        </div>
+
+        <!-- Filtros e busca -->
+        <div class="card">
+            <div class="filters-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar modelos...">
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="recent">Recentes</button>
+                    <button class="filter-btn" data-filter="popular">Populares</button>
+                    <button class="filter-btn" data-filter="premium">Premium</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="models-container">
+            <!-- Sidebar de categorias -->
+            <div class="categories-sidebar">
+                <h3>Categorias</h3>
+                <ul class="categories-list">
+                    <li class="active" data-category="all">Todos os modelos</li>
+                    <li data-category="documentos">Documentos</li>
+                    <li data-category="apresentacoes">Apresentações</li>
+                    <li data-category="planilhas">Planilhas</li>
+                    <li data-category="contratos">Contratos</li>
+                    <li data-category="marketing">Marketing</li>
+                    <li data-category="propostas">Propostas Comerciais</li>
+                    <li data-category="relatorios">Relatórios</li>
+                    <li data-category="emails">E-mails</li>
+                </ul>
+
+                <h3 style="margin-top: 2rem;">Filtrar por tags</h3>
+                <div class="tags-container">
+                    <span class="tag">Profissional</span>
+                    <span class="tag">Moderno</span>
+                    <span class="tag">Criativo</span>
+                    <span class="tag">Minimalista</span>
+                    <span class="tag">Colorido</span>
+                </div>
+            </div>
+
+            <!-- Grade de modelos -->
+            <div class="models-grid" id="modelsList">
+                <!-- Modelos carregados via JavaScript -->
+            </div>
+        </div>
+
+        <!-- Visualização de modelo -->
+        <div class="model-view" id="modelView">
+            <button class="btn btn-secondary back-btn" id="backToListBtn">
+                <i class="fas fa-arrow-left"></i> Voltar para a lista
+            </button>
+            
+            <div class="model-preview">
+                <div class="model-header">
+                    <div class="model-title">
+                        <h2 id="modelTitle">Nome do Modelo</h2>
+                        <span class="model-category" id="modelCategory">Categoria</span>
+                        <span class="model-code" id="modelCode">Código: </span>
+                    </div>
+                </div>
+                
+                <div class="model-content">
+                    <div id="modelPreviewContent">
+                        <!-- Conteúdo de pré-visualização do modelo -->
+                        <div style="text-align: center; padding: 3rem; background: #f8f9fa; border-radius: var(--border-radius);">
+                            <i class="fas fa-file-alt" style="font-size: 4rem; color: #ccc; margin-bottom: 1rem;"></i>
+                            <p>Pré-visualização do modelo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="model-details">
+                <div class="detail-section">
+                    <h3>Detalhes do Modelo</h3>
+                    <div class="detail-item">
+                        <div class="detail-label">Descrição</div>
+                        <p id="modelDescription">Descrição do modelo.</p>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Categoria</div>
+                        <p id="modelCategoryText">Categoria</p>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Tags</div>
+                        <div class="tags-container" id="modelTags">
+                            <!-- Tags carregadas via JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Formato</div>
+                        <p id="modelFormat">DOCX, PDF</p>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Tamanho</div>
+                        <p id="modelSize">250 KB</p>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h3>Personalizar</h3>
+                    <div class="customization-panel" id="customizationPanel">
+                        <!-- Opções de personalização serão carregadas aqui -->
+                    </div>
+                    
+                    <h4>Pré-visualização Personalizada</h4>
+                    <div class="custom-preview" id="customPreview">
+                        Sua personalização aparecerá aqui...
+                    </div>
+                    
+                    <div class="model-actions" style="justify-content: center; margin-top: 1.5rem;">
+                        <button class="btn btn-success" onclick="downloadModel()">
+                            <i class="fas fa-download"></i> Baixar Modelo Personalizado
+                        </button>
+                        <button class="btn btn-primary" onclick="useTemplate()">
+                            <i class="fas fa-clone"></i> Usar como Template
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Upload -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enviar Novo Modelo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Nome do Modelo</label>
+                        <input type="text" class="form-control" id="modelName">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Categoria</label>
+                        <select class="form-control" id="modelCategorySelect">
+                            <option value="">Selecione uma categoria</option>
+                            <option value="documentos">Documentos</option>
+                            <option value="apresentacoes">Apresentações</option>
+                            <option value="planilhas">Planilhas</option>
+                            <option value="contratos">Contratos</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="propostas">Propostas Comerciais</option>
+                            <option value="relatorios">Relatórios</option>
+                            <option value="emails">E-mails</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Descrição</label>
+                        <textarea class="form-control" id="modelDescriptionText" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Tags (separadas por vírgula)</label>
+                        <input type="text" class="form-control" id="modelTagsInput" placeholder="Ex: profissional, moderno, relatório">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Arquivo do Modelo</label>
+                        <input type="file" class="form-control" id="modelFile">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Imagem de Pré-visualização</label>
+                        <input type="file" class="form-control" id="modelPreviewImage" accept="image/*">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="uploadModel()">Enviar Modelo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // DADOS DE EXEMPLO
+    // =============================================
+    const models = [
+        {
+            id: 1,
+            code: "DOC-001",
+            name: "Relatório Anual Profissional",
+            category: "relatorios",
+            description: "Modelo de relatório anual com design profissional e seções pré-formatadas.",
+            tags: ["profissional", "relatório", "empresarial"],
+            format: "DOCX",
+            size: "450 KB",
+            downloads: 1245,
+            rating: 4.8,
+            created: "2023-06-15",
+            premium: false,
+            badge: "popular",
+            image: "https://images.unsplash.com/photo-1586232702178-f044c5f4d4b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            customization: {
+                colors: ["#3498db", "#2c3e50", "#e74c3c", "#2ecc71", "#9b59b6"],
+                fonts: ["Arial", "Georgia", "Times New Roman", "Helvetica", "Calibri"],
+                sections: ["Introdução", "Metodologia", "Resultados", "Conclusão"],
+                logo: true
+            }
+        },
+        {
+            id: 2,
+            code: "PPT-001",
+            name: "Apresentação Executiva",
+            category: "apresentacoes",
+            description: "Slides modernos para apresentações executivas e reuniões de negócios.",
+            tags: ["apresentação", "executivo", "moderno"],
+            format: "PPTX",
+            size: "2.1 MB",
+            downloads: 2876,
+            rating: 4.9,
+            created: "2023-07-22",
+            premium: true,
+            badge: "premium",
+            image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            customization: {
+                colors: ["#3498db", "#2c3e50", "#e74c3c", "#f39c12", "#16a085"],
+                fonts: ["Arial", "Verdana", "Helvetica", "Calibri", "Trebuchet MS"],
+                themes: ["Claro", "Escuro", "Colorido", "Minimalista"],
+                slides: 12
+            }
+        },
+        {
+            id: 3,
+            code: "CONT-001",
+            name: "Contrato de Prestação de Serviços",
+            category: "contratos",
+            description: "Modelo de contrato completo para prestação de serviços, com cláusulas padrão.",
+            tags: ["contrato", "legal", "serviços"],
+            format: "DOCX",
+            size: "320 KB",
+            downloads: 1892,
+            rating: 4.7,
+            created: "2023-05-10",
+            premium: false,
+            badge: "new",
+            image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            customization: {
+                colors: ["#2c3e50", "#34495e", "#7f8c8d", "#95a5a6", "#bdc3c7"],
+                fonts: ["Times New Roman", "Georgia", "Garamond", "Book Antiqua"],
+                clauses: ["Confidencialidade", "Prazo", "Pagamento", "Rescisão"],
+                parties: 2
+            }
+        },
+        {
+            id: 4,
+            code: "XLS-001",
+            name: "Planilha Financeira Anual",
+            category: "planilhas",
+            description: "Planilha completa para controle financeiro anual com gráficos e dashboards.",
+            tags: ["financeiro", "planilha", "dashboard"],
+            format: "XLSX",
+            size: "1.8 MB",
+            downloads: 3452,
+            rating: 4.6,
+            created: "2023-04-05",
+            premium: false,
+            image: "https://images.unsplash.com/photo-1591696205602-2f950c417dad?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            customization: {
+                colors: ["#3498db", "#2ecc71", "#e74c3c", "#f39c12", "#9b59b6"],
+                currencies: ["BRL - Real", "USD - Dólar", "EUR - Euro", "GBP - Libra"],
+                charts: ["Barras", "Pizza", "Linhas", "Área"],
+                months: 12
+            }
+        },
+        {
+            id: 5,
+            code: "PROP-001",
+            name: "Proposta Comercial Elegante",
+            category: "propostas",
+            description: "Modelo de proposta comercial com design elegante e seções personalizáveis.",
+            tags: ["proposta", "comercial", "elegante"],
+            format: "DOCX",
+            size: "520 KB",
+            downloads: 2314,
+            rating: 4.8,
+            created: "2023-08-12",
+            premium: true,
+            badge: "premium",
+            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            customization: {
+                colors: ["#3498db", "#2c3e50", "#16a085", "#d35400", "#8e44ad"],
+                fonts: ["Arial", "Helvetica", "Georgia", "Garamond"],
+                sections: ["Introdução", "Soluções", "Investimento", "Contato"],
+                logo: true
+            }
+        },
+        {
+            id: 6,
+            code: "EMAIL-001",
+            name: "Newsletter de Marketing",
+            category: "emails",
+            description: "Modelo de newsletter para e-mail marketing com layout responsivo.",
+            tags: ["marketing", "newsletter", "email"],
+            format: "HTML",
+            size: "180 KB",
+            downloads: 1765,
+            rating: 4.5,
+            created: "2023-07-30",
+            premium: false,
+            image: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            customization: {
+                colors: ["#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6"],
+                layouts: ["1 coluna", "2 colunas", "Mista", "Destaque"],
+                social: ["Facebook", "Instagram", "Twitter", "LinkedIn"],
+                responsive: true
+            }
+        },
+        {
+            id: 7,
+            code: "REP-002",
+            name: "Relatório de Projeto",
+            category: "relatorios",
+            description: "Modelo para relatórios de andamento de projetos com cronograma e métricas.",
+            tags: ["projeto", "relatório", "gerencial"],
+            format: "DOCX",
+            size: "380 KB",
+            downloads: 987,
+            rating: 4.4,
+            created: "2023-08-18",
+            premium: false,
+            badge: "new",
+            image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            customization: {
+                colors: ["#3498db", "#2c3e50", "#7f8c8d", "#e74c3c", "#27ae60"],
+                fonts: ["Arial", "Calibri", "Verdana", "Segoe UI"],
+                metrics: ["Cronograma", "Orçamento", "Entregas", "Riscos"],
+                charts: true
+            }
+        },
+        {
+            id: 8,
+            code: "PPT-002",
+            name: "Apresentação de Portfólio",
+            category: "apresentacoes",
+            description: "Slides modernos para apresentação de portfólio de trabalhos e projetos.",
+            tags: ["portfólio", "apresentação", "criativo"],
+            format: "PPTX",
+            size: "3.2 MB",
+            downloads: 1532,
+            rating: 4.7,
+            created: "2023-06-28",
+            premium: true,
+            badge: "popular",
+            image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            customization: {
+                colors: ["#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6"],
+                fonts: ["Helvetica", "Arial", "Futura", "Roboto"],
+                layouts: ["Fullscreen", "Textura", "Minimalista", "Fotográfico"],
+                projects: 6
+            }
+        }
+    ];
+
+    // Variável para armazenar o modelo atual sendo visualizado
+    let currentModel = null;
+
+    // =============================================
+    // INICIALIZAÇÃO DO SISTEMA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carregar modelos
+        renderModels();
+        
+        // Configurar event listeners
+        document.getElementById('uploadBtn').addEventListener('click', openUploadModal);
+        document.getElementById('backToListBtn').addEventListener('click', showModelList);
+        
+        // Filtros
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterModels(this.dataset.filter);
+            });
+        });
+        
+        // Categorias
+        document.querySelectorAll('.categories-list li').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.categories-list li').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                filterByCategory(this.dataset.category);
+            });
+        });
+        
+        // Busca
+        document.getElementById('searchInput').addEventListener('input', function() {
+            filterModels();
+        });
+    });
+
+    // =============================================
+    // RENDERIZAÇÃO DE MODELOS
+    // =============================================
+    function renderModels(modelsToRender = models) {
+        const modelsList = document.getElementById('modelsList');
+        modelsList.innerHTML = '';
+        
+        if (modelsToRender.length === 0) {
+            modelsList.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                    <h3>Nenhum modelo encontrado</h3>
+                    <p>Tente ajustar os filtros ou termos de busca</p>
+                </div>
+            `;
+            return;
+        }
+        
+        modelsToRender.forEach(model => {
+            const modelElement = document.createElement('div');
+            modelElement.className = 'model-card';
+            modelElement.innerHTML = `
+                <div class="model-image">
+                    <img src="${model.image}" alt="${model.name}">
+                    ${model.badge ? `<span class="model-badge badge-${model.badge}">${model.badge === 'new' ? 'Novo' : (model.badge === 'popular' ? 'Popular' : 'Premium')}</span>` : ''}
+                </div>
+                <div class="model-content">
+                    <div class="model-category">${getCategoryName(model.category)}</div>
+                    <h3 class="model-title">${model.name}</h3>
+                    <p class="model-description">${model.description}</p>
+                    <div class="model-meta">
+                        <span><i class="fas fa-download"></i> ${model.downloads.toLocaleString()}</span>
+                        <span><i class="fas fa-star"></i> ${model.rating}</span>
+                        <span class="model-code">${model.code}</span>
+                    </div>
+                    <div class="model-actions">
+                        <button class="btn btn-secondary" onclick="viewModel(${model.id})">
+                            <i class="fas fa-eye"></i> Visualizar
+                        </button>
+                        <button class="btn btn-primary" onclick="customizeModel(${model.id})">
+                            <i class="fas fa-paint-brush"></i> Personalizar
+                        </button>
+                    </div>
+                </div>
+            `;
+            modelsList.appendChild(modelElement);
+        });
+    }
+
+    // =============================================
+    // FILTROS E BUSCA
+    // =============================================
+    function filterModels(filter = 'all') {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const category = document.querySelector('.categories-list li.active').dataset.category;
+        
+        let filteredModels = models;
+        
+        // Filtrar por categoria
+        if (category !== 'all') {
+            filteredModels = filteredModels.filter(model => model.category === category);
+        }
+        
+        // Filtrar por termo de busca
+        if (searchTerm) {
+            filteredModels = filteredModels.filter(model => 
+                model.name.toLowerCase().includes(searchTerm) || 
+                model.description.toLowerCase().includes(searchTerm) ||
+                model.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+            );
+        }
+        
+        // Aplicar filtros adicionais
+        switch(filter) {
+            case 'recent':
+                filteredModels = filteredModels.filter(model => isRecent(model.created));
+                break;
+            case 'popular':
+                filteredModels = filteredModels.sort((a, b) => b.downloads - a.downloads).slice(0, 6);
+                break;
+            case 'premium':
+                filteredModels = filteredModels.filter(model => model.premium);
+                break;
+        }
+        
+        renderModels(filteredModels);
+    }
+
+    function filterByCategory(category) {
+        filterModels(document.querySelector('.filter-btn.active').dataset.filter);
+    }
+
+    function isRecent(dateString) {
+        const createdDate = new Date(dateString);
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        return createdDate >= thirtyDaysAgo;
+    }
+
+    // =============================================
+    // VISUALIZAÇÃO E PERSONALIZAÇÃO
+    // =============================================
+    function viewModel(modelId) {
+        const model = models.find(m => m.id === modelId);
+        if (!model) return;
+        
+        currentModel = model;
+        
+        // Atualizar informações do modelo
+        document.getElementById('modelTitle').textContent = model.name;
+        document.getElementById('modelCategory').textContent = getCategoryName(model.category);
+        document.getElementById('modelCode').textContent = `Código: ${model.code}`;
+        document.getElementById('modelDescription').textContent = model.description;
+        document.getElementById('modelCategoryText').textContent = getCategoryName(model.category);
+        document.getElementById('modelFormat').textContent = model.format;
+        document.getElementById('modelSize').textContent = model.size;
+        
+        // Atualizar tags
+        const tagsContainer = document.getElementById('modelTags');
+        tagsContainer.innerHTML = '';
+        model.tags.forEach(tag => {
+            const tagElement = document.createElement('span');
+            tagElement.className = 'tag';
+            tagElement.textContent = tag;
+            tagsContainer.appendChild(tagElement);
+        });
+        
+        // Mostrar a visualização e esconder a lista
+        document.getElementById('modelsList').parentElement.style.display = 'none';
+        document.getElementById('modelView').style.display = 'block';
+        
+        // Carregar opções de personalização
+        loadCustomizationOptions(model);
+    }
+
+    function customizeModel(modelId) {
+        viewModel(modelId);
+    }
+
+    function showModelList() {
+        document.getElementById('modelsList').parentElement.style.display = 'grid';
+        document.getElementById('modelView').style.display = 'none';
+        currentModel = null;
+    }
+
+    function loadCustomizationOptions(model) {
+        const panel = document.getElementById('customizationPanel');
+        panel.innerHTML = '';
+        
+        // Gerar opções de personalização baseadas no modelo
+        let optionsHTML = '';
+        
+        if (model.customization.colors) {
+            optionsHTML += `
+                <div class="custom-option">
+                    <label>Cor Principal</label>
+                    <div class="color-options">
+                        ${model.customization.colors.map(color => `
+                            <div class="color-option" style="background-color: ${color};" data-color="${color}" onclick="selectColor(this)"></div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        if (model.customization.fonts) {
+            optionsHTML += `
+                <div class="custom-option">
+                    <label>Fonte</label>
+                    <select class="form-control" onchange="updatePreview()">
+                        ${model.customization.fonts.map(font => `
+                            <option value="${font}">${font}</option>
+                        `).join('')}
+                    </select>
+                </div>
+            `;
+        }
+        
+        if (model.customization.sections) {
+            optionsHTML += `
+                <div class="custom-option">
+                    <label>Seções Incluídas</label>
+                    ${model.customization.sections.map(section => `
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" checked id="section-${section}">
+                            <label class="form-check-label" for="section-${section}">${section}</label>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        if (model.customization.logo) {
+            optionsHTML += `
+                <div class="custom-option">
+                    <label>Incluir Logo</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="includeLogo" checked onchange="updatePreview()">
+                        <label class="form-check-label" for="includeLogo">Incluir espaço para logo</label>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Adicionar opções específicas por categoria
+        switch(model.category) {
+            case 'apresentacoes':
+                if (model.customization.slides) {
+                    optionsHTML += `
+                        <div class="custom-option">
+                            <label>Número de Slides</label>
+                            <input type="range" class="form-range" min="5" max="${model.customization.slides}" value="${model.customization.slides}" oninput="updatePreview()">
+                        </div>
+                    `;
+                }
+                break;
+                
+            case 'planilhas':
+                if (model.customization.charts) {
+                    optionsHTML += `
+                        <div class="custom-option">
+                            <label>Tipos de Gráfico</label>
+                            ${model.customization.charts.map(chart => `
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" checked id="chart-${chart}">
+                                    <label class="form-check-label" for="chart-${chart}">${chart}</label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+                break;
+                
+            case 'emails':
+                if (model.customization.layouts) {
+                    optionsHTML += `
+                        <div class="custom-option">
+                            <label>Layout</label>
+                            <select class="form-control" onchange="updatePreview()">
+                                ${model.customization.layouts.map(layout => `
+                                    <option value="${layout}">${layout}</option>
+                                `).join('')}
+                            </select>
+                        </div>
+                    `;
+                }
+                break;
+        }
+        
+        // Adicionar campo para nome/empresa
+        optionsHTML += `
+            <div class="custom-option">
+                <label>Nome/Empresa</label>
+                <input type="text" class="form-control" placeholder="Seu nome ou nome da empresa" oninput="updatePreview()">
+            </div>
+        `;
+        
+        panel.innerHTML = optionsHTML;
+        
+        // Selecionar a primeira cor por padrão
+        if (model.customization.colors && model.customization.colors.length > 0) {
+            const firstColor = panel.querySelector('.color-option');
+            if (firstColor) {
+                selectColor(firstColor);
+            }
+        }
+        
+        // Atualizar a pré-visualização
+        updatePreview();
+    }
+
+    function selectColor(element) {
+        // Remover a classe active de todas as cores
+        element.parentElement.querySelectorAll('.color-option').forEach(el => {
+            el.classList.remove('active');
+        });
+        
+        // Adicionar a classe active à cor selecionada
+        element.classList.add('active');
+        
+        // Atualizar a pré-visualização
+        updatePreview();
+    }
+
+    function updatePreview() {
+        const preview = document.getElementById('customPreview');
+        const model = currentModel;
+        
+        if (!model) return;
+        
+        // Obter valores personalizados
+        const colorOption = document.querySelector('.color-option.active');
+        const primaryColor = colorOption ? colorOption.dataset.color : '#3498db';
+        const fontSelect = document.querySelector('.customization-panel select');
+        const font = fontSelect ? fontSelect.value : 'Arial';
+        const nameInput = document.querySelector('.customization-panel input[type="text"]');
+        const companyName = nameInput ? nameInput.value : 'Sua Empresa';
+        
+        // Gerar HTML de pré-visualização baseado no tipo de modelo
+        let previewHTML = '';
+        
+        switch(model.category) {
+            case 'documentos':
+            case 'relatorios':
+            case 'contratos':
+            case 'propostas':
+                previewHTML = `
+                    <div style="font-family: ${font}; color: #333; border-left: 4px solid ${primaryColor}; padding-left: 15px;">
+                        <h2 style="color: ${primaryColor}; margin-bottom: 5px;">${model.name}</h2>
+                        <p style="font-size: 0.9rem; color: #777; margin-top: 0;">Personalizado para <strong>${companyName}</strong></p>
+                        
+                        <div style="margin-top: 20px;">
+                            <h3 style="color: ${primaryColor};">Introdução</h3>
+                            <p>Este é um exemplo de como ficará seu ${getCategoryName(model.category)} personalizado. O conteúdo real será preenchido de acordo com suas necessidades.</p>
+                            
+                            <h3 style="color: ${primaryColor};">Seções Principais</h3>
+                            <ul>
+                                <li>Seção personalizável 1</li>
+                                <li>Seção personalizável 2</li>
+                                <li>Seção personalizável 3</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'apresentacoes':
+                previewHTML = `
+                    <div style="font-family: ${font}; text-align: center; padding: 20px; background: linear-gradient(135deg, ${primaryColor}, #2c3e50); color: white; border-radius: 10px;">
+                        <h2>${model.name}</h2>
+                        <p>Apresentação personalizada para</p>
+                        <h3>${companyName}</h3>
+                        
+                        <div style="margin-top: 30px; display: flex; justify-content: center; gap: 10px;">
+                            <div style="width: 60px; height: 10px; background: rgba(255,255,255,0.5); border-radius: 5px;"></div>
+                            <div style="width: 60px; height: 10px; background: white; border-radius: 5px;"></div>
+                            <div style="width: 60px; height: 10px; background: rgba(255,255,255,0.5); border-radius: 5px;"></div>
+                            <div style="width: 60px; height: 10px; background: rgba(255,255,255,0.5); border-radius: 5px;"></div>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'planilhas':
+                previewHTML = `
+                    <div style="font-family: ${font};">
+                        <h3 style="color: ${primaryColor}; border-bottom: 2px solid ${primaryColor}; padding-bottom: 5px;">${model.name}</h3>
+                        <p style="font-size: 0.9rem; color: #777;">Personalizado para <strong>${companyName}</strong></p>
+                        
+                        <div style="margin-top: 20px; overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: ${primaryColor}; color: white;">
+                                        <th style="padding: 8px; text-align: left;">Item</th>
+                                        <th style="padding: 8px; text-align: right;">Valor</th>
+                                        <th style="padding: 8px; text-align: right;">Quantidade</th>
+                                        <th style="padding: 8px; text-align: right;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 8px;">Produto/Serviço 1</td>
+                                        <td style="padding: 8px; text-align: right;">R$ 100,00</td>
+                                        <td style="padding: 8px; text-align: right;">2</td>
+                                        <td style="padding: 8px; text-align: right;">R$ 200,00</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 8px;">Produto/Serviço 2</td>
+                                        <td style="padding: 8px; text-align: right;">R$ 250,00</td>
+                                        <td style="padding: 8px; text-align: right;">1</td>
+                                        <td style="padding: 8px; text-align: right;">R$ 250,00</td>
+                                    </tr>
+                                    <tr style="font-weight: bold;">
+                                        <td style="padding: 8px;" colspan="3">Total</td>
+                                        <td style="padding: 8px; text-align: right;">R$ 450,00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'emails':
+                previewHTML = `
+                    <div style="font-family: ${font}; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 10px; overflow: hidden;">
+                        <div style="background-color: ${primaryColor}; color: white; padding: 20px; text-align: center;">
+                            <h2 style="margin: 0;">${companyName}</h2>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <h3 style="color: ${primaryColor};">Assunto do E-mail</h3>
+                            <p>Este é um exemplo de como ficará seu e-mail marketing personalizado.</p>
+                            
+                            <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                                <p>Destaque especial ou oferta pode ser colocada aqui!</p>
+                            </div>
+                            
+                            <p>Conteúdo adicional e informações relevantes para seu público.</p>
+                            
+                            <div style="text-align: center; margin: 20px 0;">
+                                <a href="#" style="display: inline-block; background-color: ${primaryColor}; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px;">Call to Action</a>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: #f5f5f5; padding: 15px; text-align: center; font-size: 0.8rem; color: #777;">
+                            <p>© 2023 ${companyName}. Todos os direitos reservados.</p>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            default:
+                previewHTML = `
+                    <div style="font-family: ${font}; color: #333;">
+                        <h2 style="color: ${primaryColor};">${model.name}</h2>
+                        <p>Personalizado para <strong>${companyName}</strong></p>
+                        <p>Este é um exemplo de visualização personalizada para o modelo ${model.name}.</p>
+                    </div>
+                `;
+        }
+        
+        preview.innerHTML = previewHTML;
+    }
+
+    // =============================================
+    // DOWNLOAD E USO DE MODELOS
+    // =============================================
+    function downloadModel() {
+        if (!currentModel) return;
+        
+        // Simular download
+        const link = document.createElement('a');
+        link.href = '#'; // Em uma implementação real, seria o URL do arquivo
+        link.download = `${currentModel.name} - Personalizado.${currentModel.format.toLowerCase()}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Mostrar mensagem de sucesso
+        alert(`Download do modelo "${currentModel.name}" iniciado!`);
+    }
+
+    function useTemplate() {
+        if (!currentModel) return;
+        
+        // Simular cópia para área de trabalho
+        alert(`O modelo "${currentModel.name}" foi copiado para sua área de trabalho e está pronto para uso!`);
+    }
+
+    // =============================================
+    // UPLOAD DE MODELOS
+    // =============================================
+    function openUploadModal() {
+        const modal = new bootstrap.Modal(document.getElementById('uploadModal'));
+        modal.show();
+    }
+
+    function uploadModel() {
+        // Obter valores do formulário
+        const name = document.getElementById('modelName').value;
+        const category = document.getElementById('modelCategorySelect').value;
+        const description = document.getElementById('modelDescriptionText').value;
+        const tags = document.getElementById('modelTagsInput').value.split(',').map(tag => tag.trim());
+        const file = document.getElementById('modelFile').files[0];
+        const previewImage = document.getElementById('modelPreviewImage').files[0];
+        
+        // Validação básica
+        if (!name || !category || !description || !file) {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            return;
+        }
+        
+        // Simular upload bem-sucedido
+        alert(`Modelo "${name}" enviado com sucesso! Ele será revisado antes de ser publicado.`);
+        
+        // Fechar o modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('uploadModal'));
+        modal.hide();
+        
+        // Limpar o formulário
+        document.getElementById('modelName').value = '';
+        document.getElementById('modelCategorySelect').value = '';
+        document.getElementById('modelDescriptionText').value = '';
+        document.getElementById('modelTagsInput').value = '';
+        document.getElementById('modelFile').value = '';
+        document.getElementById('modelPreviewImage').value = '';
+    }
+
+    // =============================================
+    // FUNÇÕES AUXILIARES
+    // =============================================
+    function getCategoryName(categoryKey) {
+        const categories = {
+            'documentos': 'Documentos',
+            'apresentacoes': 'Apresentações',
+            'planilhas': 'Planilhas',
+            'contratos': 'Contratos',
+            'marketing': 'Marketing',
+            'propostas': 'Propostas Comerciais',
+            'relatorios': 'Relatórios',
+            'emails': 'E-mails'
+        };
+        
+        return categories[categoryKey] || categoryKey;
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.Pedro Soluções - Sistema Integrado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        /* ===== VARIÁVEIS DE CORES E ESTILOS ===== */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        /* ===== ESTILOS GERAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-speed);
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - var(--header-height));
+            padding-top: var(--header-height);
+        }
+
+        /* ===== CABEÇALHO ===== */
+        .kanawa-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .top-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .top-icons .menu-item {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+        }
+
+        .top-icons .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* ===== BARRA LATERAL ===== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--box-shadow);
+            overflow-y: auto;
+            transition: all var(--transition-speed);
+            z-index: 900;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            color: #555;
+            transition: all var(--transition-speed);
+            border-left: 4px solid transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .menu-item:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+
+        .menu-item.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        /* ===== CONTEÚDO PRINCIPAL ===== */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        /* ===== WIDGETS DO DASHBOARD ===== */
+        .dashboard-widget {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform var(--transition-speed);
+        }
+
+        .dashboard-widget:hover {
+            transform: translateY(-5px);
+        }
+
+        .widget-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.3rem;
+        }
+
+        .widget-icon i {
+            color: white;
+        }
+
+        .widget-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .widget-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* ===== TABELAS ===== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* ===== BADGES DE STATUS ===== */
+        .status-badge {
+            padding: 0.35rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background-color: rgba(39, 174, 96, 0.15);
+            color: var(--success-color);
+        }
+
+        .status-pending {
+            background-color: rgba(243, 156, 18, 0.15);
+            color: var(--warning-color);
+        }
+
+        .status-completed {
+            background-color: rgba(52, 152, 219, 0.15);
+            color: var(--secondary-color);
+        }
+
+        .status-inactive {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+        }
+
+        /* ===== BARRAS DE PROGRESSO ===== */
+        .progress-container {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* ===== BOTÕES ===== */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== NOTIFICAÇÕES ===== */
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== ASSISTENTE DE IA ===== */
+        .ai-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* ===== BOTÃO DE MODO ESCURO ===== */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        /* ===== GRÁFICOS ===== */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* ===== DROPDOWNS ===== */
+        #notificationsDropdown, #userMenuDropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            width: 320px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        #userMenuDropdown {
+            width: 200px;
+        }
+
+        .notification-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ===== FORMULÁRIOS ===== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        /* ===== CHAT ===== */
+        .chat-container {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            max-width: 80%;
+            position: relative;
+        }
+
+        .bot-message {
+            background-color: white;
+            align-self: flex-start;
+            border: 1px solid #eee;
+        }
+
+        .user-message {
+            background-color: var(--secondary-color);
+            color: white;
+            align-self: flex-end;
+        }
+
+        /* ===== ATIVIDADES ===== */
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        /* ===== MODO ESCURO ===== */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .sidebar,
+        body.dark-mode .card,
+        body.dark-mode .dashboard-widget,
+        body.dark-mode .data-table th {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .data-table tr:hover,
+        body.dark-mode .menu-item:hover {
+            background-color: #3d3d3d;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #3d3d3d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .menu-item {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode h1, 
+        body.dark-mode h2, 
+        body.dark-mode h3, 
+        body.dark-mode h4, 
+        body.dark-mode h5, 
+        body.dark-mode h6 {
+            color: #e0e0e0;
+        }
+
+        /* ===== NOTIFICAÇÕES EM TEMPO REAL ===== */
+        .real-time-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 350px;
+            transform: translateX(400px);
+            transition: transform 0.5s ease;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .real-time-notification.show {
+            transform: translateX(0);
+        }
+
+        .real-time-notification.error {
+            border-left-color: var(--danger-color);
+        }
+
+        .real-time-notification.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .real-time-notification.info {
+            border-left-color: var(--info-color);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #999;
+        }
+
+        /* ===== INDICADOR DE CONEXÃO ===== */
+        .connection-status {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: var(--box-shadow);
+        }
+
+        .connection-status.connected {
+            color: var(--success-color);
+        }
+
+        .connection-status.disconnected {
+            color: var(--danger-color);
+        }
+
+        .connection-status.connecting {
+            color: var(--warning-color);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot.connected {
+            background-color: var(--success-color);
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.disconnected {
+            background-color: var(--danger-color);
+        }
+
+        .status-dot.connecting {
+            background-color: var(--warning-color);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 1200px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                height: calc(100vh - var(--header-height));
+                top: var(--header-height);
+                z-index: 999;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kanawa-header {
+                padding: 0 1rem;
+            }
+            
+            .top-icons .menu-item span {
+                display: none;
+            }
+            
+            .top-icons .menu-item {
+                font-size: 1.2rem;
+                padding: 0.5rem;
+            }
+            
+            .logo span {
+                font-size: 1.1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .dashboard-widget {
+                min-width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .ai-assistant, .dark-mode-toggle {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .dark-mode-toggle {
+                bottom: 6rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .kanawa-header {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding-top: 90px;
+            }
+            
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="kanawa-header">
+        <div class="logo">
+            <a href='DPS.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+            <span>D.Pedro Soluções</span>
+        </div>
+        <div class="top-icons">
+            <a href="index.html" class="menu-item"><i class="fas fa-home"></i> <span>Página Principal</span></a>
+            <a href="martketing/marketing.html" class="menu-item"><i class="fas fa-users"></i> <span>MARKETING DIGITAL</span></a>
+            <a href="contratos.html" class="menu-item"><i class="fas fa-file-contract"></i> <span>Contratos</span></a>
+            <a href="cursos.html" class="menu-item"><i class="fas fa-graduation-cap"></i> <span>Cursos</span></a>
+            <a href="servicos.html" class="menu-item"><i class="fas fa-briefcase"></i> <span>Serviços</span></a>
+            <a href="lojas.html" class="menu-item"><i class="fas fa-store"></i> <span>Lojas</span></a>
+            <a href="download.html" class="menu-item"><i class="fas fa-download"></i> <span>Aplicativos</span></a>
+            
+            <div style="position:relative;">
+                <a href="#" id="notificationsBtn" style="color:white;position:relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                <div id="notificationsDropdown">
+                    <h5 style="margin-bottom:1rem;">Notificações</h5>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Novo contrato assinado</strong></p>
+                        <small>Há 2 horas</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Atualização do sistema disponível</strong></p>
+                        <small>Hoje, 09:30</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Novo lead capturado</strong></p>
+                        <small>Ontem, 16:45</small>
+                    </div>
+                    <a href="#" style="display:block;text-align:center;margin-top:1rem;color:var(--secondary-color);">Ver todas</a>
+                </div>
+            </div>
+            
+            <div style="position:relative;">
+                <a href="#" id="userMenuBtn" style="color:white;display:flex;align-items:center;">
+                    <img src="https://i.postimg.cc/7YQvLZxX/user-avatar.jpg" alt="User" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
+                    <span>Daniel Pedro</span>
+                </a>
+                <div id="userMenuDropdown">
+                    <a href="profile.html" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-user"></i> Perfil</a>
+                    <a href="configuracoes.html" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-cog"></i> Configurações</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <a href="tokens-ia.html" class="menu-item"><i class="fas fa-robot"></i> Tokens de IA</a>
+            <a href="recursos.html" class="menu-item"><i class="fas fa-box-open"></i> Recursos Disponíveis</a>
+            <a href="atualizacoes.html" class="menu-item"><i class="fas fa-sync-alt"></i> Atualizações/Postagens</a>
+            <a href="notificacoes.html" class="menu-item"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="loja-virtual.html" class="menu-item"><i class="fas fa-shopping-cart"></i> Loja</a>
+            <a href="comunicacao.html" class="menu-item"><i class="fas fa-comments"></i> Meios de comunicação</a>
+            <a href="seo.html" class="menu-item"><i class="fas fa-search-plus"></i> Otimização SEO</a>
+            <a href="recursos-indisponiveis.html" class="menu-item"><i class="fas fa-ban"></i> Recursos Indisponíveis</a>
+            <a href="modelos.html" class="menu-item"><i class="fas fa-clone"></i> Modelos</a>
+            <a href="cardapio.html" class="menu-item"><i class="fas fa-utensils"></i> Cardápio</a>
+            <a href="analise.html" class="menu-item"><i class="fas fa-chart-bar"></i> Análise</a>
+            <a href="assinantes.html" class="menu-item"><i class="fas fa-users"></i> Assinantes</a>
+            <a href="dominio.html" class="menu-item"><i class="fas fa-globe"></i> Domínio</a>
+            <a href="integracao.html" class="menu-item"><i class="fas fa-plug"></i> Integração</a>
+            <a href="manutencao.html" class="menu-item"><i class="fas fa-tools"></i> Manutenção</a>
+            <a href="indicar.html" class="menu-item"><i class="fas fa-gift"></i> Indique e ganhe</a>
+            <a href="ajuda.html" class="menu-item"><i class="fas fa-question-circle"></i> Sobre e ajuda</a>
+            <a href="sair.html" class="menu-item"><i class="fas fa-sign-out-alt"></i> Produtos</a>
+        </aside>
+
+        <main class="content">
+            <div id="dynamic-content">
+                <!-- Conteúdo dinâmico será carregado aqui -->
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-home"></i>
+                        Bem-vindo ao D.Pedro Soluções
+                    </h1>
+                    <div>
+                        <button class="btn btn-primary" id="newProjectBtn">
+                            <i class="fas fa-plus"></i> Novo Projeto
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Widgets -->
+                <div class="row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div class="dashboard-widget">
+                        <div class="widget-icon" style="background-color: var(--secondary-color);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="widget-value" id="clientCount">0</div>
+                        <div class="widget-title">Clientes Ativos</div>
+                        <small style="color: var(--success-color);">
+                            <i class="fas fa-arrow-up"></i> <span id="clientGrowth">0</span>% este mês
+                        </small>
+                    </div>
+                    
+                    <div class="dashboard-widget">
+                        <div class="widget-icon" style="background-color: var(--success-color);">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="widget-value" id="monthlySales">AOA 0</div>
+                        <div class="widget-title">Vendas Mensais</div>
+                        <small style="color: var(--success-color);">
+                            <i class="fas fa-arrow-up"></i> <span id="salesGrowth">0</span>% este mês
+                        </small>
+                    </div>
+                    
+                    <div class="dashboard-widget">
+                        <div class="widget-icon" style="background-color: var(--warning-color);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="widget-value" id="annualGoal">0%</div>
+                        <div class="widget-title">Meta Anual</div>
+                        <small style="color: var(--success-color);">
+                            <i class="fas fa-arrow-up"></i> <span id="goalProgress">0</span>% este mês
+                        </small>
+                    </div>
+                    
+                    <div class="dashboard-widget">
+                        <div class="widget-icon" style="background-color: var(--info-color);">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="widget-value" id="projectsCompleted">0/0</div>
+                        <div class="widget-title">Projetos Concluídos</div>
+                        <small style="color: var(--warning-color);">
+                            <i class="fas fa-arrow-down"></i> <span id="pendingProjects">0</span> pendentes
+                        </small>
+                    </div>
+                </div>
+                
+                <!-- Gráficos e Tabelas -->
+                <div class="row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div class="card" style="flex: 2; min-width: 300px;">
+                        <h2>Desempenho Mensal</h2>
+                        <div class="chart-container">
+                            <canvas id="monthlyPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="flex: 1; min-width: 300px;">
+                        <h2>Distribuição por Categoria</h2>
+                        <div class="chart-container">
+                            <canvas id="categoryDistributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2>Projetos Recentes</h2>
+                        <div>
+                            <button class="btn btn-primary" id="addProjectBtn">
+                                <i class="fas fa-plus"></i> Adicionar Projeto
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Projeto</th>
+                                    <th>Cliente</th>
+                                    <th>Status</th>
+                                    <th>Progresso</th>
+                                    <th>Prazo</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projectsTableBody">
+                                <!-- Projetos serão carregados via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+                        <div style="color: #666; font-size: 0.9rem;">
+                            Mostrando <span id="projectsShowing">0</span> de <span id="totalProjects">0</span> projetos
+                        </div>
+                        <div>
+                            <button class="btn btn-sm" id="prevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="btn btn-sm" id="page1Btn" style="margin-left: 0.3rem; background-color: var(--secondary-color); color: white;">
+                                1
+                            </button>
+                            <button class="btn btn-sm" id="page2Btn" style="margin-left: 0.3rem;">
+                                2
+                            </button>
+                            <button class="btn btn-sm" id="page3Btn" style="margin-left: 0.3rem;">
+                                3
+                            </button>
+                            <button class="btn btn-sm" id="nextPageBtn" style="margin-left: 0.3rem;">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Atividades Recentes -->
+                <div class="card">
+                    <h2>Atividades Recentes</h2>
+                    <div style="margin-top: 1.5rem;" id="recentActivities">
+                        <!-- Atividades serão carregadas via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Assistant Button -->
+    <div class="ai-assistant">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Indicador de status de conexão -->
+    <div class="connection-status connecting" id="connectionStatus">
+        <span class="status-dot connecting"></span>
+        <span class="status-text">Conectando...</span>
+    </div>
+
+    <!-- AI Assistant Modal -->
+    <div class="modal fade" id="aiAssistantModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-robot me-2"></i> Assistente de IA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="chat-container" id="aiChatContainer">
+                        <div class="message bot-message">
+                            Olá! Sou o assistente virtual da D.Pedro Soluções. Como posso ajudar você hoje?
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="aiMessageInput" placeholder="Digite sua mensagem...">
+                        <button class="btn btn-primary" type="button" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Adicionar/Editar Projeto -->
+    <div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="projectModalTitle">Adicionar Novo Projeto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="projectForm">
+                        <input type="hidden" id="projectId">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="projectName" class="form-label">Nome do Projeto</label>
+                                    <input type="text" class="form-control" id="projectName" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="projectClient" class="form-label">Cliente</label>
+                                    <select class="form-control" id="projectClient" required>
+                                        <option value="">Selecione um cliente</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="projectStatus" class="form-label">Status</label>
+                                    <select class="form-control" id="projectStatus" required>
+                                        <option value="pending">Pendente</option>
+                                        <option value="active">Em Andamento</option>
+                                        <option value="completed">Concluído</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="projectDeadline" class="form-label">Prazo</label>
+                                    <input type="date" class="form-control" id="projectDeadline" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectProgress" class="form-label">Progresso: <span id="progressValue">0</span>%</label>
+                            <input type="range" class="form-control" id="projectProgress" min="0" max="100" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="projectDescription" class="form-label">Descrição</label>
+                            <textarea class="form-control" id="projectDescription" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="saveProjectBtn">Salvar Projeto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // BANCO DE DADOS COM INDEXEDDB
+    // =============================================
+    const DB_NAME = 'DPSystemDB';
+    const DB_VERSION = 1;
+    let db;
+
+    // Inicializar o banco de dados
+    function initDatabase() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            
+            request.onerror = event => {
+                console.error('Erro ao abrir o banco de dados:', event.target.error);
+                reject(event.target.error);
+            };
+            
+            request.onsuccess = event => {
+                db = event.target.result;
+                console.log('Banco de dados aberto com sucesso');
+                resolve(db);
+            };
+            
+            request.onupgradeneeded = event => {
+                const db = event.target.result;
+                
+                // Criar object store para projetos
+                if (!db.objectStoreNames.contains('projects')) {
+                    const projectsStore = db.createObjectStore('projects', { keyPath: 'id', autoIncrement: true });
+                    projectsStore.createIndex('name', 'name', { unique: false });
+                    projectsStore.createIndex('client', 'client', { unique: false });
+                    projectsStore.createIndex('status', 'status', { unique: false });
+                }
+                
+                // Criar object store para clientes
+                if (!db.objectStoreNames.contains('clients')) {
+                    const clientsStore = db.createObjectStore('clients', { keyPath: 'id', autoIncrement: true });
+                    clientsStore.createIndex('name', 'name', { unique: true });
+                }
+                
+                // Criar object store para atividades
+                if (!db.objectStoreNames.contains('activities')) {
+                    const activitiesStore = db.createObjectStore('activities', { keyPath: 'id', autoIncrement: true });
+                    activitiesStore.createIndex('date', 'date', { unique: false });
+                }
+                
+                // Criar object store para configurações (nova)
+                if (!db.objectStoreNames.contains('settings')) {
+                    const settingsStore = db.createObjectStore('settings', { keyPath: 'key' });
+                }
+                
+                console.log('Estrutura do banco de dados criada');
+            };
+        });
+    }
+
+    // =============================================
+    // OPERAÇÕES DO BANCO DE DADOS
+    // =============================================
+    
+    // Adicionar um item
+    function addItem(storeName, item) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.add(item);
+            
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Obter todos os itens de uma store
+    function getAllItems(storeName) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readonly');
+            const store = transaction.objectStore(storeName);
+            const request = store.getAll();
+            
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Obter um item por chave
+    function getItem(storeName, key) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readonly');
+            const store = transaction.objectStore(storeName);
+            const request = store.get(key);
+            
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Atualizar um item
+    function updateItem(storeName, item) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.put(item);
+            
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Excluir um item
+    function deleteItem(storeName, id) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.delete(id);
+            
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Salvar configuração
+    function saveSetting(key, value) {
+        return updateItem('settings', { key, value, updatedAt: new Date() });
+    }
+    
+    // Carregar configuração
+    function loadSetting(key, defaultValue = null) {
+        return getItem('settings', key).then(result => {
+            return result ? result.value : defaultValue;
+        }).catch(() => defaultValue);
+    }
+    
+    // =============================================
+    // SISTEMA DE COMUNICAÇÃO EM TEMPO REAL
+    // =============================================
+    
+    // Simulação de WebSocket (será substituída por implementação real)
+    class RealTimeConnection {
+        constructor() {
+            this.connected = false;
+            this.reconnectAttempts = 0;
+            this.maxReconnectAttempts = 5;
+            this.reconnectInterval = 3000;
+            this.eventHandlers = new Map();
+            this.settingsHandlers = [];
+        }
+        
+        // Conectar ao servidor (simulação)
+        connect() {
+            console.log('Conectando ao servidor em tempo real...');
+            this.updateConnectionStatus('connecting');
+            
+            // Simular conexão (em produção, usar WebSocket real)
+            setTimeout(() => {
+                this.connected = true;
+                this.reconnectAttempts = 0;
+                this.updateConnectionStatus('connected');
+                console.log('Conectado ao servidor em tempo real');
+                
+                // Simular recebimento de dados em tempo real
+                this.simulateRealTimeData();
+            }, 2000);
+        }
+        
+        // Desconectar
+        disconnect() {
+            this.connected = false;
+            this.updateConnectionStatus('disconnected');
+            console.log('Desconectado do servidor em tempo real');
+        }
+        
+        // Tentar reconectar
+        reconnect() {
+            if (this.reconnectAttempts < this.maxReconnectAttempts) {
+                this.reconnectAttempts++;
+                console.log(`Tentativa de reconexão ${this.reconnectAttempts}/${this.maxReconnectAttempts}`);
+                setTimeout(() => this.connect(), this.reconnectInterval);
+            } else {
+                console.error('Não foi possível reconectar ao servidor');
+            }
+        }
+        
+        // Atualizar status de conexão na UI
+        updateConnectionStatus(status) {
+            const statusElement = document.getElementById('connectionStatus');
+            if (statusElement) {
+                statusElement.className = `connection-status ${status}`;
+                statusElement.querySelector('.status-dot').className = `status-dot ${status}`;
+                
+                switch(status) {
+                    case 'connected':
+                        statusElement.querySelector('.status-text').textContent = 'Conectado';
+                        break;
+                    case 'disconnected':
+                        statusElement.querySelector('.status-text').textContent = 'Desconectado';
+                        break;
+                    case 'connecting':
+                        statusElement.querySelector('.status-text').textContent = 'Conectando...';
+                        break;
+                }
+            }
+        }
+        
+        // Simular recebimento de dados em tempo real
+        simulateRealTimeData() {
+            if (!this.connected) return;
+            
+            // Simular atualizações periódicas
+            setInterval(() => {
+                // Atualizar contadores do dashboard
+                this.updateDashboardMetrics();
+                
+                // Simular notificações
+                this.simulateNotifications();
+            }, 10000); // A cada 10 segundos
+        }
+        
+        // Atualizar métricas do dashboard
+        async updateDashboardMetrics() {
+            const projects = await getAllItems('projects');
+            const clients = await getAllItems('clients');
+            
+            // Atualizar contadores
+            const activeClients = clients.filter(c => c.status === 'active').length;
+            const completedProjects = projects.filter(p => p.status === 'completed').length;
+            const totalRevenue = projects.reduce((sum, project) => sum + (project.revenue || 0), 0);
+            
+            // Animar a mudança de valores
+            this.animateValue('clientCount', 0, activeClients, 1000);
+            this.animateValue('projectsCompleted', 0, `${completedProjects}/${projects.length}`, 1000);
+            this.animateValue('monthlySales', 0, `AOA ${totalRevenue.toLocaleString()}`, 1000);
+            
+            // Atualizar crescimento (simulado)
+            document.getElementById('clientGrowth').textContent = Math.floor(Math.random() * 15) + 5;
+            document.getElementById('salesGrowth').textContent = Math.floor(Math.random() * 10) + 3;
+            
+            const annualGoalProgress = Math.min(100, Math.floor((completedProjects / 50) * 100));
+            this.animateValue('annualGoal', 0, `${annualGoalProgress}%`, 1000);
+            document.getElementById('goalProgress').textContent = Math.floor(Math.random() * 8) + 2;
+        }
+        
+        // Animação para valores numéricos
+        animateValue(elementId, start, end, duration) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            // Se o valor for uma string com texto, extrair o número
+            let numericEnd, prefix = '', suffix = '';
+            
+            if (typeof end === 'string') {
+                const match = end.match(/([^0-9]*)([0-9.,]+)([^0-9]*)/);
+                if (match) {
+                    prefix = match[1] || '';
+                    numericEnd = parseFloat(match[2].replace(',', ''));
+                    suffix = match[3] || '';
+                } else {
+                    numericEnd = parseFloat(end) || 0;
+                }
+            } else {
+                numericEnd = end;
+            }
+            
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (numericEnd - start) + start);
+                element.textContent = prefix + value.toLocaleString() + suffix;
+                
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        // Simular notificações em tempo real
+        simulateNotifications() {
+            const notifications = [
+                { type: 'info', message: 'Sistema otimizado com sucesso', icon: 'fas fa-cog' },
+                { type: 'success', message: 'Novo lead capturado do website', icon: 'fas fa-user-plus' },
+                { type: 'warning', message: 'Backup agendado para hoje às 02:00', icon: 'fas fa-database' }
+            ];
+            
+            const notification = notifications[Math.floor(Math.random() * notifications.length)];
+            this.showNotification(notification.message, notification.type, notification.icon);
+        }
+        
+        // Mostrar notificação em tempo real
+        showNotification(message, type = 'info', icon = 'fas fa-info-circle') {
+            const notification = document.createElement('div');
+            notification.className = `real-time-notification ${type}`;
+            notification.innerHTML = `
+                <i class="${icon}"></i>
+                <div class="notification-content">${message}</div>
+                <button class="notification-close">&times;</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Mostrar notificação
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Configurar botão de fechar
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 500);
+            });
+            
+            // Auto-remover após 5 segundos
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 5000);
+        }
+        
+        // Registrar handler para eventos de configurações
+        onSettingsChange(handler) {
+            this.settingsHandlers.push(handler);
+        }
+        
+        // Enviar evento de mudança de configuração
+        emitSettingsChange(settings) {
+            this.settingsHandlers.forEach(handler => handler(settings));
+        }
+        
+        // Sincronizar configurações entre abas
+        setupCrossTabCommunication() {
+            // Usar localStorage para comunicação entre abas
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'dpsSettingsUpdate') {
+                    try {
+                        const settings = JSON.parse(event.newValue);
+                        this.emitSettingsChange(settings);
+                        this.showNotification('Configurações atualizadas', 'success', 'fas fa-sync-alt');
+                    } catch (e) {
+                        console.error('Erro ao processar configurações:', e);
+                    }
+                }
+            });
+            
+            // Também usar BroadcastChannel se disponível
+            if (typeof BroadcastChannel !== 'undefined') {
+                this.broadcastChannel = new BroadcastChannel('dps_settings');
+                this.broadcastChannel.addEventListener('message', (event) => {
+                    this.emitSettingsChange(event.data);
+                    this.showNotification('Configurações atualizadas', 'success', 'fas fa-sync-alt');
+                });
+            }
+        }
+        
+        // Enviar atualização de configurações para outras abas
+        broadcastSettings(settings) {
+            // Via localStorage
+            localStorage.setItem('dpsSettingsUpdate', JSON.stringify(settings));
+            setTimeout(() => localStorage.removeItem('dpsSettingsUpdate'), 100);
+            
+            // Via BroadcastChannel se disponível
+            if (this.broadcastChannel) {
+                this.broadcastChannel.postMessage(settings);
+            }
+        }
+    }
+    
+    // =============================================
+    // DADOS INICIAIS
+    // =============================================
+    async function initializeData() {
+        // Verificar se já existem clientes
+        const clients = await getAllItems('clients');
+        if (clients.length === 0) {
+            // Adicionar clientes iniciais
+            const initialClients = [
+                { name: 'Empresa A', email: 'contato@empresaa.com', phone: '+244 923 456 789', status: 'active' },
+                { name: 'Loja B', email: 'geral@lojab.com', phone: '+244 923 123 456', status: 'active' },
+                { name: 'Empresa C', email: 'info@empresac.com', phone: '+244 923 789 012', status: 'active' },
+                { name: 'Condomínio D', email: 'admin@condominiod.com', phone: '+244 923 345 678', status: 'active' }
+            ];
+            
+            for (const client of initialClients) {
+                await addItem('clients', client);
+            }
+        }
+        
+        // Verificar se já existem projetos
+        const projects = await getAllItems('projects');
+        if (projects.length === 0) {
+            // Adicionar projetos iniciais
+            const initialProjects = [
+                { 
+                    name: 'Sistema de Segurança', 
+                    client: 'Empresa A', 
+                    status: 'active', 
+                    progress: 75, 
+                    deadline: '2023-08-15',
+                    description: 'Instalação de sistema completo de segurança' 
+                },
+                { 
+                    name: 'PDV Completo', 
+                    client: 'Loja B', 
+                    status: 'active', 
+                    progress: 45, 
+                    deadline: '2023-08-25',
+                    description: 'Sistema de ponto de venda completo' 
+                },
+                { 
+                    name: 'CFTV Empresarial', 
+                    client: 'Empresa C', 
+                    status: 'active', 
+                    progress: 90, 
+                    deadline: '2023-08-05',
+                    description: 'Instalação de circuito fechado de TV' 
+                },
+                { 
+                    name: 'Controle de Acesso', 
+                    client: 'Condomínio D', 
+                    status: 'pending', 
+                    progress: 10, 
+                    deadline: '2023-09-10',
+                    description: 'Sistema de controle de acesso para condomínio' 
+                }
+            ];
+            
+            for (const project of initialProjects) {
+                await addItem('projects', project);
+            }
+        }
+        
+        // Verificar se já existem atividades
+        const activities = await getAllItems('activities');
+        if (activities.length === 0) {
+            // Adicionar atividades iniciais
+            const initialActivities = [
+                { 
+                    type: 'new_client', 
+                    title: 'Novo cliente adicionado', 
+                    description: 'Empresa E', 
+                    date: new Date().toISOString() 
+                },
+                { 
+                    type: 'invoice_paid', 
+                    title: 'Fatura #2456 foi paga', 
+                    description: 'Loja B', 
+                    date: new Date(Date.now() - 86400000).toISOString() 
+                },
+                { 
+                    type: 'maintenance_scheduled', 
+                    title: 'Manutenção agendada', 
+                    description: 'Para Sistema de Segurança - Empresa A', 
+                    date: new Date(Date.now() - 86400000).toISOString() 
+                },
+                { 
+                    type: 'new_comment', 
+                    title: 'Novo comentário', 
+                    description: 'No projeto CFTV Empresarial', 
+                    date: new Date(Date.now() - 2 * 86400000).toISOString() 
+                }
+            ];
+            
+            for (const activity of initialActivities) {
+                await addItem('activities', activity);
+            }
+        }
+    }
+
+    // =============================================
+    // FUNÇÕES DE INTERFACE
+    // =============================================
+    
+    // Carregar projetos na tabela
+    async function loadProjects() {
+        const projects = await getAllItems('projects');
+        const tableBody = document.getElementById('projectsTableBody');
+        tableBody.innerHTML = '';
+        
+        // Atualizar contadores
+        document.getElementById('projectsShowing').textContent = Math.min(projects.length, 4);
+        document.getElementById('totalProjects').textContent = projects.length;
+        
+        const completedProjects = projects.filter(p => p.status === 'completed').length;
+        document.getElementById('projectsCompleted').textContent = `${completedProjects}/${projects.length}`;
+        document.getElementById('pendingProjects').textContent = projects.length - completedProjects;
+        
+        // Mostrar apenas os primeiros 4 projetos
+        const projectsToShow = projects.slice(0, 4);
+        
+        projectsToShow.forEach(project => {
+            const row = document.createElement('tr');
+            
+            row.innerHTML = `
+                <td>
+                    <div style="display: flex; align-items: center;">
+                        <i class="fas fa-project-diagram" style="margin-right: 10px; color: var(--secondary-color);"></i>
+                        ${project.name}
+                    </div>
+                </td>
+                <td>${project.client}</td>
+                <td><span class="status-badge ${project.status === 'active' ? 'status-active' : 'status-inactive'}">${getStatusText(project.status)}</span></td>
+                <td>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 60px; margin-right: 10px;">
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: ${project.progress}%;"></div>
+                            </div>
+                        </div>
+                        <span>${project.progress}%</span>
+                    </div>
+                </td>
+                <td>${formatDate(project.deadline)}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary view-project" data-id="${project.id}">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-secondary edit-project" data-id="${project.id}" style="margin-left: 5px;">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger delete-project" data-id="${project.id}" style="margin-left: 5px;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+        
+        // Adicionar event listeners aos botões
+        document.querySelectorAll('.view-project').forEach(btn => {
+            btn.addEventListener('click', () => viewProject(btn.dataset.id));
+        });
+        
+        document.querySelectorAll('.edit-project').forEach(btn => {
+            btn.addEventListener('click', () => editProject(btn.dataset.id));
+        });
+        
+        document.querySelectorAll('.delete-project').forEach(btn => {
+            btn.addEventListener('click', () => deleteProject(btn.dataset.id));
+        });
+    }
+    
+    // Carregar atividades recentes
+    async function loadActivities() {
+        const activities = await getAllItems('activities');
+        const activitiesContainer = document.getElementById('recentActivities');
+        activitiesContainer.innerHTML = '';
+        
+        // Ordenar atividades por data (mais recente primeiro)
+        activities.sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        // Mostrar apenas as 4 atividades mais recentes
+        const recentActivities = activities.slice(0, 4);
+        
+        recentActivities.forEach(activity => {
+            const activityEl = document.createElement('div');
+            activityEl.style.display = 'flex';
+            activityEl.style.padding = '1rem 0';
+            activityEl.style.borderBottom = '1px solid #eee';
+            
+            // Escolher ícone com base no tipo de atividade
+            let iconClass, iconColor;
+            switch(activity.type) {
+                case 'new_client':
+                    iconClass = 'fa-user-check';
+                    iconColor = 'var(--success-color)';
+                    break;
+                case 'invoice_paid':
+                    iconClass = 'fa-file-invoice-dollar';
+                    iconColor = 'var(--secondary-color)';
+                    break;
+                case 'maintenance_scheduled':
+                    iconClass = 'fa-tools';
+                    iconColor = 'var(--warning-color)';
+                    break;
+                case 'new_comment':
+                    iconClass = 'fa-comment-alt';
+                    iconColor = 'var(--primary-color)';
+                    break;
+                default:
+                    iconClass = 'fa-info-circle';
+                    iconColor = 'var(--info-color)';
+            }
+            
+            activityEl.innerHTML = `
+                <div style="width: 40px; height: 40px; background-color: var(--light-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                    <i class="fas ${iconClass}" style="color: ${iconColor};"></i>
+                </div>
+                <div>
+                    <p style="margin-bottom: 0.2rem;"><strong>${activity.title}</strong> - ${activity.description}</p>
+                    <small style="color: #666;">${formatDateTime(activity.date)}</small>
+                </div>
+            `;
+            
+            activitiesContainer.appendChild(activityEl);
+        });
+    }
+    
+    // Carregar clientes no dropdown
+    async function loadClients() {
+        const clients = await getAllItems('clients');
+        const clientSelect = document.getElementById('projectClient');
+        
+        // Manter a opção padrão e limpar as outras
+        clientSelect.innerHTML = '<option value="">Selecione um cliente</option>';
+        
+        clients.forEach(client => {
+            const option = document.createElement('option');
+            option.value = client.name;
+            option.textContent = client.name;
+            clientSelect.appendChild(option);
+        });
+    }
+    
+    // Atualizar estatísticas do dashboard
+    async function updateDashboardStats() {
+        const projects = await getAllItems('projects');
+        const clients = await getAllItems('clients');
+        
+        // Calcular estatísticas
+        const activeClients = clients.filter(c => c.status === 'active').length;
+        const completedProjects = projects.filter(p => p.status === 'completed').length;
+        const totalRevenue = projects.reduce((sum, project) => sum + (project.revenue || 0), 0);
+        
+        // Atualizar widgets
+        document.getElementById('clientCount').textContent = activeClients;
+        document.getElementById('clientGrowth').textContent = Math.floor(Math.random() * 15) + 5; // Simular crescimento
+        
+        document.getElementById('monthlySales').textContent = `AOA ${totalRevenue.toLocaleString()}`;
+        document.getElementById('salesGrowth').textContent = Math.floor(Math.random() * 10) + 3; // Simular crescimento
+        
+        const annualGoalProgress = Math.min(100, Math.floor((completedProjects / 50) * 100)); // Meta de 50 projetos/ano
+        document.getElementById('annualGoal').textContent = `${annualGoalProgress}%`;
+        document.getElementById('goalProgress').textContent = Math.floor(Math.random() * 8) + 2; // Simular progresso
+    }
+    
+    // =============================================
+    // MANIPULAÇÃO DE PROJETOS
+    // =============================================
+    
+    // Abrir modal para adicionar projeto
+    function openProjectModal() {
+        document.getElementById('projectModalTitle').textContent = 'Adicionar Novo Projeto';
+        document.getElementById('projectForm').reset();
+        document.getElementById('projectId').value = '';
+        document.getElementById('progressValue').textContent = '0';
+        
+        const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+        modal.show();
+    }
+    
+    // Editar projeto
+    async function editProject(id) {
+        const projects = await getAllItems('projects');
+        const project = projects.find(p => p.id === parseInt(id));
+        
+        if (project) {
+            document.getElementById('projectModalTitle').textContent = 'Editar Projeto';
+            document.getElementById('projectId').value = project.id;
+            document.getElementById('projectName').value = project.name;
+            document.getElementById('projectClient').value = project.client;
+            document.getElementById('projectStatus').value = project.status;
+            document.getElementById('projectDeadline').value = project.deadline;
+            document.getElementById('projectProgress').value = project.progress;
+            document.getElementById('progressValue').textContent = project.progress;
+            document.getElementById('projectDescription').value = project.description || '';
+            
+            const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+            modal.show();
+        }
+    }
+    
+    // Visualizar projeto (modal de visualização)
+    async function viewProject(id) {
+        const projects = await getAllItems('projects');
+        const project = projects.find(p => p.id === parseInt(id));
+        
+        if (project) {
+            // Aqui você pode implementar um modal de visualização detalhada
+            alert(`Detalhes do Projeto:\nNome: ${project.name}\nCliente: ${project.client}\nStatus: ${getStatusText(project.status)}\nProgresso: ${project.progress}%\nPrazo: ${formatDate(project.deadline)}\nDescrição: ${project.description || 'Nenhuma descrição'}`);
+        }
+    }
+    
+    // Excluir projeto
+    async function deleteProject(id) {
+        if (confirm('Tem certeza que deseja excluir este projeto?')) {
+            await deleteItem('projects', parseInt(id));
+            
+            // Registrar atividade
+            await addItem('activities', {
+                type: 'project_deleted',
+                title: 'Projeto excluído',
+                description: `Projeto ID: ${id}`,
+                date: new Date().toISOString()
+            });
+            
+            // Recarregar a lista de projetos
+            await loadProjects();
+            await updateDashboardStats();
+            
+            showNotification('Projeto excluído com sucesso!', 'success');
+        }
+    }
+    
+    // Salvar projeto (novo ou existente)
+    async function saveProject() {
+        const form = document.getElementById('projectForm');
+        
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        
+        const projectId = document.getElementById('projectId').value;
+        const projectData = {
+            name: document.getElementById('projectName').value,
+            client: document.getElementById('projectClient').value,
+            status: document.getElementById('projectStatus').value,
+            deadline: document.getElementById('projectDeadline').value,
+            progress: parseInt(document.getElementById('projectProgress').value),
+            description: document.getElementById('projectDescription').value
+        };
+        
+        try {
+            if (projectId) {
+                // Atualizar projeto existente
+                projectData.id = parseInt(projectId);
+                await updateItem('projects', projectData);
+                
+                // Registrar atividade
+                await addItem('activities', {
+                    type: 'project_updated',
+                    title: 'Projeto atualizado',
+                    description: projectData.name,
+                    date: new Date().toISOString()
+                });
+                
+                showNotification('Projeto atualizado com sucesso!', 'success');
+            } else {
+                // Adicionar novo projeto
+                const newId = await addItem('projects', projectData);
+                
+                // Registrar atividade
+                await addItem('activities', {
+                    type: 'project_created',
+                    title: 'Novo projeto criado',
+                    description: projectData.name,
+                    date: new Date().toISOString()
+                });
+                
+                showNotification('Projeto criado com sucesso!', 'success');
+            }
+            
+            // Fechar o modal e recarregar os dados
+            bootstrap.Modal.getInstance(document.getElementById('projectModal')).hide();
+            await loadProjects();
+            await updateDashboardStats();
+            
+        } catch (error) {
+            console.error('Erro ao salvar projeto:', error);
+            showNotification('Erro ao salvar projeto. Tente novamente.', 'error');
+        }
+    }
+    
+    // =============================================
+    // FUNÇÕES UTILITÁRIAS
+    // =============================================
+    
+    function getStatusText(status) {
+        const statusMap = {
+            'pending': 'Pendente',
+            'active': 'Em Andamento',
+            'completed': 'Concluído'
+        };
+        return statusMap[status] || status;
+    }
+    
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR');
+    }
+    
+    function formatDateTime(dateTimeString) {
+        const date = new Date(dateTimeString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 0) {
+            return 'Hoje, ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        } else if (diffDays === 1) {
+            return 'Ontem, ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        } else {
+            return date.toLocaleDateString('pt-BR') + ', ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+    }
+    
+    function showNotification(message, type = 'info') {
+        // Implementação simples de notificação
+        alert(`${type.toUpperCase()}: ${message}`);
+    }
+    
+    // =============================================
+    // INICIALIZAÇÃO DO SISTEMA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            // Inicializar banco de dados
+            await initDatabase();
+            await initializeData();
+            
+            // Carregar dados iniciais
+            await loadClients();
+            await loadProjects();
+            await loadActivities();
+            await updateDashboardStats();
+            
+            // Inicializar gráficos
+            initCharts();
+            
+            // Configurar event listeners
+            document.getElementById('newProjectBtn').addEventListener('click', openProjectModal);
+            document.getElementById('addProjectBtn').addEventListener('click', openProjectModal);
+            document.getElementById('saveProjectBtn').addEventListener('click', saveProject);
+            
+            // Controle de progresso
+            document.getElementById('projectProgress').addEventListener('input', function() {
+                document.getElementById('progressValue').textContent = this.value;
+            });
+            
+            // Dropdown de notificações
+            document.getElementById('notificationsBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const dropdown = document.getElementById('notificationsDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Esconder dropdown do usuário se estiver aberto
+                document.getElementById('userMenuDropdown').style.display = 'none';
+            });
+            
+            // Dropdown do usuário
+            document.getElementById('userMenuBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const dropdown = document.getElementById('userMenuDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Esconder dropdown de notificações se estiver aberto
+                document.getElementById('notificationsDropdown').style.display = 'none';
+            });
+            
+            // Fechar dropdowns ao clicar fora
+            document.addEventListener('click', function() {
+                document.getElementById('notificationsDropdown').style.display = 'none';
+                document.getElementById('userMenuDropdown').style.display = 'none';
+            });
+            
+            // Impedir que clicks dentro dos dropdowns fechem eles
+            document.getElementById('notificationsDropdown').addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            document.getElementById('userMenuDropdown').addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            // Modo escuro
+            document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const icon = this.querySelector('i');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Verificar preferência de modo escuro salva
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.dark-mode-toggle i').classList.remove('fa-moon');
+                document.querySelector('.dark-mode-toggle i').classList.add('fa-sun');
+            }
+            
+            // Assistente de IA
+            document.querySelector('.ai-assistant').addEventListener('click', function() {
+                const aiModal = new bootstrap.Modal(document.getElementById('aiAssistantModal'));
+                aiModal.show();
+            });
+            
+            // Chat do assistente de IA
+            document.getElementById('sendMessageBtn').addEventListener('click', sendAIMessage);
+            document.getElementById('aiMessageInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') sendAIMessage();
+            });
+            
+            // Inicializar sistema de comunicação em tempo real
+            const realTimeConnection = new RealTimeConnection();
+            realTimeConnection.connect();
+            realTimeConnection.setupCrossTabCommunication();
+            
+            console.log('Sistema D.Pedro Soluções inicializado com sucesso');
+            
+        } catch (error) {
+            console.error('Erro ao inicializar o sistema:', error);
+            showNotification('Erro ao inicializar o sistema. Recarregue a página.', 'error');
+        }
+    });
+    
+    // =============================================
+    // GRÁFICOS
+    // =============================================
+    function initCharts() {
+        // Gráfico de desempenho mensal
+        const monthlyCtx = document.getElementById('monthlyPerformanceChart');
+        if (monthlyCtx) {
+            new Chart(monthlyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    datasets: [{
+                        label: 'Vendas (AOA)',
+                        data: [120000, 150000, 180000, 160000, 190000, 210000, 230000, 248750, 0, 0, 0, 0],
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Gráfico de distribuição por categoria
+        const categoryCtx = document.getElementById('categoryDistributionChart');
+        if (categoryCtx) {
+            new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Segurança', 'PDV', 'CFTV', 'Controle de Acesso', 'Outros'],
+                    datasets: [{
+                        data: [35, 25, 20, 15, 5],
+                        backgroundColor: [
+                            '#3498db',
+                            '#2ecc71',
+                            '#e74c3c',
+                            '#f39c12',
+                            '#9b59b6'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+        }
+    }
+    
+    // =============================================
+    // ASSISTENTE DE IA
+    // =============================================
+    function sendAIMessage() {
+        const input = document.getElementById('aiMessageInput');
+        const message = input.value.trim();
+        
+        if (!message) return;
+        
+        // Adicionar mensagem do usuário ao chat
+        addChatMessage(message, 'user');
+        input.value = '';
+        
+        // Simular resposta da IA
+        setTimeout(() => {
+            const responses = [
+                "Entendi sua solicitação. Vou ajudar com isso.",
+                "Com base na sua pergunta, recomendo verificar a documentação do sistema.",
+                "Posso auxiliar você a criar um novo projeto ou configurar integrações.",
+                "Para essa funcionalidade, você precisa de permissões de administrador.",
+                "Vou analisar seus dados e retornar com uma solução em instantes."
+            ];
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            addChatMessage(randomResponse, 'bot');
+        }, 1000);
+    }
+    
+    function addChatMessage(message, sender) {
+        const chatContainer = document.getElementById('aiChatContainer');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}-message`;
+        messageDiv.textContent = message;
+        
+        chatContainer.appendChild(messageDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    </script>
+</body>
+</html>

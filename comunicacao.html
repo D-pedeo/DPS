@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meios de Comunicação - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Layout de comunicação */
+        .comms-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .comms-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comms-section {
+            margin-bottom: 2rem;
+        }
+
+        .comms-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Filtros e busca */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 40px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Cards de comunicação */
+        .comms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .comm-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comm-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .comm-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .comm-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comm-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .comm-description {
+            color: #666;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .comm-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        /* Cores para tipos de comunicação */
+        .type-social {
+            background: linear-gradient(135deg, #3b5998, #1877f2);
+        }
+
+        .type-voice {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+        }
+
+        .type-video {
+            background: linear-gradient(135deg, #833ab4, #fd1d1d);
+        }
+
+        .type-email {
+            background: linear-gradient(135deg, #ea4335, #fbbc05);
+        }
+
+        .type-api {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+        }
+
+        .type-chat {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        /* Área de comunicação ativa */
+        .active-communication {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .active-header {
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .active-body {
+            padding: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .active-footer {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            max-width: 80%;
+        }
+
+        .message-incoming {
+            background: #f0f5ff;
+            align-self: flex-start;
+        }
+
+        .message-outgoing {
+            background: var(--secondary-color);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Status de conexão */
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f8f9fa;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success-color);
+        }
+
+        .status-indicator.offline {
+            background: var(--danger-color);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .comms-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .active-communication {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-comments"></i>
+                    Meios de Comunicação
+                </h1>
+            </div>
+            <div class="connection-status">
+                <div class="status-indicator" id="connectionStatus"></div>
+                <span id="statusText">Conectado</span>
+            </div>
+        </div>
+
+        <!-- Filtros e busca -->
+        <div class="card">
+            <div class="filters-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar canais de comunicação...">
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="social">Redes Sociais</button>
+                    <button class="filter-btn" data-filter="voice">Voz</button>
+                    <button class="filter-btn" data-filter="video">Vídeo</button>
+                    <button class="filter-btn" data-filter="email">E-mail</button>
+                    <button class="filter-btn" data-filter="api">APIs</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid de comunicação -->
+        <div class="comms-grid" id="commsList">
+            <!-- WhatsApp -->
+            <div class="comm-card" data-type="social,chat">
+                <div class="comm-icon type-chat">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">WhatsApp Business</h3>
+                    <p class="comm-description">Comunicação direta com clientes via WhatsApp. Envie mensagens, documentos e realize chamadas.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openWhatsApp()">
+                            <i class="fas fa-comment"></i> Conversar
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('whatsapp')">
+                            <i class="fas fa-cog"></i> Configurar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facebook -->
+            <div class="comm-card" data-type="social">
+                <div class="comm-icon type-social">
+                    <i class="fab fa-facebook"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">Facebook</h3>
+                    <p class="comm-description">Integração com Facebook para gerenciamento de páginas, anúncios e interação com seguidores.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openFacebook()">
+                            <i class="fas fa-thumbs-up"></i> Conectar
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('facebook')">
+                            <i class="fas fa-chart-bar"></i> Analytics
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instagram -->
+            <div class="comm-card" data-type="social">
+                <div class="comm-icon type-social">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">Instagram</h3>
+                    <p class="comm-description">Gerenciamento de perfil do Instagram, stories, posts e interação com seguidores.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openInstagram()">
+                            <i class="fas fa-camera"></i> Gerenciar
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('instagram')">
+                            <i class="fas fa-chart-line"></i> Métricas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="comm-card" data-type="social">
+                <div class="comm-icon type-social">
+                    <i class="fab fa-linkedin"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">LinkedIn</h3>
+                    <p class="comm-description">Rede profissional para conexões B2B, recrutamento e compartilhamento de conteúdo corporativo.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openLinkedIn()">
+                            <i class="fas fa-network-wired"></i> Conectar
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('linkedin')">
+                            <i class="fas fa-users"></i> Networking
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chamadas de Voz -->
+            <div class="comm-card" data-type="voice">
+                <div class="comm-icon type-voice">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">Chamadas de Voz</h3>
+                    <p class="comm-description">Sistema de VoIP para chamadas de voz através da internet com alta qualidade.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="startVoiceCall()">
+                            <i class="fas fa-phone"></i> Ligar
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('voice')">
+                            <i class="fas fa-address-book"></i> Contatos
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Videoconferência -->
+            <div class="comm-card" data-type="video">
+                <div class="comm-icon type-video">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">Videoconferência</h3>
+                    <p class="comm-description">Realize reuniões por vídeo com múltiplos participantes e recursos colaborativos.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="startVideoCall()">
+                            <i class="fas fa-video"></i> Iniciar Reunião
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('video')">
+                            <i class="fas fa-calendar"></i> Agendar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E-mail Marketing -->
+            <div class="comm-card" data-type="email">
+                <div class="comm-icon type-email">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">E-mail Marketing</h3>
+                    <p class="comm-description">Crie e gerencie campanhas de e-mail marketing com templates personalizáveis.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openEmailManager()">
+                            <i class="fas fa-paper-plane"></i> Criar Campanha
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('email')">
+                            <i class="fas fa-chart-pie"></i> Relatórios
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API de Comunicação -->
+            <div class="comm-card" data-type="api">
+                <div class="comm-icon type-api">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">API de Integração</h3>
+                    <p class="comm-description">Integre sistemas externos através de APIs RESTful para comunicação automatizada.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openAPIDocumentation()">
+                            <i class="fas fa-book"></i> Documentação
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('api')">
+                            <i class="fas fa-key"></i> Credenciais
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SMS -->
+            <div class="comm-card" data-type="social">
+                <div class="comm-icon type-social">
+                    <i class="fas fa-sms"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">SMS Marketing</h3>
+                    <p class="comm-description">Envio de mensagens de texto em massa para campanhas promocionais e informativas.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openSMSManager()">
+                            <i class="fas fa-comment-sms"></i> Enviar SMS
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('sms')">
+                            <i class="fas fa-list"></i> Listas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interno -->
+            <div class="comm-card" data-type="chat">
+                <div class="comm-icon type-chat">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">Chat Interno</h3>
+                    <p class="comm-description">Sistema de mensagens instantâneas para comunicação entre equipes e departamentos.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openInternalChat()">
+                            <i class="fas fa-comment-dots"></i> Abrir Chat
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('chat')">
+                            <i class="fas fa-user-friends"></i> Equipes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gravações -->
+            <div class="comm-card" data-type="voice,video">
+                <div class="comm-icon type-video">
+                    <i class="fas fa-microphone"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">Gravações</h3>
+                    <p class="comm-description">Grave e armazene chamadas de voz e vídeo para treinamento e documentação.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openRecordings()">
+                            <i class="fas fa-play-circle"></i> Ver Gravações
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('recordings')">
+                            <i class="fas fa-hdd"></i> Armazenamento
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Telegram -->
+            <div class="comm-card" data-type="social,chat">
+                <div class="comm-icon type-chat">
+                    <i class="fab fa-telegram"></i>
+                </div>
+                <div class="comm-content">
+                    <h3 class="comm-title">Telegram</h3>
+                    <p class="comm-description">Comunicação via Telegram com suporte a bots e canais de broadcast.</p>
+                    <div class="comm-actions">
+                        <button class="btn btn-primary" onclick="openTelegram()">
+                            <i class="fab fa-telegram"></i> Conectar
+                        </button>
+                        <button class="btn btn-secondary" onclick="openIntegration('telegram')">
+                            <i class="fas fa-robot"></i> Bots
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área de Comunicação Ativa -->
+        <div class="active-communication" id="activeComm">
+            <div class="active-header">
+                <h3 id="activeTitle">Comunicação</h3>
+                <button class="btn btn-sm btn-secondary" onclick="closeActiveComm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="active-body" id="activeBody">
+                <div class="message message-incoming">
+                    <strong>Sistema:</strong> Bem-vindo ao canal de comunicação. Como posso ajudar?
+                </div>
+            </div>
+            <div class="active-footer">
+                <input type="text" class="form-control" id="messageInput" placeholder="Digite sua mensagem...">
+                <button class="btn btn-primary" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- AI Assistant -->
+        <div class="ai-assistant" onclick="openAIAssistant()">
+            <i class="fas fa-robot"></i>
+        </div>
+
+        <!-- Modal de IA -->
+        <div class="modal fade" id="aiModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fas fa-robot me-2"></i> Assistente de IA para Comunicação</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-label">Como posso ajudar a melhorar sua comunicação?</label>
+                            <select class="form-control" id="aiQuestion">
+                                <option value="">Selecione uma opção</option>
+                                <option value="improve">Como melhorar minhas habilidades de comunicação?</option>
+                                <option value="channels">Quais canais devo usar para diferentes tipos de mensagem?</option>
+                                <option value="strategy">Como desenvolver uma estratégia de comunicação eficaz?</option>
+                                <option value="technology">Quais tecnologias posso usar para melhorar a comunicação?</option>
+                                <option value="feedback">Como obter e dar feedback de forma eficaz?</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Ou faça sua pergunta:</label>
+                            <textarea class="form-control" id="aiCustomQuestion" rows="3" placeholder="Digite sua pergunta sobre comunicação..."></textarea>
+                        </div>
+                        <div id="aiResponse" style="display: none; margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: var(--border-radius);">
+                            <h5>Resposta do Assistente:</h5>
+                            <p id="responseText"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" onclick="getAIResponse()">Obter Resposta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // VARIÁVEIS E ESTADO DO SISTEMA
+    // =============================================
+    let activeChannel = null;
+    let messages = [];
+    const communicationTips = [
+        "Escute ativamente antes de responder",
+        "Use linguagem clara e direta",
+        "Adapte sua mensagem ao público-alvo",
+        "Use múltiplos canais para reforçar a mensagem importante",
+        "Peça feedback para garantir que foi compreendido",
+        "Use histórias e exemplos para ilustrar pontos complexos",
+        "Mantenha contato visual em comunicações visuais",
+        "Resuma os pontos principais no final",
+        "Use perguntas abertas para encorajar diálogo",
+        "Seja consciente da linguagem corporal e tom de voz"
+    ];
+
+    // =============================================
+    // INICIALIZAÇÃO DO SISTEMA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configurar event listeners
+        document.getElementById('searchInput').addEventListener('input', filterComms);
+        
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterComms();
+            });
+        });
+
+        // Verificar permissões
+        checkPermissions();
+        
+        // Simular verificação de conexão
+        setInterval(() => {
+            const isOnline = Math.random() > 0.1; // 90% de chance de estar online
+            updateConnectionStatus(isOnline);
+        }, 10000);
+    });
+
+    // =============================================
+    // FILTRAGEM E BUSCA
+    // =============================================
+    function filterComms() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const filter = document.querySelector('.filter-btn.active').dataset.filter;
+        
+        document.querySelectorAll('.comm-card').forEach(card => {
+            const title = card.querySelector('.comm-title').textContent.toLowerCase();
+            const description = card.querySelector('.comm-description').textContent.toLowerCase();
+            const types = card.dataset.type.split(',');
+            
+            const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+            const matchesFilter = filter === 'all' || types.includes(filter);
+            
+            card.style.display = (matchesSearch && matchesFilter) ? 'flex' : 'none';
+        });
+    }
+
+    // =============================================
+    // FUNÇÕES DE COMUNICAÇÃO
+    // =============================================
+    function openWhatsApp() {
+        activeChannel = 'whatsapp';
+        document.getElementById('activeTitle').textContent = 'WhatsApp Business';
+        document.getElementById('activeComm').style.display = 'block';
+        addMessage('Sistema', 'Conexão com WhatsApp Business estabelecida. Você pode enviar mensagens para seus clientes.');
+    }
+
+    function openFacebook() {
+        window.open('https://www.facebook.com', '_blank');
+    }
+
+    function openInstagram() {
+        window.open('https://www.instagram.com/daniel_wasomba/', '_blank');
+    }
+
+    function openLinkedIn() {
+        window.open('https://www.linkedin.com', '_blank');
+    }
+
+    function startVoiceCall() {
+        // Verificar permissões de microfone
+        if (!checkMicrophonePermission()) {
+            alert('Permissão de microfone é necessária para chamadas de voz');
+            return;
+        }
+        
+        activeChannel = 'voice';
+        document.getElementById('activeTitle').textContent = 'Chamada de Voz';
+        document.getElementById('activeComm').style.display = 'block';
+        addMessage('Sistema', 'Chamada de voz iniciada. Use o microfone para se comunicar.');
+        
+        // Simular chamada
+        simulateCall();
+    }
+
+    function startVideoCall() {
+        // Verificar permissões de câmera e microfone
+        if (!checkCameraPermission()) {
+            alert('Permissão de câmera é necessária para videoconferência');
+            return;
+        }
+        
+        if (!checkMicrophonePermission()) {
+            alert('Permissão de microfone é necessária para videoconferência');
+            return;
+        }
+        
+        activeChannel = 'video';
+        document.getElementById('activeTitle').textContent = 'Videoconferência';
+        document.getElementById('activeComm').style.display = 'block';
+        addMessage('Sistema', 'Videoconferência iniciada. Sua câmera e microfone estão ativos.');
+    }
+
+    function openEmailManager() {
+        window.open('https://mail.google.com', '_blank');
+    }
+
+    function openAPIDocumentation() {
+        window.open('https://developer.dpedrosolucoes.com/docs', '_blank');
+    }
+
+    function openSMSManager() {
+        activeChannel = 'sms';
+        document.getElementById('activeTitle').textContent = 'SMS Marketing';
+        document.getElementById('activeComm').style.display = 'block';
+        addMessage('Sistema', 'Pronto para enviar SMS. Digite a mensagem que deseja enviar.');
+    }
+
+    function openInternalChat() {
+        activeChannel = 'chat';
+        document.getElementById('activeTitle').textContent = 'Chat Interno';
+        document.getElementById('activeComm').style.display = 'block';
+        addMessage('Sistema', 'Bem-vindo ao chat interno. Você pode conversar com outros membros da equipe.');
+    }
+
+    function openRecordings() {
+        window.open('https://drive.google.com', '_blank');
+    }
+
+    function openTelegram() {
+        window.open('https://web.telegram.org', '_blank');
+    }
+
+    function openIntegration(service) {
+        alert(`Abrindo configurações de integração para ${service}`);
+        // Aqui iria a lógica real de integração
+    }
+
+    // =============================================
+    // GERENCIAMENTO DE MENSAGENS
+    // =============================================
+    function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const message = messageInput.value.trim();
+        
+        if (!message) return;
+        
+        addMessage('Você', message, 'outgoing');
+        messageInput.value = '';
+        
+        // Simular resposta baseada no canal
+        setTimeout(() => {
+            simulateResponse(activeChannel, message);
+        }, 1000);
+    }
+
+    function addMessage(sender, text, type = 'incoming') {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message message-${type}`;
+        messageDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+        
+        document.getElementById('activeBody').appendChild(messageDiv);
+        document.getElementById('activeBody').scrollTop = document.getElementById('activeBody').scrollHeight;
+        
+        messages.push({ sender, text, type, timestamp: new Date() });
+    }
+
+    function closeActiveComm() {
+        document.getElementById('activeComm').style.display = 'none';
+        document.getElementById('activeBody').innerHTML = '';
+        document.getElementById('messageInput').value = '';
+        messages = [];
+        activeChannel = null;
+    }
+
+    // =============================================
+    // SIMULAÇÕES E RESPOSTAS AUTOMÁTICAS
+    // =============================================
+    function simulateResponse(channel, message) {
+        let response = '';
+        
+        switch(channel) {
+            case 'whatsapp':
+                response = 'Mensagem recebida via WhatsApp Business. Em breve retornaremos.';
+                break;
+            case 'voice':
+                response = 'Chamada em andamento. Qual outra informação você precisa?';
+                break;
+            case 'video':
+                response = 'Videoconferência estabelecida. Todos os participantes podem ver e ouvir.';
+                break;
+            case 'sms':
+                               response = 'SMS preparado para envio. Digite "enviar" para confirmar o disparo.';
+                break;
+            case 'chat':
+                response = 'Mensagem recebida no chat interno. Em breve alguém da equipe responderá.';
+                break;
+            default:
+                response = 'Mensagem recebida. Como posso ajudar?';
+        }
+        
+        addMessage('Sistema', response, 'incoming');
+    }
+
+    function simulateCall() {
+        // Simular uma chamada telefônica com respostas automáticas
+        setTimeout(() => {
+            addMessage('Atendente', 'Olá! Em que posso ajudar?', 'incoming');
+        }, 1500);
+        
+        setTimeout(() => {
+            addMessage('Atendente', 'Entendi sua solicitação. Estou verificando as informações...', 'incoming');
+        }, 5000);
+    }
+
+    // =============================================
+    // ASSISTENTE DE IA
+    // =============================================
+    function openAIAssistant() {
+        const aiModal = new bootstrap.Modal(document.getElementById('aiModal'));
+        aiModal.show();
+    }
+
+    function getAIResponse() {
+        const questionType = document.getElementById('aiQuestion').value;
+        const customQuestion = document.getElementById('aiCustomQuestion').value.trim();
+        
+        let responseText = '';
+        
+        if (customQuestion) {
+            // Resposta para pergunta personalizada
+            responseText = generateAIResponse(customQuestion);
+        } else if (questionType) {
+            // Resposta para pergunta pré-definida
+            switch(questionType) {
+                case 'improve':
+                    responseText = 'Para melhorar suas habilidades de comunicação: 1) Pratique a escuta ativa, 2) Seja claro e conciso, 3) Adapte sua linguagem ao público, 4) Use exemplos concretos, 5) Peça feedback regularmente.';
+                    break;
+                case 'channels':
+                    responseText = 'Escolha o canal conforme o objetivo: Redes sociais para engajamento, E-mail para comunicações formais, WhatsApp para respostas rápidas, Videoconferência para discussões complexas, SMS para alertas urgentes.';
+                    break;
+                case 'strategy':
+                    responseText = 'Desenvolva uma estratégia eficaz: 1) Defina objetivos claros, 2) Identifique seu público, 3) Escolha os canais apropriados, 4) Crie conteúdo relevante, 5) Estabeleça métricas de sucesso, 6) Ajuste com base nos resultados.';
+                    break;
+                case 'technology':
+                    responseText = 'Tecnologias para melhorar comunicação: Plataformas de videoconferência (Zoom, Teams), Ferramentas de mensageria (Slack, WhatsApp Business), Sistemas de e-mail marketing, CRMs com integração, Ferramentas de pesquisa de satisfação.';
+                    break;
+                case 'feedback':
+                    responseText = 'Para feedback eficaz: Seja específico e construtivo, foque no comportamento não na pessoa, ofereça sugestões práticas, escute a perspectiva do outro, estabeleça um plano de ação. Para receber feedback: Peça exemplos concretos, não fique na defensiva, agradeça e reflita.';
+                    break;
+            }
+        } else {
+            alert('Por favor, selecione uma opção ou digite sua pergunta.');
+            return;
+        }
+        
+        document.getElementById('responseText').textContent = responseText;
+        document.getElementById('aiResponse').style.display = 'block';
+    }
+
+    function generateAIResponse(question) {
+        // Resposta genérica para perguntas personalizadas
+        const lowerQuestion = question.toLowerCase();
+        
+        if (lowerQuestion.includes('redes sociais') || lowerQuestion.includes('social media')) {
+            return 'Para redes sociais, recomendo: postar regularmente, usar imagens de alta qualidade, interagir com os seguidores, usar hashtags relevantes e analisar as métricas de engajamento para ajustar a estratégia.';
+        } else if (lowerQuestion.includes('email') || lowerQuestion.includes('e-mail')) {
+            return 'Para e-mails eficazes: escreva assuntos claros, mantenha o conteúdo conciso, use chamadas para ação evidentes, personalize quando possível e evite jargon desnecessário. Taxa de abertura média é de 15-25%.';
+        } else if (lowerQuestion.includes('reunião') || lowerQuestion.includes('videoconferência')) {
+            return 'Para reuniões eficientes: defina uma agenda clara, teste a tecnologia antes, designe um moderador, mantenha o foco no tópico e resuma os action items ao final. Limite a 45-60 minutos sempre que possível.';
+        } else {
+            // Resposta padrão para outras perguntas
+            return `Com base na sua pergunta sobre "${question}", recomendo: 1) Definir objetivos claros de comunicação, 2) Conhecer seu público-alvo, 3) Escolher os canais apropriados, 4) Mensurar resultados e ajustar estratégia. A comunicação eficaz geralmente combina múltiplos canais para reforçar a mensagem.`;
+        }
+    }
+
+    // =============================================
+    // VERIFICAÇÕES DE PERMISSÃO E CONEXÃO
+    // =============================================
+    function checkPermissions() {
+        // Verificar se o navegador suporta as APIs necessárias
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            console.warn('API de mídia não suportada neste navegador');
+        }
+        
+        // Verificar permissões gerais (simulação)
+        setTimeout(() => {
+            const hasMicrophone = Math.random() > 0.3;
+            const hasCamera = Math.random() > 0.4;
+            
+            if (!hasMicrophone) {
+                console.warn('Permissão de microfone não concedida');
+            }
+            
+            if (!hasCamera) {
+                console.warn('Permissão de câmera não concedida');
+            }
+        }, 2000);
+    }
+
+    function checkMicrophonePermission() {
+        // Simulação de verificação de permissão
+        return Math.random() > 0.3;
+    }
+
+    function checkCameraPermission() {
+        // Simulação de verificação de permissão
+        return Math.random() > 0.4;
+    }
+
+    function updateConnectionStatus(isOnline) {
+        const statusIndicator = document.getElementById('connectionStatus');
+        const statusText = document.getElementById('statusText');
+        
+        if (isOnline) {
+            statusIndicator.style.backgroundColor = 'var(--success-color)';
+            statusText.textContent = 'Conectado';
+        } else {
+            statusIndicator.style.backgroundColor = 'var(--danger-color)';
+            statusText.textContent = 'Offline';
+            statusIndicator.classList.add('offline');
+            
+            // Mostrar notificação de offline
+            if (activeChannel) {
+                addMessage('Sistema', 'Conexão perdida. Tentando reconectar...', 'incoming');
+            }
+        }
+    }
+
+    // =============================================
+    // RECOMENDAÇÕES DE COMUNICAÇÃO
+    // =============================================
+    function showCommunicationTip() {
+        // Mostrar uma dica de comunicação aleatória
+        const tip = communicationTips[Math.floor(Math.random() * communicationTips.length)];
+        
+        // Criar notificação
+        const notification = document.createElement('div');
+        notification.className = 'alert alert-info alert-dismissible fade show';
+        notification.innerHTML = `
+            <strong>Dica de Comunicação:</strong> ${tip}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        // Adicionar ao início da página
+        document.querySelector('.container').prepend(notification);
+        
+        // Agendar próxima dica (entre 2-5 minutos)
+        setTimeout(showCommunicationTip, Math.floor(Math.random() * 180000) + 120000);
+    }
+
+    // Iniciar dicas após o carregamento da página
+    setTimeout(showCommunicationTip, 10000);
+
+    // =============================================
+    // FUNÇÕES ADICIONAIS DE INTEGRAÇÃO
+    // =============================================
+    function connectToService(serviceName) {
+        // Simular processo de conexão
+        addMessage('Sistema', `Conectando ao ${serviceName}...`, 'incoming');
+        
+        setTimeout(() => {
+            const success = Math.random() > 0.2;
+            
+            if (success) {
+                addMessage('Sistema', `Conexão com ${serviceName} estabelecida com sucesso!`, 'incoming');
+            } else {
+                addMessage('Sistema', `Falha ao conectar com ${serviceName}. Tente novamente.`, 'incoming');
+            }
+        }, 2000);
+    }
+
+    // Inicializar tooltips do Bootstrap
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
+</body>
+</html>

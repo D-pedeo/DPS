@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otimização SEO - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Dashboard SEO */
+        .seo-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: var(--success-color);
+        }
+
+        .change-negative {
+            color: var(--danger-color);
+        }
+
+        /* Análise de URL */
+        .url-analysis {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .url-input {
+            flex: 1;
+            position: relative;
+        }
+
+        .url-input input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .url-input i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        /* Abas */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .tab.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Tabelas */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .score-badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .score-high {
+            background: rgba(39, 174, 96, 0.15);
+            color: var(--success-color);
+        }
+
+        .score-medium {
+            background: rgba(241, 196, 15, 0.15);
+            color: var(--warning-color);
+        }
+
+        .score-low {
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+        }
+
+        /* Gráficos */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Auditoria */
+        .audit-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .audit-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .audit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .audit-title {
+            font-weight: 600;
+        }
+
+        .audit-score {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .score-90 { background: var(--success-color); color: white; }
+        .score-80 { background: #27ae60; color: white; }
+        .score-70 { background: #f39c12; color: white; }
+        .score-60 { background: #f39c12; color: white; }
+        .score-50 { background: var(--danger-color); color: white; }
+
+        .audit-list {
+            list-style: none;
+        }
+
+        .audit-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .audit-list li:last-child {
+            border-bottom: none;
+        }
+
+        .audit-list i {
+            font-size: 0.8rem;
+        }
+
+        .fa-check-circle { color: var(--success-color); }
+        .fa-times-circle { color: var(--danger-color); }
+        .fa-exclamation-circle { color: var(--warning-color); }
+
+        /* Palavras-chave */
+        .keyword {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            background: white;
+            margin-bottom: 0.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .keyword-info {
+            flex: 1;
+        }
+
+        .keyword-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .keyword-metrics {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .keyword-position {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .position-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .position-change {
+            font-size: 0.8rem;
+        }
+
+        /* Assistente de IA */
+        .ai-assistant {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .seo-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .audit-results {
+                grid-template-columns: 1fr;
+            }
+            
+            .url-analysis {
+                flex-direction: column;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 0;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-search"></i>
+                    Otimização SEO
+                </h1>
+            </div>
+            <button class="btn btn-primary" id="newAnalysisBtn">
+                <i class="fas fa-plus"></i> Nova Análise
+            </button>
+        </div>
+
+        <!-- Análise de URL -->
+        <div class="card">
+            <div class="url-analysis">
+                <div class="url-input">
+                    <input type="text" id="urlInput" placeholder="Digite a URL para análise (ex: https://www.seusite.com)" value="https://dpedrosolucoes.com">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <button class="btn btn-primary" onclick="analyzeURL()">
+                    <i class="fas fa-search"></i> Analisar
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard de Métricas -->
+        <div class="seo-dashboard">
+            <div class="metric-card">
+                <div class="metric-value" id="scoreValue">82</div>
+                <div class="metric-title">Pontuação SEO</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>4% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="visitsValue">4.2K</div>
+                <div class="metric-title">Visitas Orgânicas</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>12% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="keywordsValue">248</div>
+                <div class="metric-title">Palavras-chave</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>8% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="positionValue">12.4</div>
+                <div class="metric-title">Posição Média</div>
+                <div class="metric-change change-negative">
+                    <i class="fas fa-arrow-down"></i> <span>2% desde o último mês</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas de Conteúdo -->
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">Visão Geral</div>
+            <div class="tab" data-tab="audit">Auditoria</div>
+            <div class="tab" data-tab="keywords">Palavras-chave</div>
+            <div class="tab" data-tab="backlinks">Backlinks</div>
+            <div class="tab" data-tab="competitors">Concorrentes</div>
+        </div>
+
+        <!-- Conteúdo da Aba Visão Geral -->
+        <div class="tab-content active" id="overview">
+            <div class="card">
+                <h2>Desempenho de Tráfego</h2>
+                <div class="chart-container">
+                    <canvas id="trafficChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Posições de Palavras-chave</h2>
+                <div class="chart-container">
+                    <canvas id="positionsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Principais Recomendações</h2>
+                <div class="audit-list">
+                    <li><i class="fas fa-exclamation-circle"></i> <span>17 páginas com meta descriptions ausentes</span></li>
+                    <li><i class="fas fa-exclamation-circle"></i> <span>23 imagens sem atributos alt</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>Velocidade de carregamento está boa (2.4s)</span></li>
+                    <li><i class="fas fa-exclamation-circle"></i> <span>5 páginas com conteúdo duplicado</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>Site é mobile-friendly</span></li>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Auditoria -->
+        <div class="tab-content" id="audit">
+            <div class="card">
+                <h2>Auditoria Técnica</h2>
+                <div class="audit-results">
+                    <div class="audit-item">
+                        <div class="audit-header">
+                            <div class="audit-title">Desempenho</div>
+                            <div class="audit-score score-90">90</div>
+                        </div>
+                        <ul class="audit-list">
+                            <li><i class="fas fa-check-circle"></i> Tempo de carregamento adequado</li>
+                            <li><i class="fas fa-check-circle"></i> JavaScript otimizado</li>
+                            <li><i class="fas fa-check-circle"></i> CSS otimizado</li>
+                            <li><i class="fas fa-exclamation-circle"></i> Imagens podem ser melhor comprimidas</li>
+                        </ul>
+                    </div>
+
+                    <div class="audit-item">
+                        <div class="audit-header">
+                            <div class="audit-title">SEO</div>
+                            <div class="audit-score score-70">70</div>
+                        </div>
+                        <ul class="audit-list">
+                            <li><i class="fas fa-check-circle"></i> Meta tags bem configuradas</li>
+                            <li><i class="fas fa-exclamation-circle"></i> Falta schema markup</li>
+                            <li><i class="fas fa-times-circle"></i> Conteúdo duplicado detectado</li>
+                            <li><i class="fas fa-exclamation-circle"></i> URLs canônicas ausentes</li>
+                        </ul>
+                    </div>
+
+                    <div class="audit-item">
+                        <div class="audit-header">
+                            <div class="audit-title">Acessibilidade</div>
+                            <div class="audit-score score-80">80</div>
+                        </div>
+                        <ul class="audit-list">
+                            <li><i class="fas fa-check-circle"></i> Contraste de cores adequado</li>
+                            <li><i class="fas fa-check-circle"></i> Navegação por teclado funcionando</li>
+                            <li><i class="fas fa-exclamation-circle"></i> Algumas imagens sem alt text</li>
+                            <li><i class="fas fa-check-circle"></i> Estrutura de cabeçalhos adequada</li>
+                        </ul>
+                    </div>
+
+                    <div class="audit-item">
+                        <div class="audit-header">
+                            <div class="audit-title">Melhores Práticas</div>
+                            <div class="audit-score score-60">60</div>
+                        </div>
+                        <ul class="audit-list">
+                            <li><i class="fas fa-check-circle"></i> HTTPS implementado</li>
+                            <li><i class="fas fa-times-circle"></i> Console de erros com mensagens</li>
+                            <li><i class="fas fa-times-circle"></i> Plugins desatualizados detectados</li>
+                            <li><i class="fas fa-check-circle"></i> Redirecionamentos adequados</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Palavras-chave -->
+        <div class="tab-content" id="keywords">
+            <div class="card">
+                <h2>Palavras-chave Monitoradas</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Palavra-chave</th>
+                                <th>Posição</th>
+                                <th>Volume</th>
+                                <th>Dificuldade</th>
+                                <th>CTR</th>
+                                <th>Tendência</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keywordsTable">
+                            <!-- Conteúdo preenchido por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Oportunidades de Palavras-chave</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Palavra-chave</th>
+                                <th>Volume</th>
+                                <th>Dificuldade</th>
+                                <th>CPC</th>
+                                <th>Potencial</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="opportunitiesTable">
+                            <!-- Conteúdo preenchido por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Backlinks -->
+        <div class="tab-content" id="backlinks">
+            <div class="card">
+                <h2>Análise de Backlinks</h2>
+                <div class="chart-container">
+                    <canvas id="backlinksChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Top Backlinks</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Domínio de Origem</th>
+                                <th>Autoridade</th>
+                                <th>Tipo</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="backlinksTable">
+                            <!-- Conteúdo preenchido por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Concorrentes -->
+        <div class="tab-content" id="competitors">
+            <div class="card">
+                <h2>Análise de Concorrentes</h2>
+                <div class="chart-container">
+                    <canvas id="competitorsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Comparativo com Concorrentes</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Concorrente</th>
+                                <th>Tráfego</th>
+                                <th>Palavras-chave</th>
+                                <th>Backlinks</th>
+                                <th>Autoridade</th>
+                                <th>Pontuação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="competitorsTable">
+                            <!-- Conteúdo preenchido por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assistente de IA -->
+        <div class="ai-assistant" onclick="openAIAssistant()">
+            <i class="fas fa-robot"></i>
+        </div>
+
+        <!-- Modal de IA -->
+        <div class="modal fade" id="aiModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fas fa-robot me-2"></i> Assistente de IA para SEO</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-label">Como posso ajudar com sua estratégia SEO?</label>
+                            <select class="form-control" id="aiQuestion">
+                                <option value="">Selecione uma opção</option>
+                                <option value="technical">Como melhorar o SEO técnico do meu site?</option>
+                                <option value="content">Como criar conteúdo otimizado para SEO?</option>
+                                <option value="keywords">Como escolher as melhores palavras-chave?</option>
+                                <option value="backlinks">Como construir uma estratégia de backlinks?</option>
+                                <option value="local">Como otimizar para SEO local?</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Ou faça sua pergunta:</label>
+                            <textarea class="form-control" id="aiCustomQuestion" rows="3" placeholder="Digite sua pergunta sobre SEO..."></textarea>
+                        </div>
+                        <div id="aiResponse" style="display: none; margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: var(--border-radius);">
+                            <h5>Resposta do Assistente:</h5>
+                            <p id="responseText"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" onclick="getAIResponse()">Obter Resposta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // DADOS DE EXEMPLO
+    // =============================================
+    const keywordsData = [
+        { keyword: "soluções em ti", position: 8, change: 2, volume: 1200, difficulty: 78, ctr: 4.2 },
+        { keyword: "serviços de cftv", position: 3, change: -1, volume: 890, difficulty: 65, ctr: 7.8 },
+        { keyword: "sistema de segurança", position: 12, change: 3, volume: 1500, difficulty: 82, ctr: 3.5 },
+        { keyword: "pdv angola", position: 5, change: 0, volume: 640, difficulty: 58, ctr: 6.1 },
+        { keyword: "marketing digital luanda", position: 18, change: 4, volume: 480, difficulty: 72, ctr: 2.8 },
+        { keyword: "controle de acesso", position: 9, change: -2, volume: 920, difficulty: 69, ctr: 5.2 },
+        { keyword: "serviços cloud angola", position: 25, change: 5, volume: 350, difficulty: 63, ctr: 2.1 }
+    ];
+
+    const opportunitiesData = [
+        { keyword: "informática luanda", volume: 720, difficulty: 54, cpc: 2.40, potential: "Alto" },
+        { keyword: "manutenção de computadores", volume: 680, difficulty: 49, cpc: 1.80, potential: "Médio" },
+        { keyword: "redes de computadores", volume: 850, difficulty: 62, cpc: 2.10, potential: "Alto" },
+        { keyword: "software angola", volume: 420, difficulty: 45, cpc: 3.20, potential: "Médio" },
+        { keyword: "servidores empresas", volume: 310, difficulty: 58, cpc: 4.50, potential: "Alto" }
+    ];
+
+    const backlinksData = [
+        { domain: "tech-africa.com", authority: 78, type: "Guest Post", date: "2023-07-15", status: "Ativo" },
+        { domain: "luandadigital.ao", authority: 65, type: "Diretório", date: "2023-06-22", status: "Ativo" },
+        { domain: "angolatechforum.com", authority: 82, type: "Mencionamento", date: "2023-08-03", status: "Ativo" },
+        { domain: "africa-business.com", authority: 88, type: "Guest Post", date: "2023-05-18", status: "Perdido" },
+        { domain: "secure-africa.org", authority: 75, type: "Recurso", date: "2023-07-30", status: "Ativo" }
+    ];
+
+    const competitorsData = [
+        { name: "D.Pedro Soluções", traffic: 4200, keywords: 248, backlinks: 184, authority: 42, score: 82 },
+        { name: "TechSolutions AO", traffic: 6800, keywords: 385, backlinks: 276, authority: 58, score: 76 },
+        { name: "SecureAfrica", traffic: 3500, keywords: 192, backlinks: 145, authority: 38, score: 71 },
+        { name: "Luanda Digital", traffic: 5200, keywords: 275, backlinks: 210, authority: 47, score: 79 },
+        { name: "Angola Tech", traffic: 2900, keywords: 168, backlinks: 125, authority: 35, score: 68 }
+    ];
+
+    // =============================================
+    // INICIALIZAÇÃO DO SISTEMA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar abas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Carregar dados iniciais
+        renderKeywordsTable();
+        renderOpportunitiesTable();
+        renderBacklinksTable();
+        renderCompetitorsTable();
+        initCharts();
+
+        // Configurar evento de análise de URL
+        document.getElementById('urlInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') analyzeURL();
+        });
+    });
+
+    // =============================================
+    // FUNÇÕES DE ANÁLISE
+    // =============================================
+    function analyzeURL() {
+        const urlInput = document.getElementById('urlInput');
+        const url = urlInput.value.trim();
+        
+        if (!url) {
+            alert('Por favor, digite uma URL para análise');
+            return;
+        }
+        
+        // Validar URL
+        if (!isValidURL(url)) {
+            alert('Por favor, digite uma URL válida (ex: https://www.seusite.com)');
+            return;
+        }
+        
+        // Simular análise (em um sistema real, isso faria chamadas à API)
+        simulateAnalysis(url);
+    }
+
+    function isValidURL(url) {
+        try {
+            new URL(url);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function simulateAnalysis(url) {
+        // Mostrar loading
+        const analyzeBtn = document.querySelector('.url-analysis .btn');
+        const originalText = analyzeBtn.innerHTML;
+        analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analisando...';
+        analyzeBtn.disabled = true;
+        
+        // Simular tempo de análise
+        setTimeout(() => {
+            // Atualizar métricas com base na URL
+            document.getElementById('scoreValue').textContent = Math.floor(Math.random() * 20) + 75;
+            document.getElementById('visitsValue').textContent = (Math.floor(Math.random() * 5) + 2) + 'K';
+            document.getElementById('keywordsValue').textContent = Math.floor(Math.random() * 100) + 200;
+            document.getElementById('positionValue').textContent = (Math.random() * 5 + 10).toFixed(1);
+            
+            // Atualizar tabelas
+            renderKeywordsTable();
+            renderOpportunitiesTable();
+            renderBacklinksTable();
+            renderCompetitorsTable();
+            
+            // Atualizar gráficos
+            initCharts();
+            
+            // Restaurar botão
+            analyzeBtn.innerHTML = originalText;
+            analyzeBtn.disabled = false;
+            
+            // Mostrar mensagem de sucesso
+            alert(`Análise de ${url} concluída com sucesso!`);
+        }, 2000);
+    }
+
+    // =============================================
+    // RENDERIZAÇÃO DE TABELAS
+    // =============================================
+    function renderKeywordsTable() {
+        const tableBody = document.getElementById('keywordsTable');
+        tableBody.innerHTML = '';
+        
+        keywordsData.forEach(item => {
+            const changeIcon = item.change > 0 ? 'arrow-up' : (item.change < 0 ? 'arrow-down' : 'minus');
+            const changeClass = item.change > 0 ? 'change-positive' : (item.change < 0 ? 'change-negative' : '');
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.keyword}</td>
+                <td>
+                    <div class="keyword-position">
+                        <span class="position-value">${item.position}</span>
+                        <span class="position-change ${changeClass}">
+                            <i class="fas fa-${changeIcon}"></i> ${Math.abs(item.change)}
+                        </span>
+                    </div>
+                </td>
+                <td>${item.volume.toLocaleString()}/mês</td>
+                <td>
+                    <div class="score-badge ${getDifficultyClass(item.difficulty)}">
+                        ${item.difficulty}%
+                    </div>
+                </td>
+                <td>${item.ctr}%</td>
+                <td>
+                    <span class="${changeClass}">
+                        <i class="fas fa-${changeIcon}"></i>
+                    </span>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+
+    function renderOpportunitiesTable() {
+        const tableBody = document.getElementById('opportunitiesTable');
+        tableBody.innerHTML = '';
+        
+        opportunitiesData.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.keyword}</td>
+                <td>${item.volume.toLocaleString()}/mês</td>
+                <td>
+                    <div class="score-badge ${getDifficultyClass(item.difficulty)}">
+                        ${item.difficulty}%
+                    </div>
+                </td>
+                <td>$${item.cpc.toFixed(2)}</td>
+                <td>
+                    <div class="score-badge ${getPotentialClass(item.potential)}">
+                        ${item.potential}
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus"></i> Adicionar
+                    </button>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+
+    function renderBacklinksTable() {
+        const tableBody = document.getElementById('backlinksTable');
+        tableBody.innerHTML = '';
+        
+        backlinksData.forEach(item => {
+            const statusClass = item.status === 'Ativo' ? 'score-high' : 'score-low';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.domain}</td>
+                <td>${item.authority}</td>
+                <td>${item.type}</td>
+                <td>${formatDate(item.date)}</td>
+                <td>
+                    <div class="score-badge ${statusClass}">
+                        ${item.status}
+                    </div>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+
+    function renderCompetitorsTable() {
+        const tableBody = document.getElementById('competitorsTable');
+        tableBody.innerHTML = '';
+        
+        competitorsData.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.traffic.toLocaleString()}</td>
+                <td>${item.keywords}</td>
+                <td>${item.backlinks}</td>
+                <td>${item.authority}</td>
+                <td>
+                    <div class="score-badge ${getScoreClass(item.score)}">
+                        ${item.score}
+                    </div>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+
+    // =============================================
+    // GRÁFICOS
+    // =============================================
+    function initCharts() {
+        initTrafficChart();
+        initPositionsChart();
+        initBacklinksChart();
+        initCompetitorsChart();
+    }
+
+    function initTrafficChart() {
+        const ctx = document.getElementById('trafficChart').getContext('2d');
+        
+        // Dados de exemplo
+        const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+        const organic = [3200, 3500, 3700, 3900, 4100, 4300, 4200, 4400, 4600, 4800, 5000, 5200];
+        const direct = [1800, 1900, 2100, 2000, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900];
+        const referral = [800, 850, 900, 950, 1000, 1100, 1050, 1150, 1200, 1250, 1300, 1350];
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [
+                    {
+                        label: 'Tráfego Orgânico',
+                        data: organic,
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Tráfego Direto',
+                        data: direct,
+                        borderColor: '#2ecc71',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Tráfego de Referência',
+                        data: referral,
+                        borderColor: '#9b59b6',
+                        backgroundColor: 'rgba(155, 89, 182, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Evolução do Tráfego (últimos 12 meses)'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function initPositionsChart() {
+        const ctx = document.getElementById('positionsChart').getContext('2d');
+        
+        // Dados de exemplo
+        const positions = ['Top 3', 'Top 5', 'Top 10', 'Top 20', 'Top 50', 'Top 100'];
+        const counts = [12, 18, 35, 62, 98, 23];
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: positions,
+                datasets: [{
+                    label: 'Palavras-chave por Posição',
+                    data: counts,
+                    backgroundColor: [
+                        'rgba(46, 204, 113, 0.7)',
+                        'rgba(52, 152, 219, 0.7)',
+                        'rgba(155, 89, 182, 0.7)',
+                        'rgba(241, 196, 15, 0.7)',
+                        'rgba(243, 156, 18, 0.7)',
+                        'rgba(231, 76, 60, 0.7)'
+                    ],
+                    borderColor: [
+                        '#27ae60',
+                        '#2980b9',
+                        '#8e44ad',
+                        '#f1c40f',
+                        '#f39c12',
+                        '#e74c3c'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Distribuição de Posições no Google'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function initBacklinksChart() {
+        const ctx = document.getElementById('backlinksChart').getContext('2d');
+        
+        // Dados de exemplo
+        const types = ['Guest Posts', 'Diretórios', 'Mencionamentos', 'Recursos', 'Comentários'];
+        const counts = [65, 42, 38, 27, 12];
+        
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: types,
+                datasets: [{
+                    data: counts,
+                    backgroundColor: [
+                        '#3498db',
+                        '#2ecc71',
+                        '#9b59b6',
+                        '#f1c40f',
+                        '#e74c3c'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Distribuição de Backlinks por Tipo'
+                    },
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+    }
+
+    function initCompetitorsChart() {
+        const ctx = document.getElementById('competitorsChart').getContext('2d');
+        
+        // Dados de exemplo
+        const competitors = competitorsData.map(c => c.name);
+        const authority = competitorsData.map(c => c.authority);
+        const traffic = competitorsData.map(c => c.traffic / 1000);
+        
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Autoridade', 'Tráfego', 'Palavras-chave', 'Backlinks', 'Pontuação'],
+                datasets: [
+                    {
+                        label: 'D.Pedro Soluções',
+                        data: [42, 4.2, 85, 70, 82],
+                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                        borderColor: '#3498db',
+                        pointBackgroundColor: '#3498db'
+                    },
+                    {
+                        label: 'Maior Concorrente',
+                        data: [58, 6.8, 95, 85, 76],
+                        backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                        borderColor: '#e74c3c',
+                        pointBackgroundColor: '#e74c3c'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Comparativo com Concorrente Principal'
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+    }
+
+    // =============================================
+    // FUNÇÕES AUXILIARES
+    // =============================================
+    function getDifficultyClass(difficulty) {
+        if (difficulty >= 80) return 'score-low';
+        if (difficulty >= 60) return 'score-medium';
+        return 'score-high';
+    }
+
+    function getPotentialClass(potential) {
+        if (potential === 'Alto') return 'score-high';
+        if (potential === 'Médio') return 'score-medium';
+        return 'score-low';
+    }
+
+    function getScoreClass(score) {
+        if (score >= 80) return 'score-high';
+        if (score >= 60) return 'score-medium';
+        return 'score-low';
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR');
+    }
+
+    // =============================================
+    // ASSISTENTE DE IA
+    // =============================================
+    function openAIAssistant() {
+        const modal = new bootstrap.Modal(document.getElementById('aiModal'));
+        modal.show();
+    }
+
+    function getAIResponse() {
+        const questionType = document.getElementById('aiQuestion').value;
+        const customQuestion = document.getElementById('aiCustomQuestion').value.trim();
+        
+        if (!questionType && !customQuestion) {
+            alert('Por favor, selecione uma opção ou digite sua pergunta');
+            return;
+        }
+        
+        let response = '';
+        
+        if (questionType) {
+            switch(questionType) {
+                case 'technical':
+                    response = "Para melhorar o SEO técnico: 1) Garanta que seu site seja rápido (otimize imagens, use CDN); 2) Implemente SSL; 3) Use URLs amigáveis; 4) Crie um sitemap XML; 5) Configure robots.txt adequadamente; 6) Elimine erros 404; 7) Implemente schema markup; 8) Garanta que o site seja mobile-friendly.";
+                    break;
+                case 'content':
+                    response = "Para criar conteúdo otimizado: 1) Pesquise palavras-chave relevantes; 2) Crie conteúdo original e de qualidade; 3) Use palavras-chave no título, URL e primeiro parágrafo; 4) Estruture o conteúdo com cabeçalhos (H1, H2, H3); 5) Use imagens com alt text; 6) Incorpore links internos; 7) Escreva meta descriptions atraentes; 8) Atualize conteúdo regularmente.";
+                    break;
+                case 'keywords':
+                    response = "Para escolher melhores palavras-chave: 1) Use ferramentas como Google Keyword Planner; 2) Analise a intenção de busca; 3) Considere volume e dificuldade; 4) Inclua palavras-chave de cauda longa; 5) Analise as palavras-chave dos concorrentes; 6) Agrupe palavras-chave semanticamente relacionadas; 7) Considere a sazonalidade; 8) Monitore o desempenho e ajuste a estratégia.";
+                    break;
+                case 'backlinks':
+                    response = "Para construir backlinks: 1) Crie conteúdo linkável (estudos, infográficos); 2) Faça guest posting em sites relevantes; 3) Participe de diretórios locais; 4) Use técnicas de link building quebrado; 5) Converse com parceiros para menções; 6) Participe de fóruns e comunidades; 7) Use redes sociais para promover conteúdo; 8) Monitore backlinks e elimine os tóxicos.";
+                    break;
+                case 'local':
+                    response = "Para otimizar para SEO local: 1) Crie uma página Google Meu Negócio; 2) Otimize para mobile; 3) Inclua informações de localização nas páginas; 4) Use palavras-chave com termos locais; 5) Incentive avaliações de clientes; 6) Participe de diretórios locais; 7) Use schema markup local; 8) Crie conteúdo relevante para a comunidade local.";
+                    break;
+            }
+        } else {
+            // Resposta genérica para perguntas personalizadas
+            const tips = [
+                "Foque em criar conteúdo de qualidade que responda às intenções de busca dos usuários.",
+                "A velocidade de carregamento é um fator crucial de rankeamento no Google.",
+                "Links internos bem estruturados ajudam os motores de busca a entenderem sua site structure.",
+                "O mobile-friendliness é essencial já que a maioria das buscas vem de dispositivos móveis.",
+                "Use heading tags (H1, H2, H3) para estruturar seu conteúdo de forma hierárquica.",
+                "Meta descriptions bem escritas podem melhorar significativamente seu CTR nos resultados de busca.",
+                "Backlinks de sites com alta autoridade são um dos fatores mais importantes para SEO.",
+                "Conteúdo fresco e atualizado regularmente é favorecido pelos algoritmos de busca."
+            ];
+            
+            response = `Sua pergunta "${customQuestion}" é relevante. Uma dica importante: ${tips[Math.floor(Math.random() * tips.length)]} Deseja mais informações sobre algum aspecto específico?`;
+        }
+        
+        document.getElementById('responseText').textContent = response;
+        document.getElementById('aiResponse').style.display = 'block';
+    }
+
+    // =============================================
+    // API PARA OUTRAS PÁGINAS
+    // =============================================
+    window.DPS_SEO = {
+        analyzePage: function(url) {
+            document.getElementById('urlInput').value = url;
+            analyzeURL();
+        },
+        
+        getKeywords: function() {
+            return keywordsData;
+        },
+        
+        getSEOScore: function() {
+            return parseInt(document.getElementById('scoreValue').textContent);
+        }
+    };
+    </script>
+</body>
+</html>

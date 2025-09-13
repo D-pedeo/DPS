@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenção - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ===== VARIÁVEIS DE CORES E ESTILOS ===== */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        /* ===== ESTILOS GERAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-speed);
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - var(--header-height));
+            padding-top: var(--header-height);
+        }
+
+        /* ===== CABEÇALHO ===== */
+        .kanawa-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .top-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .top-icons .menu-item {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+        }
+
+        .top-icons .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* ===== BARRA LATERAL ===== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--box-shadow);
+            overflow-y: auto;
+            transition: all var(--transition-speed);
+            z-index: 900;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            color: #555;
+            transition: all var(--transition-speed);
+            border-left: 4px solid transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .menu-item:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+
+        .menu-item.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        /* ===== CONTEÚDO PRINCIPAL ===== */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        /* ===== WIDGETS DO DASHBOARD ===== */
+        .dashboard-widget {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform var(--transition-speed);
+        }
+
+        .dashboard-widget:hover {
+            transform: translateY(-5px);
+        }
+
+        .widget-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.3rem;
+        }
+
+        .widget-icon i {
+            color: white;
+        }
+
+        .widget-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .widget-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* ===== TABELAS ===== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* ===== BADGES DE STATUS ===== */
+        .status-badge {
+            padding: 0.35rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: rgba(243, 156, 18, 0.15);
+            color: var(--warning-color);
+        }
+
+        .status-in-progress {
+            background-color: rgba(52, 152, 219, 0.15);
+            color: var(--secondary-color);
+        }
+
+        .status-completed {
+            background-color: rgba(39, 174, 96, 0.15);
+            color: var(--success-color);
+        }
+
+        .status-cancelled {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+        }
+
+        /* ===== BARRAS DE PROGRESSO ===== */
+        .progress-container {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* ===== BOTÕES ===== */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        /* ===== NOTIFICAÇÕES ===== */
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== ASSISTENTE DE IA ===== */
+        .ai-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* ===== BOTÃO DE MODO ESCURO ===== */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        /* ===== GRÁFICOS ===== */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* ===== DROPDOWNS ===== */
+        #notificationsDropdown, #userMenuDropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            width: 320px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        #userMenuDropdown {
+            width: 200px;
+        }
+
+        .notification-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ===== FORMULÁRIOS ===== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        /* ===== CHAT ===== */
+        .chat-container {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            max-width: 80%;
+            position: relative;
+        }
+
+        .bot-message {
+            background-color: white;
+            align-self: flex-start;
+            border: 1px solid #eee;
+        }
+
+        .user-message {
+            background-color: var(--secondary-color);
+            color: white;
+            align-self: flex-end;
+        }
+
+        /* ===== MODO ESCURO ===== */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .sidebar,
+        body.dark-mode .card,
+        body.dark-mode .dashboard-widget,
+        body.dark-mode .data-table th {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .data-table tr:hover,
+        body.dark-mode .menu-item:hover {
+            background-color: #3d3d3d;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #3d3d3d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .menu-item {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode h1, 
+        body.dark-mode h2, 
+        body.dark-mode h3, 
+        body.dark-mode h4, 
+        body.dark-mode h5, 
+        body.dark-mode h6 {
+            color: #e0e0e0;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 1200px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                height: calc(100vh - var(--header-height));
+                top: var(--header-height);
+                z-index: 999;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kanawa-header {
+                padding: 0 1rem;
+            }
+            
+            .top-icons .menu-item span {
+                display: none;
+            }
+            
+            .top-icons .menu-item {
+                font-size: 1.2rem;
+                padding: 0.5rem;
+            }
+            
+            .logo span {
+                font-size: 1.1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .dashboard-widget {
+                min-width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .ai-assistant, .dark-mode-toggle {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .dark-mode-toggle {
+                bottom: 6rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .kanawa-header {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding-top: 90px;
+            }
+            
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="kanawa-header">
+        <div class="logo">
+            <a href='DPS.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+            <span>D.Pedro Soluções</span>
+        </div>
+        <div class="top-icons">
+            <a href="index.html" class="menu-item"><i class="fas fa-home"></i> <span>Página Principal</span></a>
+            <a href="martketing/marketing.html" class="menu-item"><i class="fas fa-users"></i> <span>MARKETING DIGITAL</span></a>
+            <a href="contratos.html" class="menu-item"><i class="fas fa-file-contract"></i> <span>Contratos</span></a>
+            <a href="cursos.html" class="menu-item"><i class="fas fa-graduation-cap"></i> <span>Cursos</span></a>
+            <a href="servicos.html" class="menu-item"><i class="fas fa-briefcase"></i> <span>Serviços</span></a>
+            <a href="lojas.html" class="menu-item"><i class="fas fa-store"></i> <span>Lojas</span></a>
+            <a href="download.html" class="menu-item"><i class="fas fa-download"></i> <span>Aplicativos</span></a>
+            
+            <div style="position:relative;">
+                <a href="#" id="notificationsBtn" style="color:white;position:relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                <div id="notificationsDropdown">
+                    <h5 style="margin-bottom:1rem;">Notificações</h5>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Nova solicitação de manutenção</strong></p>
+                        <small>Há 2 horas</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Manutenção agendada para amanhã</strong></p>
+                        <small>Hoje, 09:30</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Peça de reposição disponível</strong></p>
+                        <small>Ontem, 16:45</small>
+                    </div>
+                    <a href="#" style="display:block;text-align:center;margin-top:1rem;color:var(--secondary-color);">Ver todas</a>
+                </div>
+            </div>
+            
+            <div style="position:relative;">
+                <a href="#" id="userMenuBtn" style="color:white;display:flex;align-items:center;">
+                    <img src="https://i.postimg.cc/7YQvLZxX/user-avatar.jpg" alt="User" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
+                    <span>Daniel Pedro</span>
+                </a>
+                <div id="userMenuDropdown">
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-user"></i> Perfil</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-cog"></i> Configurações</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <a href="tokens-ia.html" class="menu-item"><i class="fas fa-robot"></i> Tokens de IA</a>
+            <a href="recursos.html" class="menu-item"><i class="fas fa-box-open"></i> Recursos Disponíveis</a>
+            <a href="atualizacoes.html" class="menu-item"><i class="fas fa-sync-alt"></i> Atualizações/Postagens</a>
+            <a href="notificacoes.html" class="menu-item"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="loja-virtual.html" class="menu-item"><i class="fas fa-shopping-cart"></i> Loja</a>
+            <a href="comunicacao.html" class="menu-item"><i class="fas fa-comments"></i> Meios de comunicação</a>
+            <a href="seo.html" class="menu-item"><i class="fas fa-search-plus"></i> Otimização SEO</a>
+            <a href="recursos-indisponiveis.html" class="menu-item"><i class="fas fa-ban"></i> Recursos Indisponíveis</a>
+            <a href="modelos.html" class="menu-item"><i class="fas fa-clone"></i> Modelos</a>
+            <a href="cardapio.html" class="menu-item"><i class="fas fa-utensils"></i> Cardápio</a>
+            <a href="analise.html" class="menu-item"><i class="fas fa-chart-bar"></i> Análise</a>
+            <a href="assinantes.html" class="menu-item"><i class="fas fa-users"></i> Assinantes</a>
+            <a href="dominio.html" class="menu-item"><i class="fas fa-globe"></i> Domínio</a>
+            <a href="integracao.html" class="menu-item"><i class="fas fa-plug"></i> Integração</a>
+            <a href="manutencao.html" class="menu-item active"><i class="fas fa-tools"></i> Manutenção</a>
+            <a href="indicar.html" class="menu-item"><i class="fas fa-gift"></i> Indique e ganhe</a>
+            <a href="ajuda.html" class="menu-item"><i class="fas fa-question-circle"></i> Sobre e ajuda</a>
+            <a href="sair.html" class="menu-item"><i class="fas fa-sign-out-alt"></i> Produtos</a>
+        </aside>
+
+        <main class="content">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-tools"></i>
+                    Sistema de Manutenção
+                </h1>
+                <div>
+                    <button class="btn btn-primary" id="newMaintenanceBtn">
+                        <i class="fas fa-plus"></i> Nova Solicitação
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Dashboard Widgets -->
+            <div class="row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--warning-color);">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="widget-value" id="pendingCount">0</div>
+                    <div class="widget-title">Pendentes</div>
+                    <small style="color: var(--warning-color);">
+                        <i class="fas fa-arrow-up"></i> <span id="pendingGrowth">0</span>% este mês
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--secondary-color);">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="widget-value" id="progressCount">0</div>
+                    <div class="widget-title">Em Andamento</div>
+                    <small style="color: var(--secondary-color);">
+                        <i class="fas fa-arrow-up"></i> <span id="progressGrowth">0</span>% este mês
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--success-color);">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="widget-value" id="completedCount">0</div>
+                    <div class="widget-title">Concluídas</div>
+                    <small style="color: var(--success-color);">
+                        <i class="fas fa-arrow-up"></i> <span id="completedGrowth">0</span>% este mês
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--danger-color);">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="widget-value" id="cancelledCount">0</div>
+                    <div class="widget-title">Canceladas</div>
+                    <small style="color: var(--danger-color);">
+                        <i class="fas fa-arrow-down"></i> <span id="cancelledGrowth">0</span>% este mês
+                    </small>
+                </div>
+            </div>
+            
+            <!-- Filtros -->
+            <div class="card">
+                <h2>Filtros</h2>
+                <div class="row" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <div class="form-group">
+                            <label for="statusFilter" class="form-label">Status</label>
+                            <select class="form-control" id="statusFilter">
+                                <option value="all">Todos</option>
+                                <option value="pending">Pendente</option>
+                                <option value="in-progress">Em Andamento</option>
+                                <option value="completed">Concluído</option>
+                                <option value="cancelled">Cancelado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <div class="form-group">
+                            <label for="priorityFilter" class="form-label">Prioridade</label>
+                            <select class="form-control" id="priorityFilter">
+                                <option value="all">Todas</option>
+                                <option value="low">Baixa</option>
+                                <option value="medium">Média</option>
+                                <option value="high">Alta</option>
+                                <option value="urgent">Urgente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <div class="form-group">
+                            <label for="dateFilter" class="form-label">Data</label>
+                            <input type="date" class="form-control" id="dateFilter">
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 200px; display: flex; align-items: flex-end;">
+                        <button class="btn btn-primary" id="applyFiltersBtn" style="width: 100%;">
+                            <i class="fas fa-filter"></i> Aplicar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tabela de Manutenções -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2>Solicitações de Manutenção</h2>
+                    <div>
+                        <button class="btn btn-secondary" id="exportBtn">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Equipamento</th>
+                                <th>Problema</th>
+                                <th>Prioridade</th>
+                                <th>Status</th>
+                                <th>Data</th>
+                                <th>Técnico</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="maintenanceTableBody">
+                            <!-- Manutenções serão carregadas via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+                    <div style="color: #666; font-size: 0.9rem;">
+                        Mostrando <span id="maintenanceShowing">0</span> de <span id="totalMaintenance">0</span> solicitações
+                    </div>
+                    <div>
+                        <button class="btn btn-sm" id="prevPageBtn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="btn btn-sm" id="page1Btn" style="margin-left: 0.3rem; background-color: var(--secondary-color); color: white;">
+                            1
+                        </button>
+                        <button class="btn btn-sm" id="page2Btn" style="margin-left: 0.3rem;">
+                            2
+                        </button>
+                        <button class="btn btn-sm" id="page3Btn" style="margin-left: 0.3rem;">
+                            3
+                        </button>
+                        <button class="btn btn-sm" id="nextPageBtn" style="margin-left: 0.3rem;">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Calendário de Manutenções -->
+            <div class="card">
+                <h2>Calendário de Manutenções</h2>
+                <div id="calendar" style="height: 400px; margin-top: 1.5rem;">
+                    <!-- Calendário será carregado via JavaScript -->
+                    <div id="calendarPlaceholder" style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-calendar-alt" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p>Calendário de manutenções será carregado aqui</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Assistant Button -->
+    <div class="ai-assistant">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Modal para Adicionar/Editar Manutenção -->
+    <div class="modal fade" id="maintenanceModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="maintenanceModalTitle">Nova Solicitação de Manutenção</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="maintenanceForm">
+                        <input type="hidden" id="maintenanceId">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="maintenanceClient" class="form-label">Cliente *</label>
+                                    <select class="form-control" id="maintenanceClient" required>
+                                        <option value="">Selecione um cliente</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="maintenanceEquipment" class="form-label">Equipamento *</label>
+                                    <input type="text" class="form-control" id="maintenanceEquipment" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="maintenanceProblem" class="form-label">Problema Relatado *</label>
+                                    <textarea class="form-control" id="maintenanceProblem" rows="3" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="maintenanceDiagnosis" class="form-label">Diagnóstico Técnico</label>
+                                    <textarea class="form-control" id="maintenanceDiagnosis" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="maintenancePriority" class="form-label">Prioridade *</label>
+                                    <select class="form-control" id="maintenancePriority" required>
+                                        <option value="low">Baixa</option>
+                                        <option value="medium" selected>Média</option>
+                                        <option value="high">Alta</option>
+                                        <option value="urgent">Urgente</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="maintenanceStatus" class="form-label">Status *</label>
+                                    <select class="form-control" id="maintenanceStatus" required>
+                                        <option value="pending" selected>Pendente</option>
+                                        <option value="in-progress">Em Andamento</option>
+                                        <option value="completed">Concluído</option>
+                                        <option value="cancelled">Cancelado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="maintenanceTechnician" class="form-label">Técnico</label>
+                                    <select class="form-control" id="maintenanceTechnician">
+                                        <option value="">Selecione um técnico</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="maintenanceDate" class="form-label">Data de Solicitação *</label>
+                                    <input type="date" class="form-control" id="maintenanceDate" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="maintenanceDeadline" class="form-label">Prazo Estimado</label>
+                                    <input type="date" class="form-control" id="maintenanceDeadline">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="maintenanceSolution" class="form-label">Solução Aplicada</label>
+                            <textarea class="form-control" id="maintenanceSolution" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="maintenanceCost" class="form-label">Custo (R$)</label>
+                            <input type="number" class="form-control" id="maintenanceCost" step="0.01" min="0">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="saveMaintenanceBtn">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Chat Modal -->
+    <div class="modal fade" id="aiAssistantModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-robot"></i> Assistente de IA - Manutenção
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="chat-container" id="aiChatContainer">
+                        <div class="message bot-message">
+                            Olá! Sou seu assistente de IA para o sistema de manutenção. Como posso ajudá-lo hoje?
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="aiChatInput" placeholder="Digite sua pergunta...">
+                        <button class="btn btn-primary" id="aiSendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dados de exemplo para demonstração
+        const sampleMaintenances = [
+            {
+                id: "MT001",
+                client: "Restaurante Sabor Mineiro",
+                equipment: "Freezer Horizontal",
+                problem: "Não está gelando adequadamente",
+                priority: "urgent",
+                status: "in-progress",
+                date: "2023-10-15",
+                technician: "Carlos Silva",
+                diagnosis: "Compressor com sinais de desgaste",
+                solution: "",
+                cost: 0
+            },
+            {
+                id: "MT002",
+                client: "Padaria Pão Quente",
+                equipment: "Forno Elétrico Industrial",
+                problem: "Temperatura irregular",
+                priority: "high",
+                status: "pending",
+                date: "2023-10-16",
+                technician: "",
+                diagnosis: "",
+                solution: "",
+                cost: 0
+            },
+            {
+                id: "MT003",
+                client: "Mercado Preço Baixo",
+                equipment: "Balança Eletrônica",
+                problem: "Tela não liga",
+                priority: "medium",
+                status: "completed",
+                date: "2023-10-10",
+                technician: "Ana Costa",
+                diagnosis: "Problema na fonte de alimentação",
+                solution: "Substituição da fonte danificada",
+                cost: 120.50
+            },
+            {
+                id: "MT004",
+                client: "Lanchonete Rápido Sabor",
+                equipment: "Liquidificador Industrial",
+                problem: "Faz barulho excessivo",
+                priority: "medium",
+                status: "in-progress",
+                date: "2023-10-14",
+                technician: "João Mendes",
+                diagnosis: "Rolamentos desgastados",
+                solution: "",
+                cost: 0
+            },
+            {
+                id: "MT005",
+                client: "Hotel Conforto Máximo",
+                equipment: "Ar Condicionado Central",
+                problem: "Vazamento de água",
+                priority: "high",
+                status: "pending",
+                date: "2023-10-17",
+                technician: "",
+                diagnosis: "",
+                solution: "",
+                cost: 0
+            },
+            {
+                id: "MT006",
+                client: "Restaurante Mar e Céu",
+                equipment: "Fogão Industrial",
+                problem: "Queimador não acende",
+                priority: "low",
+                status: "cancelled",
+                date: "2023-10-05",
+                technician: "Carlos Silva",
+                diagnosis: "Sistema de ignição danificado",
+                solution: "",
+                cost: 0
+            },
+            {
+                id: "MT007",
+                client: "Cafeteria Aroma Divino",
+                equipment: "Máquina de Café Expresso",
+                problem: "Pressão insuficiente",
+                priority: "high",
+                status: "completed",
+                date: "2023-10-12",
+                technician: "Ana Costa",
+                diagnosis: "Entupimento no sistema de água",
+                solution: "Limpeza completa do sistema e substituição de filtros",
+                cost: 89.90
+            }
+        ];
+
+        const sampleClients = [
+            { id: 1, name: "Restaurante Sabor Mineiro" },
+            { id: 2, name: "Padaria Pão Quente" },
+            { id: 3, name: "Mercado Preço Baixo" },
+            { id: 4, name: "Lanchonete Rápido Sabor" },
+            { id: 5, name: "Hotel Conforto Máximo" },
+            { id: 6, name: "Restaurante Mar e Céu" },
+            { id: 7, name: "Cafeteria Aroma Divino" }
+        ];
+
+        const sampleTechnicians = [
+            { id: 1, name: "Carlos Silva" },
+            { id: 2, name: "Ana Costa" },
+            { id: 3, name: "João Mendes" },
+            { id: 4, name: "Maria Oliveira" }
+        ];
+
+        // Funções de inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar dados
+            initData();
+            
+            // Inicializar eventos
+            initEvents();
+            
+            // Carregar dados iniciais
+            loadMaintenances();
+            updateDashboard();
+            
+            // Preencher selects do formulário
+            populateSelects();
+        });
+
+        // Inicializar dados no localStorage se necessário
+        function initData() {
+            if (!localStorage.getItem('maintenances')) {
+                localStorage.setItem('maintenances', JSON.stringify(sampleMaintenances));
+            }
+            
+            if (!localStorage.getItem('clients')) {
+                localStorage.setItem('clients', JSON.stringify(sampleClients));
+            }
+            
+            if (!localStorage.getItem('technicians')) {
+                localStorage.setItem('technicians', JSON.stringify(sampleTechnicians));
+            }
+        }
+
+        // Inicializar eventos
+        function initEvents() {
+            // Botão de nova manutenção
+            document.getElementById('newMaintenanceBtn').addEventListener('click', function() {
+                document.getElementById('maintenanceModalTitle').textContent = 'Nova Solicitação de Manutenção';
+                document.getElementById('maintenanceId').value = '';
+                document.getElementById('maintenanceForm').reset();
+                
+                // Definir data atual como padrão
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('maintenanceDate').value = today;
+                
+                // Abrir modal
+                const modal = new bootstrap.Modal(document.getElementById('maintenanceModal'));
+                modal.show();
+            });
+            
+            // Salvar manutenção
+            document.getElementById('saveMaintenanceBtn').addEventListener('click', function() {
+                saveMaintenance();
+            });
+            
+            // Botão de filtros
+            document.getElementById('applyFiltersBtn').addEventListener('click', function() {
+                loadMaintenances();
+            });
+            
+            // Botão de exportar
+            document.getElementById('exportBtn').addEventListener('click', function() {
+                alert('Funcionalidade de exportação será implementada em breve!');
+            });
+            
+            // Notificações dropdown
+            document.getElementById('notificationsBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('notificationsDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Fechar outros dropdowns
+                document.getElementById('userMenuDropdown').style.display = 'none';
+            });
+            
+            // User menu dropdown
+            document.getElementById('userMenuBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('userMenuDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Fechar outros dropdowns
+                document.getElementById('notificationsDropdown').style.display = 'none';
+            });
+            
+            // Fechar dropdowns ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#notificationsBtn') && !e.target.closest('#notificationsDropdown')) {
+                    document.getElementById('notificationsDropdown').style.display = 'none';
+                }
+                
+                if (!e.target.closest('#userMenuBtn') && !e.target.closest('#userMenuDropdown')) {
+                    document.getElementById('userMenuDropdown').style.display = 'none';
+                }
+            });
+            
+            // Dark mode toggle
+            document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                const icon = this.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Verificar preferência de modo escuro
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('.dark-mode-toggle i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+            
+            // AI Assistant
+            document.querySelector('.ai-assistant').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('aiAssistantModal'));
+                modal.show();
+            });
+            
+            // Enviar mensagem para o assistente de IA
+            document.getElementById('aiSendBtn').addEventListener('click', function() {
+                sendAIMessage();
+            });
+            
+            document.getElementById('aiChatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendAIMessage();
+                }
+            });
+        }
+
+        // Popular selects do formulário
+        function populateSelects() {
+            const clients = JSON.parse(localStorage.getItem('clients'));
+            const technicians = JSON.parse(localStorage.getItem('technicians'));
+            
+            const clientSelect = document.getElementById('maintenanceClient');
+            const technicianSelect = document.getElementById('maintenanceTechnician');
+            
+            // Limpar selects
+            clientSelect.innerHTML = '<option value="">Selecione um cliente</option>';
+            technicianSelect.innerHTML = '<option value="">Selecione um técnico</option>';
+            
+            // Popular clientes
+            clients.forEach(client => {
+                const option = document.createElement('option');
+                option.value = client.id;
+                option.textContent = client.name;
+                clientSelect.appendChild(option);
+            });
+            
+            // Popular técnicos
+            technicians.forEach(technician => {
+                const option = document.createElement('option');
+                option.value = technician.id;
+                option.textContent = technician.name;
+                technicianSelect.appendChild(option);
+            });
+        }
+
+        // Carregar manutenções na tabela
+        function loadMaintenances() {
+            const maintenances = JSON.parse(localStorage.getItem('maintenances'));
+            const tableBody = document.getElementById('maintenanceTableBody');
+            
+            // Limpar tabela
+            tableBody.innerHTML = '';
+            
+            // Obter filtros
+            const statusFilter = document.getElementById('statusFilter').value;
+            const priorityFilter = document.getElementById('priorityFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+            
+            // Aplicar filtros
+            let filteredMaintenances = maintenances;
+            
+            if (statusFilter !== 'all') {
+                filteredMaintenances = filteredMaintenances.filter(m => m.status === statusFilter);
+            }
+            
+            if (priorityFilter !== 'all') {
+                filteredMaintenances = filteredMaintenances.filter(m => m.priority === priorityFilter);
+            }
+            
+            if (dateFilter) {
+                filteredMaintenances = filteredMaintenances.filter(m => m.date === dateFilter);
+            }
+            
+            // Atualizar contadores
+            document.getElementById('maintenanceShowing').textContent = filteredMaintenances.length;
+            document.getElementById('totalMaintenance').textContent = maintenances.length;
+            
+            // Preencher tabela
+            filteredMaintenances.forEach(maintenance => {
+                const row = document.createElement('tr');
+                
+                // Determinar classe de prioridade
+                let priorityClass = '';
+                switch(maintenance.priority) {
+                    case 'low':
+                        priorityClass = 'text-info';
+                        break;
+                    case 'medium':
+                        priorityClass = 'text-warning';
+                        break;
+                    case 'high':
+                        priorityClass = 'text-danger';
+                        break;
+                    case 'urgent':
+                        priorityClass = 'text-danger fw-bold';
+                        break;
+                }
+                
+                // Determinar badge de status
+                let statusBadge = '';
+                switch(maintenance.status) {
+                    case 'pending':
+                        statusBadge = '<span class="status-badge status-pending">Pendente</span>';
+                        break;
+                    case 'in-progress':
+                        statusBadge = '<span class="status-badge status-in-progress">Em Andamento</span>';
+                        break;
+                    case 'completed':
+                        statusBadge = '<span class="status-badge status-completed">Concluído</span>';
+                        break;
+                    case 'cancelled':
+                        statusBadge = '<span class="status-badge status-cancelled">Cancelado</span>';
+                        break;
+                }
+                
+                row.innerHTML = `
+                    <td>${maintenance.id}</td>
+                    <td>${maintenance.client}</td>
+                    <td>${maintenance.equipment}</td>
+                    <td>${maintenance.problem}</td>
+                    <td class="${priorityClass}">${getPriorityText(maintenance.priority)}</td>
+                    <td>${statusBadge}</td>
+                    <td>${formatDate(maintenance.date)}</td>
+                    <td>${maintenance.technician || '-'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary view-maintenance" data-id="${maintenance.id}">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-secondary edit-maintenance" data-id="${maintenance.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger delete-maintenance" data-id="${maintenance.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Adicionar eventos aos botões
+            document.querySelectorAll('.view-maintenance').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    viewMaintenance(this.getAttribute('data-id'));
+                });
+            });
+            
+            document.querySelectorAll('.edit-maintenance').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    editMaintenance(this.getAttribute('data-id'));
+                });
+            });
+            
+            document.querySelectorAll('.delete-maintenance').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    deleteMaintenance(this.getAttribute('data-id'));
+                });
+            });
+        }
+
+        // Obter texto da prioridade
+        function getPriorityText(priority) {
+            switch(priority) {
+                case 'low': return 'Baixa';
+                case 'medium': return 'Média';
+                case 'high': return 'Alta';
+                case 'urgent': return 'Urgente';
+                default: return priority;
+            }
+        }
+
+        // Formatar data
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        // Atualizar dashboard
+        function updateDashboard() {
+            const maintenances = JSON.parse(localStorage.getItem('maintenances'));
+            
+            // Contar por status
+            const pendingCount = maintenances.filter(m => m.status === 'pending').length;
+            const progressCount = maintenances.filter(m => m.status === 'in-progress').length;
+            const completedCount = maintenances.filter(m => m.status === 'completed').length;
+            const cancelledCount = maintenances.filter(m => m.status === 'cancelled').length;
+            
+            // Atualizar contadores
+            document.getElementById('pendingCount').textContent = pendingCount;
+            document.getElementById('progressCount').textContent = progressCount;
+            document.getElementById('completedCount').textContent = completedCount;
+            document.getElementById('cancelledCount').textContent = cancelledCount;
+            
+            // Atualizar crescimento (valores aleatórios para demonstração)
+            document.getElementById('pendingGrowth').textContent = Math.floor(Math.random() * 20) + 1;
+            document.getElementById('progressGrowth').textContent = Math.floor(Math.random() * 15) + 1;
+            document.getElementById('completedGrowth').textContent = Math.floor(Math.random() * 25) + 1;
+            document.getElementById('cancelledGrowth').textContent = Math.floor(Math.random() * 10) + 1;
+        }
+
+        // Visualizar manutenção
+        function viewMaintenance(id) {
+            const maintenances = JSON.parse(localStorage.getItem('maintenances'));
+            const maintenance = maintenances.find(m => m.id === id);
+            
+            if (maintenance) {
+                // Preencher modal com dados (somente leitura)
+                document.getElementById('maintenanceModalTitle').textContent = `Visualizar Solicitação: ${maintenance.id}`;
+                document.getElementById('maintenanceId').value = maintenance.id;
+                document.getElementById('maintenanceClient').value = maintenance.client;
+                document.getElementById('maintenanceEquipment').value = maintenance.equipment;
+                document.getElementById('maintenanceProblem').value = maintenance.problem;
+                document.getElementById('maintenanceDiagnosis').value = maintenance.diagnosis || '';
+                document.getElementById('maintenancePriority').value = maintenance.priority;
+                document.getElementById('maintenanceStatus').value = maintenance.status;
+                document.getElementById('maintenanceTechnician').value = maintenance.technician || '';
+                document.getElementById('maintenanceDate').value = maintenance.date;
+                document.getElementById('maintenanceDeadline').value = maintenance.deadline || '';
+                document.getElementById('maintenanceSolution').value = maintenance.solution || '';
+                document.getElementById('maintenanceCost').value = maintenance.cost || '';
+                
+                // Tornar campos somente leitura
+                const form = document.getElementById('maintenanceForm');
+                const inputs = form.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => input.setAttribute('readonly', true));
+                
+                // Ocultar botão de salvar
+                document.getElementById('saveMaintenanceBtn').style.display = 'none';
+                
+                // Abrir modal
+                const modal = new bootstrap.Modal(document.getElementById('maintenanceModal'));
+                modal.show();
+                
+                // Restaurar campos após fechar o modal
+                modal._element.addEventListener('hidden.bs.modal', function() {
+                    inputs.forEach(input => input.removeAttribute('readonly'));
+                    document.getElementById('saveMaintenanceBtn').style.display = 'block';
+                });
+            }
+        }
+
+        // Editar manutenção
+        function editMaintenance(id) {
+            const maintenances = JSON.parse(localStorage.getItem('maintenances'));
+            const maintenance = maintenances.find(m => m.id === id);
+            
+            if (maintenance) {
+                // Preencher modal com dados
+                document.getElementById('maintenanceModalTitle').textContent = `Editar Solicitação: ${maintenance.id}`;
+                document.getElementById('maintenanceId').value = maintenance.id;
+                document.getElementById('maintenanceClient').value = maintenance.client;
+                document.getElementById('maintenanceEquipment').value = maintenance.equipment;
+                document.getElementById('maintenanceProblem').value = maintenance.problem;
+                document.getElementById('maintenanceDiagnosis').value = maintenance.diagnosis || '';
+                document.getElementById('maintenancePriority').value = maintenance.priority;
+                document.getElementById('maintenanceStatus').value = maintenance.status;
+                document.getElementById('maintenanceTechnician').value = maintenance.technician || '';
+                document.getElementById('maintenanceDate').value = maintenance.date;
+                document.getElementById('maintenanceDeadline').value = maintenance.deadline || '';
+                document.getElementById('maintenanceSolution').value = maintenance.solution || '';
+                document.getElementById('maintenanceCost').value = maintenance.cost || '';
+                
+                // Abrir modal
+                const modal = new bootstrap.Modal(document.getElementById('maintenanceModal'));
+                modal.show();
+            }
+        }
+
+        // Salvar manutenção
+        function saveMaintenance() {
+            const form = document.getElementById('maintenanceForm');
+            
+            // Validar formulário
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const maintenances = JSON.parse(localStorage.getItem('maintenances'));
+            const id = document.getElementById('maintenanceId').value;
+            
+            if (id) {
+                // Editar manutenção existente
+                const index = maintenances.findIndex(m => m.id === id);
+                
+                if (index !== -1) {
+                    maintenances[index] = {
+                        ...maintenances[index],
+                        client: document.getElementById('maintenanceClient').value,
+                        equipment: document.getElementById('maintenanceEquipment').value,
+                        problem: document.getElementById('maintenanceProblem').value,
+                        diagnosis: document.getElementById('maintenanceDiagnosis').value,
+                        priority: document.getElementById('maintenancePriority').value,
+                        status: document.getElementById('maintenanceStatus').value,
+                        technician: document.getElementById('maintenanceTechnician').value,
+                        date: document.getElementById('maintenanceDate').value,
+                        deadline: document.getElementById('maintenanceDeadline').value,
+                        solution: document.getElementById('maintenanceSolution').value,
+                        cost: document.getElementById('maintenanceCost').value ? parseFloat(document.getElementById('maintenanceCost').value) : 0
+                    };
+                }
+            } else {
+                // Criar nova manutenção
+                const newId = 'MT' + String(maintenances.length + 1).padStart(3, '0');
+                
+                maintenances.push({
+                    id: newId,
+                    client: document.getElementById('maintenanceClient').value,
+                    equipment: document.getElementById('maintenanceEquipment').value,
+                    problem: document.getElementById('maintenanceProblem').value,
+                    diagnosis: document.getElementById('maintenanceDiagnosis').value,
+                    priority: document.getElementById('maintenancePriority').value,
+                    status: document.getElementById('maintenanceStatus').value,
+                    technician: document.getElementById('maintenanceTechnician').value,
+                    date: document.getElementById('maintenanceDate').value,
+                    deadline: document.getElementById('maintenanceDeadline').value,
+                    solution: document.getElementById('maintenanceSolution').value,
+                    cost: document.getElementById('maintenanceCost').value ? parseFloat(document.getElementById('maintenanceCost').value) : 0
+                });
+            }
+            
+            // Salvar no localStorage
+            localStorage.setItem('maintenances', JSON.stringify(maintenances));
+            
+            // Fechar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('maintenanceModal'));
+            modal.hide();
+            
+            // Recarregar dados
+            loadMaintenances();
+            updateDashboard();
+            
+            // Mostrar mensagem de sucesso
+            alert('Manutenção salva com sucesso!');
+        }
+
+        // Excluir manutenção
+        function deleteMaintenance(id) {
+            if (confirm('Tem certeza que deseja excluir esta solicitação de manutenção?')) {
+                const maintenances = JSON.parse(localStorage.getItem('maintenances'));
+                const filteredMaintenances = maintenances.filter(m => m.id !== id);
+                
+                // Salvar no localStorage
+                localStorage.setItem('maintenances', JSON.stringify(filteredMaintenances));
+                
+                // Recarregar dados
+                loadMaintenances();
+                updateDashboard();
+                
+                // Mostrar mensagem de sucesso
+                alert('Manutenção excluída com sucesso!');
+            }
+        }
+
+        // Enviar mensagem para o assistente de IA
+        function sendAIMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Adicionar mensagem do usuário ao chat
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            document.getElementById('aiChatContainer').appendChild(userMessage);
+            
+            // Limpar input
+            input.value = '';
+            
+            // Simular resposta da IA após um pequeno delay
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot-message';
+                
+                // Respostas pré-definidas baseadas em palavras-chave
+                if (message.toLowerCase().includes('status') || message.toLowerCase().includes('andamento')) {
+                    botMessage.textContent = 'Atualmente, temos 2 manutenções pendentes, 2 em andamento, 2 concluídas e 1 cancelada. Posso fornecer mais detalhes sobre alguma específica?';
+                } else if (message.toLowerCase().includes('nova') || message.toLowerCase().includes('criar')) {
+                    botMessage.textContent = 'Para criar uma nova solicitação de manutenção, clique no botão "Nova Solicitação" no topo da página. Preencha os dados do cliente, equipamento e problema relatado.';
+                } else if (message.toLowerCase().includes('prioridade') || message.toLowerCase().includes('urgente')) {
+                    botMessage.textContent = 'As prioridades são classificadas como Baixa, Média, Alta e Urgente. Solicitações urgentes devem ser atendidas em até 24 horas.';
+                } else if (message.toLowerCase().includes('técnico') || message.toLowerCase().includes('atribuir')) {
+                    botMessage.textContent = 'Você pode atribuir um técnico a uma solicitação editando a manutenção e selecionando um técnico na lista. Os técnicos disponíveis são Carlos Silva, Ana Costa, João Mendes e Maria Oliveira.';
+                } else {
+                    botMessage.textContent = 'Entendi sua solicitação. Como assistente de IA do sistema de manutenção, posso ajudar com informações sobre status de solicitações, criação de novas manutenções, atribuição de técnicos e relatórios. O que mais você gostaria de saber?';
+                }
+                
+                document.getElementById('aiChatContainer').appendChild(botMessage);
+                
+                // Rolagem automática para a última mensagem
+                document.getElementById('aiChatContainer').scrollTop = document.getElementById('aiChatContainer').scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

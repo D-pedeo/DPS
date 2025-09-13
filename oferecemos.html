@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O que Oferecemos – D.Pedro Soluções</title>
+  <style>
+    body{margin:0;font-family:sans-serif;background:#0f172a;color:#e5e7eb}
+    header{background:#0b1225;padding:1rem 0}
+    .container{width:min(1100px,92vw);margin:auto}
+    .logo{display:flex;align-items:center;gap:.5rem;font-weight:700;color:#e5e7eb}
+    .logo img{width:36px;height:36px;border-radius:8px}
+    nav a{margin-left:1rem;color:#94a3b8;text-decoration:none}
+    section{padding:2rem 0}
+    h1,h2{margin-bottom:1rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+    .card{background:#111827;border-radius:12px;padding:1.5rem;box-shadow:0 2px 6px rgba(0,0,0,.4);text-align:center}
+    .card h2{margin-bottom:.5rem;color:#22c55e}
+    .icon{font-size:2.5rem;margin-bottom:.5rem}
+    footer{padding:2rem 0;color:#94a3b8;text-align:center;border-top:1px solid rgba(255,255,255,.1)}
+    video{width:100%;border-radius:12px;margin-top:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center">
+      <div class="logo">
+        <a href='index.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+        <span>D.Pedro Soluções</span>
+      </div>
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="servicos.html">Serviços</a>
+        <a href="candidatos.html">Candidatos</a>
+        <a href="oferecemos.html">Oferecemos</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h1>O que Oferecemos</h1>
+      <div class="grid">
+        <div class="card">
+          <div class="icon">✅</div>
+          <h2>Contratação Fácil</h2>
+          <p>Processo simples, rápido e sem complicações para encontrar o profissional ideal.</p>
+        </div>
+        <div class="card">
+          <div class="icon">👩‍👧</div>
+          <h2>Apoio Personalizado</h2>
+          <p>Acompanhamos todo o processo para garantir que sua escolha seja a melhor para sua família ou empresa.</p>
+        </div>
+        <div class="card">
+          <div class="icon">⭐</div>
+          <h2>Garantia de Satisfação</h2>
+          <p>Equipe dedicada que assegura qualidade e confiança em cada serviço prestado.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🏠🏢</div>
+          <h2>Profissionais para Todas as Necessidades</h2>
+          <p>Fornecemos empregados(as) para empresas, casas, restaurantes, residências e onde mais você precisar.</p>
+        </div>
+      </div>
+
+      <h2 style="margin-top:2rem">Vídeo Explicativo</h2>
+      <video controls>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        Seu navegador não suporta a reprodução de vídeos.
+      </video>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> D.Pedro Soluções – Serviços Domésticos 24/7</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Filtros e controles */
+        .controls-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .date-range {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .date-input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+        }
+
+        /* Dashboard de métricas */
+        .metrics-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: var(--success-color);
+        }
+
+        .change-negative {
+            color: var(--danger-color);
+        }
+
+        /* Layout de gráficos */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Tabelas de dados */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Abas de análise */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .tab.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* KPIs e indicadores */
+        .kpi-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .kpi-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .kpi-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .kpi-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Relatórios */
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .report-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+        }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .report-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .metrics-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 0;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Análise e Relatórios
+                </h1>
+            </div>
+            <button class="btn btn-primary" id="generateReportBtn">
+                <i class="fas fa-file-export"></i> Gerar Relatório
+            </button>
+        </div>
+
+        <!-- Controles e filtros -->
+        <div class="card">
+            <div class="controls-container">
+                <div class="filter-group">
+                    <button class="filter-btn active" data-period="today">Hoje</button>
+                    <button class="filter-btn" data-period="week">Esta Semana</button>
+                    <button class="filter-btn" data-period="month">Este Mês</button>
+                    <button class="filter-btn" data-period="quarter">Este Trimestre</button>
+                    <button class="filter-btn" data-period="year">Este Ano</button>
+                </div>
+                <div class="date-range">
+                    <input type="date" class="date-input" id="startDate">
+                    <span>até</span>
+                    <input type="date" class="date-input" id="endDate">
+                    <button class="btn btn-secondary" id="applyDateBtn">
+                        <i class="fas fa-check"></i> Aplicar
+                    </button>
+                </div>
+                <div class="filter-group">
+                    <select class="form-control" id="categoryFilter">
+                        <option value="all">Todas as Categorias</option>
+                        <option value="sales">Vendas</option>
+                        <option value="finance">Financeiro</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="operations">Operações</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard de métricas -->
+        <div class="metrics-dashboard">
+            <div class="metric-card">
+                <div class="metric-icon" style="background-color: rgba(52, 152, 219, 0.1); color: var(--secondary-color);">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="metric-value" id="totalSales">0</div>
+                <div class="metric-title">Vendas Totais</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span id="salesChange">0%</span> desde o último mês
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon" style="background-color: rgba(46, 204, 113, 0.1); color: var(--success-color);">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="metric-value" id="totalCustomers">0</div>
+                <div class="metric-title">Novos Clientes</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span id="customersChange">0%</span> desde o último mês
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon" style="background-color: rgba(155, 89, 182, 0.1); color: #9b59b6;">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="metric-value" id="conversionRate">0%</div>
+                <div class="metric-title">Taxa de Conversão</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span id="conversionChange">0%</span> desde o último mês
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon" style="background-color: rgba(243, 156, 18, 0.1); color: var(--warning-color);">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="metric-value" id="averageOrder">0</div>
+                <div class="metric-title">Ticket Médio</div>
+                <div class="metric-change change-negative">
+                    <i class="fas fa-arrow-down"></i> <span id="orderChange">0%</span> desde o último mês
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas de análise -->
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">Visão Geral</div>
+            <div class="tab" data-tab="sales">Vendas</div>
+            <div class="tab" data-tab="customers">Clientes</div>
+            <div class="tab" data-tab="finance">Financeiro</div>
+            <div class="tab" data-tab="reports">Relatórios</div>
+        </div>
+
+        <!-- Conteúdo da Aba Visão Geral -->
+        <div class="tab-content active" id="overview">
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Desempenho de Vendas</h3>
+                        <select class="form-control" style="width: auto;" id="salesChartType">
+                            <option value="line">Linha</option>
+                            <option value="bar">Barras</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Distribuição por Categoria</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Principais Métricas</h3>
+                <div class="kpi-container">
+                    <div class="kpi-item">
+                        <div class="kpi-value" id="kpiRevenue">0</div>
+                        <div class="kpi-label">Receita Total</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value" id="kpiOrders">0</div>
+                        <div class="kpi-label">Total de Pedidos</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value" id="kpiGrowth">0%</div>
+                        <div class="kpi-label">Crescimento</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value" id="kpiCustAcq">0</div>
+                        <div class="kpi-label">Custo de Aquisição</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Top Produtos</h3>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Vendas</th>
+                                <th>Receita</th>
+                                <th>Crescimento</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topProductsTable">
+                            <!-- Conteúdo preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Vendas -->
+        <div class="tab-content" id="sales">
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Vendas por Canal</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="channelChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Vendas por Região</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="regionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Desempenho de Vendas</h3>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Período</th>
+                                <th>Vendas</th>
+                                <th>Receita</th>
+                                <th>Meta</th>
+                                <th>Desempenho</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesPerformanceTable">
+                            <!-- Conteúdo preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Clientes -->
+        <div class="tab-content" id="customers">
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Demografia de Clientes</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="demographicChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Comportamento de Compra</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="behaviorChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Análise de Clientes</h3>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Segmento</th>
+                                <th>Clientes</th>
+                                <th>Valor Médio</th>
+                                <th>Frequência</th>
+                                <th>Retenção</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerAnalysisTable">
+                            <!-- Conteúdo preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Financeiro -->
+        <div class="tab-content" id="finance">
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Fluxo de Caixa</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="cashflowChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Despesas por Categoria</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="expensesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Indicadores Financeiros</h3>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Indicador</th>
+                                <th>Valor Atual</th>
+                                <th>Mês Anterior</th>
+                                <th>Variação</th>
+                                <th>Meta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financialIndicatorsTable">
+                            <!-- Conteúdo preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Relatórios -->
+        <div class="tab-content" id="reports">
+            <div class="card">
+                <h3>Relatórios Disponíveis</h3>
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <div class="report-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h4>Relatório de Vendas</h4>
+                        <p>Relatório detalhado de vendas por período, produto e região.</p>
+                        <div class="report-actions">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-eye"></i> Visualizar
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Baixar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Relatório de Clientes</h4>
+                        <p>Análise de comportamento, demografia e valor do cliente.</p>
+                        <div class="report-actions">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-eye"></i> Visualizar
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Baixar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h4>Relatório Financeiro</h4>
+                        <p>Demonstrativos financeiros e indicadores de performance.</p>
+                        <div class="report-actions">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-eye"></i> Visualizar
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Baixar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <h4>Relatório de Operações</h4>
+                        <p>Eficiência operacional, produtividade e métricas de processos.</p>
+                        <div class="report-actions">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-eye"></i> Visualizar
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Baixar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h4>Relatório de Marketing</h4>
+                        <p>Performance de campanhas, ROI e análise de canais.</p>
+                        <div class="report-actions">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-eye"></i> Visualizar
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Baixar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h4>Relatório Personalizado</h4>
+                        <p>Crie um relatório personalizado com os dados que você precisa.</p>
+                        <div class="report-actions">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Criar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+    // =============================================
+    // DADOS DE EXEMPLO
+    // =============================================
+    const salesData = {
+        daily: [1200, 1900, 1500, 2100, 1800, 2500, 2200],
+        weekly: [8500, 9200, 7800, 11000, 10500, 9800, 12500],
+        monthly: [35000, 42000, 38000, 45000, 48000, 52000, 55000],
+        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']
+    };
+
+    const categoryData = {
+        labels: ['Eletrônicos', 'Roupas', 'Casa', 'Esportes', 'Beleza'],
+        values: [35, 25, 20, 15, 5],
+        colors: ['#3498db', '#2ecc71', '#9b59b6', '#e67e22', '#e74c3c']
+    };
+
+    const topProducts = [
+        { name: 'Smartphone XYZ', sales: 142, revenue: 284000, growth: 12 },
+        { name: 'Notebook ABC', sales: 98, revenue: 245000, growth: 8 },
+        { name: 'Fone de Ouvido', sales: 256, revenue: 128000, growth: 15 },
+        { name: 'Tablet Lite', sales: 87, revenue: 130500, growth: -3 },
+        { name: 'Smartwatch Pro', sales: 114, revenue: 171000, growth: 22 }
+    ];
+
+    const performanceData = [
+        { period: 'Jan', sales: 35000, revenue: 105000, goal: 100000, performance: 105 },
+        { period: 'Fev', sales: 42000, revenue: 126000, goal: 110000, performance: 115 },
+        { period: 'Mar', sales: 38000, revenue: 114000, goal: 115000, performance: 99 },
+        { period: 'Abr', sales: 45000, revenue: 135000, goal: 120000, performance: 113 },
+        { period: 'Mai', sales: 48000, revenue: 144000, goal: 125000, performance: 115 },
+        { period: 'Jun', sales: 52000, revenue: 156000, goal: 130000, performance: 120 }
+    ];
+
+    const customerData = {
+        demographics: {
+            labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
+            values: [15, 35, 25, 15, 10]
+        },
+        behavior: {
+            labels: ['Primeira Compra', 'Compra Recorrente', 'Compra por Oferta', 'Compra por Recomendação'],
+            values: [30, 40, 20, 10]
+        }
+    };
+
+    const financialData = {
+        cashflow: [5000, 7000, 4000, 8000, 6000, 9000, 10000],
+        expenses: {
+            labels: ['Pessoal', 'Marketing', 'Operações', 'TI', 'Administrativo'],
+            values: [40, 25, 15, 12, 8]
+        }
+    };
+
+    // =============================================
+    // INICIALIZAÇÃO DO SISTEMA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar abas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Inicializar filtros de período
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                updateCharts(this.dataset.period);
+            });
+        });
+
+        // Aplicar filtro de data
+        document.getElementById('applyDateBtn').addEventListener('click', function() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            if (startDate && endDate) {
+                // Simular carregamento de dados
+                simulateDataLoading();
+            } else {
+                alert('Por favor, selecione ambas as datas.');
+            }
+        });
+
+        // Gerar relatório
+        document.getElementById('generateReportBtn').addEventListener('click', function() {
+            generateReport();
+        });
+
+        // Inicializar gráficos
+        initCharts();
+        updateMetrics();
+        renderTables();
+        
+        // Definir datas padrão (últimos 7 dias)
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - 7);
+        
+        document.getElementById('startDate').valueAsDate = startDate;
+        document.getElementById('endDate').valueAsDate = endDate;
+    });
+
+    // =============================================
+    // INICIALIZAÇÃO DE GRÁFICOS
+    // =============================================
+    let salesChart, categoryChart, channelChart, regionChart, demographicChart, behaviorChart, cashflowChart, expensesChart;
+
+    function initCharts() {
+        // Gráfico de vendas
+        const salesCtx = document.getElementById('salesChart').getContext('2d');
+        salesChart = new Chart(salesCtx, {
+            type: 'line',
+            data: {
+                labels: salesData.labels,
+                datasets: [{
+                    label: 'Vendas (AOA)',
+                    data: salesData.daily,
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de categorias
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        categoryChart = new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: categoryData.labels,
+                datasets: [{
+                    data: categoryData.values,
+                    backgroundColor: categoryData.colors,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Gráfico de canais de venda
+        const channelCtx = document.getElementById('channelChart').getContext('2d');
+        channelChart = new Chart(channelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Loja Física', 'Site', 'Marketplace', 'App'],
+                datasets: [{
+                    label: 'Vendas por Canal',
+                    data: [45, 30, 15, 10],
+                    backgroundColor: ['#3498db', '#2ecc71', '#9b59b6', '#e67e22'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de vendas por região
+        const regionCtx = document.getElementById('regionChart').getContext('2d');
+        regionChart = new Chart(regionCtx, {
+            type: 'polarArea',
+            data: {
+                labels: ['Norte', 'Sul', 'Leste', 'Oeste', 'Centro'],
+                datasets: [{
+                    data: [20, 25, 15, 22, 18],
+                    backgroundColor: ['#3498db', '#2ecc71', '#9b59b6', '#e67e22', '#e74c3c']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Gráfico demográfico
+        const demographicCtx = document.getElementById('demographicChart').getContext('2d');
+        demographicChart = new Chart(demographicCtx, {
+            type: 'bar',
+            data: {
+                labels: customerData.demographics.labels,
+                datasets: [{
+                    label: 'Distribuição por Idade',
+                    data: customerData.demographics.values,
+                    backgroundColor: '#3498db',
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de comportamento
+        const behaviorCtx = document.getElementById('behaviorChart').getContext('2d');
+        behaviorChart = new Chart(behaviorCtx, {
+            type: 'pie',
+            data: {
+                labels: customerData.behavior.labels,
+                datasets: [{
+                    data: customerData.behavior.values,
+                    backgroundColor: ['#3498db', '#2ecc71', '#9b59b6', '#e67e22']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Gráfico de fluxo de caixa
+        const cashflowCtx = document.getElementById('cashflowChart').getContext('2d');
+        cashflowChart = new Chart(cashflowCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Entradas',
+                    data: [12000, 19000, 15000, 18000, 22000, 21000, 24000],
+                    borderColor: '#2ecc71',
+                    backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Saídas',
+                    data: [7000, 12000, 11000, 10000, 16000, 12000, 14000],
+                    borderColor: '#e74c3c',
+                    backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de despesas
+        const expensesCtx = document.getElementById('expensesChart').getContext('2d');
+        expensesChart = new Chart(expensesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: financialData.expenses.labels,
+                datasets: [{
+                    data: financialData.expenses.values,
+                    backgroundColor: ['#3498db', '#2ecc71', '#9b59b6', '#e67e22', '#e74c3c']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Event listener para mudar tipo de gráfico de vendas
+        document.getElementById('salesChartType').addEventListener('change', function() {
+            salesChart.config.type = this.value;
+            salesChart.update();
+        });
+    }
+
+    // =============================================
+    // FUNÇÕES DE ATUALIZAÇÃO
+    // =============================================
+    function updateMetrics() {
+        // Atualizar métricas com dados simulados
+        document.getElementById('totalSales').textContent = '52.000';
+        document.getElementById('salesChange').textContent = '12%';
+        
+        document.getElementById('totalCustomers').textContent = '1.248';
+        document.getElementById('customersChange').textContent = '8%';
+        
+        document.getElementById('conversionRate').textContent = '4.8%';
+        document.getElementById('conversionChange').textContent = '5%';
+        
+        document.getElementById('averageOrder').textContent = '2.450 AOA';
+        document.getElementById('orderChange').textContent = '3%';
+        
+        // Atualizar KPIs
+        document.getElementById('kpiRevenue').textContent = '127.400 AOA';
+        document.getElementById('kpiOrders').textContent = '52';
+        document.getElementById('kpiGrowth').textContent = '12.5%';
+        document.getElementById('kpiCustAcq').textContent = '320 AOA';
+    }
+
+    function updateCharts(period = 'week') {
+        let data, labels;
+        
+        switch(period) {
+            case 'today':
+                data = salesData.daily.slice(0, 1);
+                labels = [salesData.labels[0]];
+                break;
+            case 'week':
+                data = salesData.daily;
+                labels = salesData.labels;
+                break;
+            case 'month':
+                data = salesData.weekly;
+                labels = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7'];
+                break;
+            case 'quarter':
+                data = salesData.monthly.slice(0, 3);
+                labels = ['Mês 1', 'Mês 2', 'Mês 3'];
+                break;
+            case 'year':
+                data = salesData.monthly;
+                labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'];
+                break;
+            default:
+                data = salesData.daily;
+                labels = salesData.labels;
+        }
+        
+        // Atualizar gráfico de vendas
+        salesChart.data.labels = labels;
+        salesChart.data.datasets[0].data = data;
+        salesChart.update();
+    }
+
+    function simulateDataLoading() {
+        // Simular carregamento de dados
+        const applyBtn = document.getElementById('applyDateBtn');
+        const originalText = applyBtn.innerHTML;
+        applyBtn.innerHTML = '<span class="loader"></span> Carregando...';
+        applyBtn.disabled = true;
+        
+        setTimeout(() => {
+            // Simular atualização de dados
+            updateMetrics();
+            updateCharts();
+            
+            // Restaurar botão
+            applyBtn.innerHTML = originalText;
+            applyBtn.disabled = false;
+            
+            // Mostrar mensagem de sucesso
+            showNotification('Dados atualizados com sucesso!');
+        }, 1500);
+    }
+
+    function generateReport() {
+        // Simular geração de relatório
+        const generateBtn = document.getElementById('generateReportBtn');
+        const originalText = generateBtn.innerHTML;
+        generateBtn.innerHTML = '<span class="loader"></span> Gerando...';
+        generateBtn.disabled = true;
+        
+        setTimeout(() => {
+            // Restaurar botão
+            generateBtn.innerHTML = originalText;
+            generateBtn.disabled = false;
+            
+            // Mostrar mensagem de sucesso
+            showNotification('Relatório gerado com sucesso!');
+            
+            // Simular download
+            alert('Seu relatório está pronto para download.');
+        }, 2000);
+    }
+
+    function showNotification(message) {
+        // Criar elemento de notificação
+        const notification = document.createElement('div');
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.right = '20px';
+        notification.style.padding = '10px 20px';
+        notification.style.background = '#27ae60';
+        notification.style.color = 'white';
+        notification.style.borderRadius = '5px';
+        notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+        notification.style.zIndex = '1000';
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Remover após 3 segundos
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 500);
+        }, 3000);
+    }
+
+    // =============================================
+    // RENDERIZAÇÃO DE TABELAS
+    // =============================================
+    function renderTables() {
+        renderTopProductsTable();
+        renderPerformanceTable();
+        renderCustomerAnalysisTable();
+        renderFinancialIndicatorsTable();
+    }
+
+    function renderTopProductsTable() {
+        const tableBody = document.getElementById('topProductsTable');
+        tableBody.innerHTML = '';
+        
+        topProducts.forEach(product => {
+            const growthClass = product.growth >= 0 ? 'change-positive' : 'change-negative';
+            const growthIcon = product.growth >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${product.name}</td>
+                <td>${product.sales}</td>
+                <td>${product.revenue.toLocaleString()} AOA</td>
+                <td>
+                    <span class="trend-indicator ${growthClass}">
+                        <i class="fas ${growthIcon}"></i> ${Math.abs(product.growth)}%
+                    </span>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+
+    function renderPerformanceTable() {
+        const tableBody = document.getElementById('salesPerformanceTable');
+        tableBody.innerHTML = '';
+        
+        performanceData.forEach(data => {
+            const performanceClass = data.performance >= 100 ? 'change-positive' : 'change-negative';
+            const performanceIcon = data.performance >= 100 ? 'fa-arrow-up' : 'fa-arrow-down';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${data.period}</td>
+                <td>${data.sales.toLocaleString()}</td>
+                <td>${data.revenue.toLocaleString()} AOA</td>
+                <td>${data.goal.toLocaleString()} AOA</td>
+                <td>
+                    <span class="trend-indicator ${performanceClass}">
+                        <i class="fas ${performanceIcon}"></i> ${data.performance}%
+                    </span>
+                </td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+
+    function renderCustomerAnalysisTable() {
+        const tableBody = document.getElementById('customerAnalysisTable');
+        tableBody.innerHTML = '';
+        
+        const segments = [
+            { segment: 'Premium', customers: 150, avgValue: 1850, frequency: 4.2, retention: 92 },
+            { segment: 'Frequente', customers: 450, avgValue: 750, frequency: 2.8, retention: 78 },
+            { segment: 'Ocasional', customers: 648, avgValue: 420, frequency: 1.2, retention: 45 }
+        ];
+        
+        segments.forEach(segment => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${segment.segment}</td>
+                <td>${segment.customers}</td>
+                <td>${segment.avgValue} AOA</td>
+                <td>${segment.frequency}/mês</td>
+                <td>${segment.retention}%</td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+
+    function renderFinancialIndicatorsTable() {
+        const tableBody = document.getElementById('financialIndicatorsTable');
+        tableBody.innerHTML = '';
+        
+        const indicators = [
+            { indicator: 'Lucratividade', current: 28, previous: 25, change: 12, goal: 30 },
+            { indicator: 'ROI', current: 22, previous: 18, change: 22, goal: 25 },
+            { indicator: 'Margem Líquida', current: 18, previous: 15, change: 20, goal: 20 },
+            { indicator: 'Custo Aquisição Cliente', current: 320, previous: 350, change: -9, goal: 300 }
+        ];
+        
+        indicators.forEach(ind => {
+            const changeClass = ind.change >= 0 ? 'change-positive' : 'change-negative';
+            const changeIcon = ind.change >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${ind.indicator}</td>
+                <td>${ind.current}${ind.indicator.includes('Custo') ? ' AOA' : '%'}</td>
+                <td>${ind.previous}${ind.indicator.includes('Custo') ? ' AOA' : '%'}</td>
+                <td>
+                    <span class="trend-indicator ${changeClass}">
+                        <i class="fas ${changeIcon}"></i> ${Math.abs(ind.change)}%
+                    </span>
+                </td>
+                <td>${ind.goal}${ind.indicator.includes('Custo') ? ' AOA' : '%'}</td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+</script>
+</body>
+</html>

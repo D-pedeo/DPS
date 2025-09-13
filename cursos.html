@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root { --primary-color: #2c3e50; --secondary-color: #3498db; --accent-color: #e74c3c; --light-color: #ecf0f1; --dark-color: #2c3e50; --success-color: #2ecc71; --warning-color: #f39c12; --danger-color: #e74c3c; --border-radius: 8px; --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; background-color: #f5f7fa; color: var(--dark-color); line-height: 1.6; }
+        .kanawa-header { background-color: var(--primary-color); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--box-shadow); position: sticky; top: 0; z-index: 1000; }
+        .logo { display: flex; align-items: center; font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .logo img { height: 38px; width: auto; margin-right: 10px; vertical-align: middle; box-shadow: 0 2px 8px rgba(255,255,255,0.067); border-radius: 8px; }
+        .main-container { display: flex; min-height: calc(100vh - 70px); }
+        .sidebar { width: 280px; background-color: white; box-shadow: var(--box-shadow); padding: 1.5rem 0; overflow-y: auto; transition: all 0.3s ease; }
+        .menu-item { padding: 0.8rem 1.5rem; display: flex; align-items: center; cursor: pointer; transition: all 0.3s ease; color: var(--dark-color); text-decoration: none; border-left: 4px solid transparent; }
+        .menu-item i { margin-right: 10px; width: 20px; text-align: center; color: var(--secondary-color); }
+        .menu-item:hover, .menu-item.active { background-color: var(--light-color); border-left: 4px solid var(--secondary-color); padding-left: calc(1.5rem - 4px); }
+        .content { flex: 1; padding: 2rem; overflow-y: auto; background-color: #f5f7fa; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #eee; }
+        .page-title { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: var(--primary-color); display: flex; align-items: center; }
+        .card { background-color: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow); padding: 2rem; margin-bottom: 2rem; border: none; }
+        .card-header { font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: var(--primary-color); }
+        .btn { border-radius: 6px; padding: 0.5rem 1.2rem; font-weight: 500; transition: background 0.2s; }
+        .btn-primary { background: var(--secondary-color); color: #fff; border: none; }
+        .btn-primary:hover { background: #217dbb; }
+        .btn-success { background: var(--success-color); color: #fff; border: none; }
+        .btn-warning { background: var(--warning-color); color: #fff; border: none; }
+        .btn-danger { background: var(--danger-color); color: #fff; border: none; }
+        .btn-sm { font-size: 0.85rem; padding: 0.3rem 0.8rem; }
+        @media (max-width: 1200px) { .sidebar { width: 200px; } .content { padding: 1rem; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .fade-in { animation: fadeIn 0.7s; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="kanawa-header">
+        <div class="logo"><img src="DPS.ico" alt="Logo DPS"> D.Pedro Soluções</div>
+    </header>
+    <div class="main-container">
+        <aside class="sidebar">
+            <nav>
+                <a class="menu-item" href="DPS.html"><i class="fas fa-home"></i> Dashboard</a>
+                <a class="menu-item" href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
+                <a class="menu-item" href="contratos.html"><i class="fas fa-file-contract"></i> Contratos</a>
+                <a class="menu-item active" href="cursos.html"><i class="fas fa-graduation-cap"></i> Cursos</a>
+                <a class="menu-item" href="servicos.html"><i class="fas fa-concierge-bell"></i> Serviços</a>
+                <a class="menu-item" href="lojas.html"><i class="fas fa-store"></i> Lojas</a>
+                <a class="menu-item" href="download.html"><i class="fas fa-download"></i> Download</a>
+            </nav>
+        </aside>
+        <main class="content">
+            <div class="page-header">
+                <div class="page-title"><i class="fas fa-graduation-cap"></i> Cursos</div>
+            </div>
+            <div class="card">
+                <div class="card-header">Meus Cursos</div>
+                <ul>
+                    <li>Curso de Gestão Empresarial</li>
+                    <li>Curso de Vendas Online</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('href');
+                    window.location.href = page;
+                });
+            });
+            document.querySelector('.dark-mode-toggle')?.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                if(document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+            }
+            if (window.ipcRenderer) {
+                window.ipcRenderer.on('new-notification', (data) => {
+                    alert(data.title + ': ' + data.message);
+                });
+            }
+        });
+        </script>
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+        }
+        if (window.ipcRenderer) {
+            window.ipcRenderer.on('new-notification', (data) => {
+                alert(data.title + ': ' + data.message);
+            });
+        }
+    });
+    </script>
+</body>
+</body>
+</html>

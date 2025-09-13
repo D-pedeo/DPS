@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saindo... - D.Pedro Soluções</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        
+        .logout-container {
+            max-width: 500px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 1.5rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <div class="spinner"></div>
+        <h2>Saindo do sistema...</h2>
+        <p>Você está sendo desconectado. Aguarde um momento.</p>
+    </div>
+
+    <script>
+        // Função para fazer logout
+        function logout() {
+            // Limpar dados de autenticação
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('sessionToken');
+            
+            // Redirecionar para a página de login após um breve delay
+            setTimeout(function() {
+                window.location.href = 'login.html';
+            }, 2000);
+        }
+        
+        // Executar logout quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            logout();
+        });
+    </script>
+</body>
+</html>

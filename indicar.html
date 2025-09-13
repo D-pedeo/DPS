@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indique e Ganhe - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ===== VARIÁVEIS DE CORES E ESTILOS ===== */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        /* ===== ESTILOS GERAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-speed);
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - var(--header-height));
+            padding-top: var(--header-height);
+        }
+
+        /* ===== CABEÇALHO ===== */
+        .kanawa-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .top-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .top-icons .menu-item {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+        }
+
+        .top-icons .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* ===== BARRA LATERAL ===== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--box-shadow);
+            overflow-y: auto;
+            transition: all var(--transition-speed);
+            z-index: 900;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            color: #555;
+            transition: all var(--transition-speed);
+            border-left: 4px solid transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .menu-item:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+
+        .menu-item.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        /* ===== CONTEÚDO PRINCIPAL ===== */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        /* ===== WIDGETS DO DASHBOARD ===== */
+        .dashboard-widget {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform var(--transition-speed);
+        }
+
+        .dashboard-widget:hover {
+            transform: translateY(-5px);
+        }
+
+        .widget-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.3rem;
+        }
+
+        .widget-icon i {
+            color: white;
+        }
+
+        .widget-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .widget-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* ===== TABELAS ===== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* ===== BADGES DE STATUS ===== */
+        .status-badge {
+            padding: 0.35rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: rgba(243, 156, 18, 0.15);
+            color: var(--warning-color);
+        }
+
+        .status-approved {
+            background-color: rgba(39, 174, 96, 0.15);
+            color: var(--success-color);
+        }
+
+        .status-rejected {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+        }
+
+        /* ===== BOTÕES ===== */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219955;
+            transform: translateY(-2px);
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        /* ===== NOTIFICAÇÕES ===== */
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== ASSISTENTE DE IA ===== */
+        .ai-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* ===== BOTÃO DE MODO ESCURO ===== */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        /* ===== FORMULÁRIOS ===== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        /* ===== CHAT ===== */
+        .chat-container {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            max-width: 80%;
+            position: relative;
+        }
+
+        .bot-message {
+            background-color: white;
+            align-self: flex-start;
+            border: 1px solid #eee;
+        }
+
+        .user-message {
+            background-color: var(--secondary-color);
+            color: white;
+            align-self: flex-end;
+        }
+
+        /* ===== CARDS DE RECOMPENSA ===== */
+        .reward-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .reward-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed);
+            text-align: center;
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .reward-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .reward-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+            background-color: var(--secondary-color);
+        }
+
+        .reward-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .reward-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .reward-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success-color);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== ETAPAS DO PROCESSO ===== */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #eee;
+            z-index: 1;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            background-color: var(--secondary-color);
+            border: 4px solid white;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* ===== MODO ESCURO ===== */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .sidebar,
+        body.dark-mode .card,
+        body.dark-mode .dashboard-widget,
+        body.dark-mode .data-table th,
+        body.dark-mode .reward-card {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .data-table tr:hover,
+        body.dark-mode .menu-item:hover {
+            background-color: #3d3d3d;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #3d3d3d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .menu-item {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode h1, 
+        body.dark-mode h2, 
+        body.dark-mode h3, 
+        body.dark-mode h4, 
+        body.dark-mode h5, 
+        body.dark-mode h6 {
+            color: #e0e0e0;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 1200px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                height: calc(100vh - var(--header-height));
+                top: var(--header-height);
+                z-index: 999;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+
+            .process-steps {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .process-steps::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kanawa-header {
+                padding: 0 1rem;
+            }
+            
+            .top-icons .menu-item span {
+                display: none;
+            }
+            
+            .top-icons .menu-item {
+                font-size: 1.2rem;
+                padding: 0.5rem;
+            }
+            
+            .logo span {
+                font-size: 1.1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .dashboard-widget {
+                min-width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .reward-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .ai-assistant, .dark-mode-toggle {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .dark-mode-toggle {
+                bottom: 6rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .kanawa-header {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding-top: 90px;
+            }
+            
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="kanawa-header">
+        <div class="logo">
+            <a href='DPS.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+            <span>D.Pedro Soluções</span>
+        </div>
+        <div class="top-icons">
+            <a href="index.html" class="menu-item"><i class="fas fa-home"></i> <span>Página Principal</span></a>
+            <a href="martketing/marketing.html" class="menu-item"><i class="fas fa-users"></i> <span>MARKETING DIGITAL</span></a>
+            <a href="contratos.html" class="menu-item"><i class="fas fa-file-contract"></i> <span>Contratos</span></a>
+            <a href="cursos.html" class="menu-item"><i class="fas fa-graduation-cap"></i> <span>Cursos</span></a>
+            <a href="servicos.html" class="menu-item"><i class="fas fa-briefcase"></i> <span>Serviços</span></a>
+            <a href="lojas.html" class="menu-item"><i class="fas fa-store"></i> <span>Lojas</span></a>
+            <a href="download.html" class="menu-item"><i class="fas fa-download"></i> <span>Aplicativos</span></a>
+            
+            <div style="position:relative;">
+                <a href="#" id="notificationsBtn" style="color:white;position:relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                <div id="notificationsDropdown">
+                    <h5 style="margin-bottom:1rem;">Notificações</h5>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Nova indicação recebida</strong></p>
+                        <small>Há 2 horas</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Parabéns! Você ganhou 50 tokens</strong></p>
+                        <small>Hoje, 09:30</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Sua recompensa está disponível</strong></p>
+                        <small>Ontem, 16:45</small>
+                    </div>
+                    <a href="#" style="display:block;text-align:center;margin-top:1rem;color:var(--secondary-color);">Ver todas</a>
+                </div>
+            </div>
+            
+            <div style="position:relative;">
+                <a href="#" id="userMenuBtn" style="color:white;display:flex;align-items:center;">
+                    <img src="https://i.postimg.cc/7YQvLZxX/user-avatar.jpg" alt="User" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
+                    <span>Daniel Pedro</span>
+                </a>
+                <div id="userMenuDropdown">
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-user"></i> Perfil</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-cog"></i> Configurações</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <a href="tokens-ia.html" class="menu-item"><i class="fas fa-robot"></i> Tokens de IA</a>
+            <a href="recursos.html" class="menu-item"><i class="fas fa-box-open"></i> Recursos Disponíveis</a>
+            <a href="atualizacoes.html" class="menu-item"><i class="fas fa-sync-alt"></i> Atualizações/Postagens</a>
+            <a href="notificacoes.html" class="menu-item"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="loja-virtual.html" class="menu-item"><i class="fas fa-shopping-cart"></i> Loja</a>
+            <a href="comunicacao.html" class="menu-item"><i class="fas fa-comments"></i> Meios de comunicação</a>
+            <a href="seo.html" class="menu-item"><i class="fas fa-search-plus"></i> Otimização SEO</a>
+            <a href="recursos-indisponiveis.html" class="menu-item"><i class="fas fa-ban"></i> Recursos Indisponíveis</a>
+            <a href="modelos.html" class="menu-item"><i class="fas fa-clone"></i> Modelos</a>
+            <a href="cardapio.html" class="menu-item"><i class="fas fa-utensils"></i> Cardápio</a>
+            <a href="analise.html" class="menu-item"><i class="fas fa-chart-bar"></i> Análise</a>
+            <a href="assinantes.html" class="menu-item"><i class="fas fa-users"></i> Assinantes</a>
+            <a href="dominio.html" class="menu-item"><i class="fas fa-globe"></i> Domínio</a>
+            <a href="integracao.html" class="menu-item"><i class="fas fa-plug"></i> Integração</a>
+            <a href="manutencao.html" class="menu-item"><i class="fas fa-tools"></i> Manutenção</a>
+            <a href="indicar.html" class="menu-item active"><i class="fas fa-gift"></i> Indique e ganhe</a>
+            <a href="ajuda.html" class="menu-item"><i class="fas fa-question-circle"></i> Sobre e ajuda</a>
+            <a href="sair.html" class="menu-item"><i class="fas fa-sign-out-alt"></i> Produtos</a>
+        </aside>
+
+        <main class="content">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-gift"></i>
+                    Indique e Ganhe
+                </h1>
+                <div>
+                    <button class="btn btn-primary" id="shareButton">
+                        <i class="fas fa-share-alt"></i> Compartilhar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Dashboard Widgets -->
+            <div class="row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--success-color);">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="widget-value" id="referralsCount">12</div>
+                    <div class="widget-title">Indicações</div>
+                    <small style="color: var(--success-color);">
+                        <i class="fas fa-arrow-up"></i> <span id="referralsGrowth">5</span> este mês
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--secondary-color);">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="widget-value" id="tokensEarned">350</div>
+                    <div class="widget-title">Tokens Ganhos</div>
+                    <small style="color: var(--secondary-color);">
+                        <i class="fas fa-arrow-up"></i> <span id="tokensGrowth">150</span> este mês
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--warning-color);">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="widget-value" id="pendingRewards">3</div>
+                    <div class="widget-title">Recompensas Pendentes</div>
+                    <small style="color: var(--warning-color);">
+                        <i class="fas fa-clock"></i> Aguardando aprovação
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--info-color);">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="widget-value" id="claimedRewards">5</div>
+                    <div class="widget-title">Recompensas Resgatadas</div>
+                    <small style="color: var(--info-color);">
+                        <i class="fas fa-gift"></i> Total resgatado
+                    </small>
+                </div>
+            </div>
+            
+            <!-- Como Funciona -->
+            <div class="card">
+                <h2>Como Funciona</h2>
+                <p>Indique amigos para a D.Pedro Soluções e ganhe recompensas incríveis! Cada indicação que se tornar um cliente ativo vale tokens que você pode trocar por benefícios exclusivos.</p>
+                
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Compartilhe seu link</div>
+                        <div class="step-description">Use seu link único para indicar amigos</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Amigo se cadastra</div>
+                        <div class="step-description">Seu amigo se cadastra usando seu link</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Amigo vira cliente</div>
+                        <div class="step-description">Seu amigo se torna um cliente ativo</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Ganhe recompensas</div>
+                        <div class="step-description">Receba seus tokens de recompensa</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seu Link de Indicação -->
+            <div class="card">
+                <h2>Seu Link de Indicação</h2>
+                <p>Compartilhe este link único com seus amigos. Quando eles se cadastrarem usando este link, você receberá créditos para recompensas.</p>
+                
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="referralLink" value="https://dpedrosolucoes.com/ref/danielpedro9832" readonly>
+                        <button class="btn btn-primary" id="copyLinkBtn">
+                            <i class="fas fa-copy"></i> Copiar
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" id="shareWhatsAppBtn">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </button>
+                    <button class="btn btn-secondary" id="shareFacebookBtn">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                    <button class="btn btn-secondary" id="shareEmailBtn">
+                        <i class="fas fa-envelope"></i> E-mail
+                    </button>
+                    <button class="btn btn-secondary" id="shareTelegramBtn">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Recompensas Disponíveis -->
+            <div class="card">
+                <h2>Recompensas Disponíveis</h2>
+                <p>Troque seus tokens por essas recompensas incríveis:</p>
+                
+                <div class="reward-cards">
+                    <div class="reward-card">
+                        <div class="reward-icon" style="background-color: #3498db;">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="reward-title">Tokens de IA</div>
+                        <div class="reward-description">100 tokens de IA para usar em nossos recursos de inteligência artificial</div>
+                        <div class="reward-value">50 Tokens</div>
+                        <button class="btn btn-primary">Resgatar</button>
+                    </div>
+                    
+                    <div class="reward-card">
+                        <div class="reward-icon" style="background-color: #27ae60;">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="reward-title">Desconto Premium</div>
+                        <div class="reward-description">20% de desconto em qualquer plano premium por 3 meses</div>
+                        <div class="reward-value">75 Tokens</div>
+                        <button class="btn btn-primary">Resgatar</button>
+                    </div>
+                    
+                    <div class="reward-card">
+                        <div class="reward-icon" style="background-color: #f39c12;">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="reward-title">Kit Boas-Vindas</div>
+                        <div class="reward-description">Kit exclusivo de boas-vindas com brindes personalizados</div>
+                        <div class="reward-value">100 Tokens</div>
+                        <button class="btn btn-primary">Resgatar</button>
+                    </div>
+                    
+                    <div class="reward-card">
+                        <div class="reward-icon" style="background-color: #9b59b6;">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="reward-title">Assinatura VIP</div>
+                        <div class="reward-description">1 mês grátis de assinatura VIP com recursos exclusivos</div>
+                        <div class="reward-value">150 Tokens</div>
+                        <button class="btn btn-primary">Resgatar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Suas Indicações -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2>Suas Indicações</h2>
+                    <div>
+                        <button class="btn btn-secondary" id="exportReferralsBtn">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Tokens</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="referralsTableBody">
+                            <tr>
+                                <td>Carlos Silva</td>
+                                <td>carlos@email.com</td>
+                                <td>15/10/2023</td>
+                                <td><span class="status-badge status-approved">Aprovado</span></td>
+                                <td>50</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ana Costa</td>
+                                <td>ana.costa@email.com</td>
+                                <td>12/10/2023</td>
+                                <td><span class="status-badge status-approved">Aprovado</span></td>
+                                <td>50</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>João Mendes</td>
+                                <td>jmendes@email.com</td>
+                                <td>10/10/2023</td>
+                                <td><span class="status-badge status-pending">Pendente</span></td>
+                                <td>0</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Maria Oliveira</td>
+                                <td>maria.oliveira@email.com</td>
+                                <td>05/10/2023</td>
+                                <td><span class="status-badge status-approved">Aprovado</span></td>
+                                <td>50</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pedro Santos</td>
+                                <td>pedro.s@email.com</td>
+                                <td>01/10/2023</td>
+                                <td><span class="status-badge status-rejected">Rejeitado</span></td>
+                                <td>0</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+                    <div style="color: #666; font-size: 0.9rem;">
+                        Mostrando 5 de 12 indicações
+                    </div>
+                    <div>
+                        <button class="btn btn-sm" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="btn btn-sm" style="margin-left: 0.3rem; background-color: var(--secondary-color); color: white;">
+                            1
+                        </button>
+                        <button class="btn btn-sm" style="margin-left: 0.3rem;">
+                            2
+                        </button>
+                        <button class="btn btn-sm" style="margin-left: 0.3rem;">
+                            3
+                        </button>
+                        <button class="btn btn-sm" style="margin-left: 0.3rem;">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Perguntas Frequentes -->
+            <div class="card">
+                <h2>Perguntas Frequentes</h2>
+                
+                <div class="faq-item" style="margin-bottom: 1.5rem;">
+                    <h4>Como recebo minhas recompensas?</h4>
+                    <p>Assim que seu amigo se tornar um cliente ativo (realizar o primeiro pagamento), os tokens serão creditados automaticamente na sua conta em até 24 horas.</p>
+                </div>
+                
+                <div class="faq-item" style="margin-bottom: 1.5rem;">
+                    <h4>Quantas pessoas posso indicar?</h4>
+                    <p>Não há limite de indicações! Quanto mais amigos você indicar, mais recompensas você ganha.</p>
+                </div>
+                
+                <div class="faq-item" style="margin-bottom: 1.5rem;">
+                    <h4>Posso resgatar várias recompensas ao mesmo tempo?</h4>
+                    <p>Sim, desde que você tenha tokens suficientes para cada recompensa. Você pode resgatar quantas recompensas quiser.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>As recompensas têm prazo de validade?</h4>
+                    <p>Os tokens não expiram, mas as recompensas específicas podem ter prazos de validade. Verifique os detalhes de cada recompensa antes de resgatar.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Assistant Button -->
+    <div class="ai-assistant">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Modal de Compartilhamento -->
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-share-alt me-2"></i> Compartilhar Indicação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Compartilhe seu link de indicação com seus amigos:</p>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" value="https://dpedrosolucoes.com/ref/danielpedro9832" readonly>
+                        <button class="btn btn-outline-secondary" type="button" id="modalCopyBtn">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="d-flex justify-content-around mt-4">
+                        <button class="btn btn-success" style="border-radius: 50%; width: 50px; height: 50px;">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button class="btn btn-primary" style="border-radius: 50%; width: 50px; height: 50px;">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button class="btn btn-info" style="border-radius: 50%; width: 50px; height: 50px;">
+                            <i class="fab fa-telegram"></i>
+                        </button>
+                        <button class="btn btn-danger" style="border-radius: 50%; width: 50px; height: 50px;">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Chat Modal -->
+    <div class="modal fade" id="aiAssistantModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-robot"></i> Assistente de IA - Indicações
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="chat-container" id="aiChatContainer">
+                        <div class="message bot-message">
+                            Olá! Sou seu assistente para o programa de indicações. Posso ajudar com informações sobre como indicar amigos, recompensas disponíveis ou status das suas indicações. Como posso ajudá-lo?
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="aiChatInput" placeholder="Digite sua pergunta...">
+                        <button class="btn btn-primary" id="aiSendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Funções de inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar eventos
+            initEvents();
+            
+            // Verificar preferência de modo escuro
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('.dark-mode-toggle i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        });
+
+        // Inicializar eventos
+        function initEvents() {
+            // Botão de copiar link
+            document.getElementById('copyLinkBtn').addEventListener('click', function() {
+                const referralLink = document.getElementById('referralLink');
+                referralLink.select();
+                document.execCommand('copy');
+                
+                alert('Link copiado para a área de transferência!');
+            });
+            
+            // Botões de compartilhamento
+            document.getElementById('shareButton').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('shareModal'));
+                modal.show();
+            });
+            
+            document.getElementById('modalCopyBtn').addEventListener('click', function() {
+                const referralLink = document.querySelector('#shareModal input');
+                referralLink.select();
+                document.execCommand('copy');
+                
+                alert('Link copiado para a área de transferência!');
+            });
+            
+            // Botão de exportar
+            document.getElementById('exportReferralsBtn').addEventListener('click', function() {
+                alert('Funcionalidade de exportação será implementada em breve!');
+            });
+            
+            // Notificações dropdown
+            document.getElementById('notificationsBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('notificationsDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Fechar outros dropdowns
+                document.getElementById('userMenuDropdown').style.display = 'none';
+            });
+            
+            // User menu dropdown
+            document.getElementById('userMenuBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('userMenuDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Fechar outros dropdowns
+                document.getElementById('notificationsDropdown').style.display = 'none';
+            });
+            
+            // Fechar dropdowns ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#notificationsBtn') && !e.target.closest('#notificationsDropdown')) {
+                    document.getElementById('notificationsDropdown').style.display = 'none';
+                }
+                
+                if (!e.target.closest('#userMenuBtn') && !e.target.closest('#userMenuDropdown')) {
+                    document.getElementById('userMenuDropdown').style.display = 'none';
+                }
+            });
+            
+            // Dark mode toggle
+            document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                const icon = this.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // AI Assistant
+            document.querySelector('.ai-assistant').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('aiAssistantModal'));
+                modal.show();
+            });
+            
+            // Enviar mensagem para o assistente de IA
+            document.getElementById('aiSendBtn').addEventListener('click', function() {
+                sendAIMessage();
+            });
+            
+            document.getElementById('aiChatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendAIMessage();
+                }
+            });
+            
+            // Botões de recompensa
+            document.querySelectorAll('.reward-card .btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const rewardTitle = this.closest('.reward-card').querySelector('.reward-title').textContent;
+                    alert(`Você está prestes a resgatar: ${rewardTitle}`);
+                });
+            });
+        }
+
+        // Enviar mensagem para o assistente de IA
+        function sendAIMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Adicionar mensagem do usuário ao chat
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            document.getElementById('aiChatContainer').appendChild(userMessage);
+            
+            // Limpar input
+            input.value = '';
+            
+            // Simular resposta da IA após um pequeno delay
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot-message';
+                
+                // Respostas pré-definidas baseadas em palavras-chave
+                if (message.toLowerCase().includes('indicar') || message.toLowerCase().includes('indicacao')) {
+                    botMessage.textContent = 'Para indicar amigos, compartilhe seu link único de indicação. Quando seus amigos se cadastrarem e se tornarem clientes ativos, você receberá tokens de recompensa.';
+                } else if (message.toLowerCase().includes('recompensa') || message.toLowerCase().includes('token')) {
+                    botMessage.textContent = 'Você ganha 50 tokens para cada amigo que se tornar um cliente ativo. Os tokens podem ser trocados por recompensas na seção "Recompensas Disponíveis".';
+                } else if (message.toLowerCase().includes('status') || message.toLowerCase().includes('pendente')) {
+                    botMessage.textContent = 'Você pode verificar o status das suas indicações na tabela "Suas Indicações". Indicações aprovadas já renderam tokens, enquanto as pendentes ainda estão aguardando a ativação do cliente.';
+                } else if (message.toLowerCase().includes('resgatar') || message.toLowerCase().includes('como resgatar')) {
+                    botMessage.textContent = 'Para resgatar uma recompensa, vá até a seção "Recompensas Disponíveis", escolha a recompensa desejada e clique no botão "Resgatar". Se você tiver tokens suficientes, a recompensa será concedida.';
+                } else {
+                    botMessage.textContent = 'Como assistente do programa de indicações, posso ajudar com informações sobre como indicar amigos, recompensas disponíveis ou status das suas indicações. Sobre o que você gostaria de saber?';
+                }
+                
+                document.getElementById('aiChatContainer').appendChild(botMessage);
+                
+                // Rolagem automática para a última mensagem
+                document.getElementById('aiChatContainer').scrollTop = document.getElementById('aiChatContainer').scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

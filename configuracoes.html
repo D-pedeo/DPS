@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos existentes do sistema */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-speed);
+        }
+
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - var(--header-height));
+            padding-top: var(--header-height);
+        }
+
+        .kanawa-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .top-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .top-icons .menu-item {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+        }
+
+        .top-icons .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--box-shadow);
+            overflow-y: auto;
+            transition: all var(--transition-speed);
+            z-index: 900;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            color: #555;
+            transition: all var(--transition-speed);
+            border-left: 4px solid transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .menu-item:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+
+        .menu-item.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Estilos específicos para a página de configurações */
+        .settings-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .settings-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all var(--transition-speed);
+        }
+
+        .settings-tab.active {
+            border-bottom-color: var(--secondary-color);
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .settings-tab:hover {
+            background-color: #f8f9fa;
+        }
+
+        .settings-content {
+            display: none;
+        }
+
+        .settings-content.active {
+            display: block;
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+        }
+
+        .settings-section-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--secondary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .color-picker {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .backup-status {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .real-time-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Modo escuro */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .sidebar,
+        body.dark-mode .card {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .menu-item {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode h1, 
+        body.dark-mode h2, 
+        body.dark-mode h3, 
+        body.dark-mode h4, 
+        body.dark-mode h5, 
+        body.dark-mode h6 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #3d3d3d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                height: calc(100vh - var(--header-height));
+                top: var(--header-height);
+                z-index: 999;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kanawa-header {
+                padding: 0 1rem;
+            }
+            
+            .top-icons .menu-item span {
+                display: none;
+            }
+            
+            .top-icons .menu-item {
+                font-size: 1.2rem;
+                padding: 0.5rem;
+            }
+            
+            .logo span {
+                font-size: 1.1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .settings-tabs {
+                flex-direction: column;
+            }
+            
+            .settings-tab {
+                border-bottom: 1px solid #eee;
+                border-left: 3px solid transparent;
+            }
+            
+            .settings-tab.active {
+                border-bottom-color: #eee;
+                border-left-color: var(--secondary-color);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="kanawa-header">
+        <div class="logo">
+            <a href='DPS.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+            <span>D.Pedro Soluções</span>
+        </div>
+        <div class="top-icons">
+            <a href="DPS.html" class="menu-item"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+            <a href="contratos.html" class="menu-item"><i class="fas fa-file-contract"></i> <span>Contratos</span></a>
+            <a href="servicos.html" class="menu-item"><i class="fas fa-briefcase"></i> <span>Serviços</span></a>
+            
+            <div style="position:relative;">
+                <a href="#" id="notificationsBtn" style="color:white;position:relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+            </div>
+            
+            <div style="position:relative;">
+                <a href="#" id="userMenuBtn" style="color:white;display:flex;align-items:center;">
+                    <img src="https://i.postimg.cc/7YQvLZxX/user-avatar.jpg" alt="User" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
+                    <span>Daniel Pedro</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <a href="tokens-ia.html" class="menu-item"><i class="fas fa-robot"></i> Tokens de IA</a>
+            <a href="recursos.html" class="menu-item"><i class="fas fa-box-open"></i> Recursos Disponíveis</a>
+            <a href="atualizacoes.html" class="menu-item"><i class="fas fa-sync-alt"></i> Atualizações/Postagens</a>
+            <a href="notificacoes.html" class="menu-item"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="loja-virtual.html" class="menu-item"><i class="fas fa-shopping-cart"></i> Loja</a>
+            <a href="comunicacao.html" class="menu-item"><i class="fas fa-comments"></i> Meios de comunicação</a>
+            <a href="seo.html" class="menu-item"><i class="fas fa-search-plus"></i> Otimização SEO</a>
+            <a href="recursos-indisponiveis.html" class="menu-item"><i class="fas fa-ban"></i> Recursos Indisponíveis</a>
+            <a href="modelos.html" class="menu-item"><i class="fas fa-clone"></i> Modelos</a>
+            <a href="cardapio.html" class="menu-item"><i class="fas fa-utensils"></i> Cardápio</a>
+            <a href="analise.html" class="menu-item"><i class="fas fa-chart-bar"></i> Análise</a>
+            <a href="assinantes.html" class="menu-item"><i class="fas fa-users"></i> Assinantes</a>
+            <a href="dominio.html" class="menu-item"><i class="fas fa-globe"></i> Domínio</a>
+            <a href="integracao.html" class="menu-item"><i class="fas fa-plug"></i> Integração</a>
+            <a href="manutencao.html" class="menu-item"><i class="fas fa-tools"></i> Manutenção</a>
+            <a href="configuracoes.html" class="menu-item active"><i class="fas fa-cog"></i> Configurações</a>
+            <a href="indicar.html" class="menu-item"><i class="fas fa-gift"></i> Indique e ganhe</a>
+            <a href="ajuda.html" class="menu-item"><i class="fas fa-question-circle"></i> Sobre e ajuda</a>
+            <a href="sair.html" class="menu-item"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </aside>
+
+        <main class="content">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-cog"></i>
+                    Configurações do Sistema
+                </h1>
+                <div>
+                    <button class="btn btn-primary" id="saveAllSettings">
+                        <i class="fas fa-save"></i> Salvar Todas as Configurações
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-tabs">
+                <div class="settings-tab active" data-tab="geral">Geral</div>
+                <div class="settings-tab" data-tab="aparencia">Aparência</div>
+                <div class="settings-tab" data-tab="notificacoes">Notificações</div>
+                <div class="settings-tab" data-tab="seguranca">Segurança</div>
+                <div class="settings-tab" data-tab="backup">Backup & Restauração</div>
+                <div class="settings-tab" data-tab="integracao">Integrações</div>
+                <div class="settings-tab" data-tab="avancado">Avançado</div>
+            </div>
+
+            <!-- Conteúdo da aba Geral -->
+            <div class="settings-content active" id="geral-content">
+                <div class="card">
+                    <h3>Configurações Gerais</h3>
+                    
+                    <div class="settings-section">
+                        <h4 class="settings-section-title">Informações da Empresa</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="companyName" class="form-label">Nome da Empresa</label>
+                                    <input type="text" class="form-control" id="companyName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="companyEmail" class="form-label">Email da Empresa</label>
+                                    <input type="email" class="form-control" id="companyEmail">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="companyPhone" class="form-label">Telefone</label>
+                                    <input type="tel" class="form-control" id="companyPhone">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="companyWebsite" class="form-label">Website</label>
+                                    <input type="url" class="form-control" id="companyWebsite">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="companyAddress" class="form-label">Endereço</label>
+                            <textarea class="form-control" id="companyAddress" rows="2"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4 class="settings-section-title">Preferências do Sistema</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="systemLanguage" class="form-label">Idioma</label>
+                                    <select class="form-control" id="systemLanguage">
+                                        <option value="pt">Português</option>
+                                        <option value="en">Inglês</option>
+                                        <option value="es">Espanhol</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="systemCurrency" class="form-label">Moeda</label>
+                                    <select class="form-control" id="systemCurrency">
+                                        <option value="AOA">Kwanza Angolano (AOA)</option>
+                                        <option value="USD">Dólar Americano (USD)</option>
+                                        <option value="EUR">Euro (EUR)</option>
+                                        <option value="BRL">Real Brasileiro (BRL)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="dateFormat" class="form-label">Formato de Data</label>
+                                    <select class="form-control" id="dateFormat">
+                                        <option value="dd/MM/yyyy">DD/MM/AAAA</option>
+                                        <option value="MM/dd/yyyy">MM/DD/AAAA</option>
+                                        <option value="yyyy-MM-dd">AAAA-MM-DD</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="timeFormat" class="form-label">Formato de Hora</label>
+                                    <select class="form-control" id="timeFormat">
+                                        <option value="24">24 horas</option>
+                                        <option value="12">12 horas (AM/PM)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conteúdo da aba Aparência -->
+            <div class="settings-content" id="aparencia-content">
+                <div class="card">
+                    <h3>Personalização da Aparência</h3>
+                    
+                    <div class="settings-section">
+                        <h4 class="settings-section-title">Tema</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Modo Escuro</label>
+                                    <div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="darkModeToggle">
+                                            <span class="slider"></span>
+                                        </label>
+                                        <span style="margin-left: 10px;">Ativar/Desativar</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Tema do Sistema</label>
+                                    <select class="form-control" id="systemTheme">
+                                        <option value="default">Padrão</option>
+                                        <option value="light">Claro</option>
+                                        <option value="dark">Escuro</option>
+                                        <option value="auto">Automático (segue o sistema)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4 class="settings-section-title">Cores Personalizadas</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="primaryColor" class="form-label">Cor Primária</label>
+                                    <div>
+                                        <input type="color" class="color-picker" id="primaryColor" value="#2c3e50">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="secondaryColor" class="form-label">Cor Secundária</label>
+                                    <div>
+                                        <input type="color" class="color-picker" id="secondaryColor" value="#3498db">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="accentColor" class="form-label">Cor de Destaque</label>
+                                    <div>
+                                        <input type="color" class="color-picker" id="accentColor" value="#e74c3c">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="successColor" class="form-label">Cor de Sucesso</label>
+                                    <div>
+                                        <input type="color" class="color-picker" id="successColor" value="#27ae60">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-secondary" id="resetColors">
+                            <i class="fas fa-undo"></i> Redefinir Cores Padrão
+                        </button>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4 class="settings-section-title">Layout</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Layout do Menu</label>
+                                    <select class="form-control" id="menuLayout">
+                                        <option value="vertical">Vertical (Padrão)</option>
+                                        <option value="horizontal">Horizontal</option>
+                                        <option value="collapsible">Recolhível</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Densidade de Informação</label>
+                                    <select class="form-control" id="informationDensity">
+                                        <option value="comfortable">Confortável</option>
+                                        <option value="compact">Compacto</option>
+                                        <option value="spacious">Espaçoso</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conteúdo das outras abas (simplificado para este exemplo) -->
+            <div class="settings-content" id="notificacoes-content">
+                <div class="card">
+                    <h3>Configurações de Notificações</h3>
+                    <p>Configure como e quando receber notificações do sistema.</p>
+                    <!-- Conteúdo detalhado das notificações -->
+                </div>
+            </div>
+
+            <div class="settings-content" id="seguranca-content">
+                <div class="card">
+                    <h3>Configurações de Segurança</h3>
+                    <p>Gerencie as configurações de segurança e privacidade do sistema.</p>
+                    <!-- Conteúdo detalhado de segurança -->
+                </div>
+            </div>
+
+            <div class="settings-content" id="backup-content">
+                <div class="card">
+                    <h3>Backup e Restauração</h3>
+                    
+                    <div class="settings-section">
+                        <h4 class="settings-section-title">Backup do Sistema</h4>
+                        
+                        <div class="backup-status">
+                            <p><strong>Último backup:</strong> <span id="lastBackupDate">Nunca</span></p>
+                            <p><strong>Próximo backup automático:</strong> <span id="nextBackupDate">-</span></p>
+                            <p><strong>Tamanho do backup:</strong> <span id="backupSize">-</span></p>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Frequência de Backup</label>
+                                    <select class="form-control" id="backupFrequency">
+                                        <option value="daily">Diariamente</option>
+                                        <option value="weekly">Semanalmente</option>
+                                        <option value="monthly">Mensalmente</option>
+                                        <option value="never">Nunca (apenas manual)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="backupTime" class="form-label">Hora do Backup</label>
+                                    <input type="time" class="form-control" id="backupTime" value="02:00">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Itens para Backup</label>
+                            <div>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="backupProjects" checked> Projetos
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="backupClients" checked> Clientes
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="backupSettings" checked> Configurações
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="backupActivities" checked> Atividades
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button class="btn btn-primary" id="backupNow">
+                                <i class="fas fa-download"></i> Fazer Backup Agora
+                            </button>
+                            <button class="btn btn-secondary" id="restoreBackup" style="margin-left: 10px;">
+                                <i class="fas fa-upload"></i> Restaurar Backup
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4 class="settings-section-title">Histórico de Backups</h4>
+                        <div id="backupHistory">
+                            <p>Nenhum backup encontrado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-content" id="integracao-content">
+                <div class="card">
+                    <h3>Integrações</h3>
+                    <p>Configure integrações com outros serviços e plataformas.</p>
+                    <!-- Conteúdo detalhado de integrações -->
+                </div>
+            </div>
+
+            <div class="settings-content" id="avancado-content">
+                <div class="card">
+                    <h3>Configurações Avançadas</h3>
+                    <p>Acesse configurações avançadas do sistema.</p>
+                    <!-- Conteúdo detalhado de configurações avançadas -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // BANCO DE DADOS UNIFICADO
+    // =============================================
+    const DB_NAME = 'DPSystemDB';
+    const DB_VERSION = 2; // Versão incrementada para incluir configurações
+    let db;
+
+    // Inicializar o banco de dados
+    function initDatabase() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            
+            request.onerror = event => {
+                console.error('Erro ao abrir o banco de dados:', event.target.error);
+                reject(event.target.error);
+            };
+            
+            request.onsuccess = event => {
+                db = event.target.result;
+                console.log('Banco de dados aberto com sucesso');
+                resolve(db);
+            };
+            
+            request.onupgradeneeded = event => {
+                const db = event.target.result;
+                
+                // Criar object store para projetos
+                if (!db.objectStoreNames.contains('projects')) {
+                    const projectsStore = db.createObjectStore('projects', { keyPath: 'id', autoIncrement: true });
+                    projectsStore.createIndex('name', 'name', { unique: false });
+                    projectsStore.createIndex('client', 'client', { unique: false });
+                    projectsStore.createIndex('status', 'status', { unique: false });
+                }
+                
+                // Criar object store para clientes
+                if (!db.objectStoreNames.contains('clients')) {
+                    const clientsStore = db.createObjectStore('clients', { keyPath: 'id', autoIncrement: true });
+                    clientsStore.createIndex('name', 'name', { unique: true });
+                }
+                
+                // Criar object store para atividades
+                if (!db.objectStoreNames.contains('activities')) {
+                    const activitiesStore = db.createObjectStore('activities', { keyPath: 'id', autoIncrement: true });
+                    activitiesStore.createIndex('date', 'date', { unique: false });
+                }
+                
+                // Criar object store para configurações (NOVO)
+                if (!db.objectStoreNames.contains('settings')) {
+                    const settingsStore = db.createObjectStore('settings', { keyPath: 'key' });
+                }
+                
+                // Criar object store para backups (NOVO)
+                if (!db.objectStoreNames.contains('backups')) {
+                    const backupsStore = db.createObjectStore('backups', { keyPath: 'id', autoIncrement: true });
+                    backupsStore.createIndex('date', 'date', { unique: false });
+                }
+                
+                // Criar object store para logs do sistema (NOVO)
+                if (!db.objectStoreNames.contains('system_logs')) {
+                    const logsStore = db.createObjectStore('system_logs', { keyPath: 'id', autoIncrement: true });
+                    logsStore.createIndex('date', 'date', { unique: false });
+                    logsStore.createIndex('type', 'type', { unique: false });
+                }
+                
+                console.log('Estrutura do banco de dados criada/atualizada');
+            };
+        });
+    }
+
+    // =============================================
+    // OPERAÇÕES DO BANCO DE DADOS
+    // =============================================
+    
+    // Adicionar um item
+    function addItem(storeName, item) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.add(item);
+            
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Obter todos os itens de uma store
+    function getAllItems(storeName) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readonly');
+            const store = transaction.objectStore(storeName);
+            const request = store.getAll();
+            
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Obter um item por chave
+    function getItem(storeName, key) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readonly');
+            const store = transaction.objectStore(storeName);
+            const request = store.get(key);
+            
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Atualizar um item
+    function updateItem(storeName, item) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.put(item);
+            
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Deletar um item
+    function deleteItem(storeName, key) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.delete(key);
+            
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // Salvar configuração
+    function saveSetting(key, value) {
+        return updateItem('settings', { key, value, updatedAt: new Date() });
+    }
+    
+    // Carregar configuração
+    function loadSetting(key, defaultValue = null) {
+        return getItem('settings', key).then(result => {
+            return result ? result.value : defaultValue;
+        }).catch(() => defaultValue);
+    }
+    
+    // =============================================
+    // SISTEMA DE TEMPO REAL (SIMULAÇÃO COM WEBSOCKET)
+    // =============================================
+    
+    // Simulação de conexão WebSocket para tempo real
+    function initRealTimeConnection() {
+        console.log('Iniciando conexão em tempo real...');
+        
+        // Simulação de atualizações em tempo real
+        setInterval(() => {
+            // Atualizar status de backup
+            updateBackupStatus();
+            
+            // Simular notificações
+            simulateRealTimeNotifications();
+        }, 30000); // A cada 30 segundos
+        
+        // Inicializar status
+        updateBackupStatus();
+    }
+    
+    function updateBackupStatus() {
+        // Simular dados de backup
+        const lastBackup = new Date();
+        lastBackup.setDate(lastBackup.getDate() - 1);
+        document.getElementById('lastBackupDate').textContent = lastBackup.toLocaleString();
+        
+        const nextBackup = new Date();
+        nextBackup.setDate(nextBackup.getDate() + 1);
+        nextBackup.setHours(2, 0, 0, 0);
+        document.getElementById('nextBackupDate').textContent = nextBackup.toLocaleString();
+        
+        document.getElementById('backupSize').textContent = '2.4 MB';
+    }
+    
+    function simulateRealTimeNotifications() {
+        // Simular notificações em tempo real
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            const count = parseInt(notificationBadge.textContent);
+            notificationBadge.textContent = count + 1;
+            
+            // Adicionar animação
+            notificationBadge.classList.add('real-time-badge');
+            setTimeout(() => {
+                notificationBadge.classList.remove('real-time-badge');
+            }, 2000);
+        }
+    }
+    
+    // =============================================
+    // SISTEMA DE BACKUP E RESTAURAÇÃO
+    // =============================================
+    
+    async function createBackup() {
+        try {
+            console.log('Iniciando backup...');
+            
+            // Coletar dados de todas as stores
+            const backupData = {
+                timestamp: new Date(),
+                version: DB_VERSION,
+                projects: await getAllItems('projects'),
+                clients: await getAllItems('clients'),
+                activities: await getAllItems('activities'),
+                settings: await getAllItems('settings')
+            };
+            
+            // Salvar o backup no IndexedDB
+            await addItem('backups', {
+                date: new Date(),
+                data: JSON.stringify(backupData),
+                size: JSON.stringify(backupData).length
+            });
+            
+            // Registrar no log
+            await addItem('system_logs', {
+                date: new Date(),
+                type: 'backup',
+                message: 'Backup criado com sucesso',
+                details: `Tamanho: ${JSON.stringify(backupData).length} bytes`
+            });
+            
+            console.log('Backup concluído com sucesso');
+            alert('Backup criado com sucesso!');
+            
+            // Atualizar status
+            updateBackupStatus();
+            
+            return backupData;
+        } catch (error) {
+            console.error('Erro ao criar backup:', error);
+            alert('Erro ao criar backup: ' + error.message);
+        }
+    }
+    
+    async function restoreBackup(backupData) {
+        try {
+            console.log('Iniciando restauração...');
+            
+            // Limpar dados existentes
+            await clearStore('projects');
+            await clearStore('clients');
+            await clearStore('activities');
+            await clearStore('settings');
+            
+            // Restaurar dados
+            for (const project of backupData.projects) {
+                await addItem('projects', project);
+            }
+            
+            for (const client of backupData.clients) {
+                await addItem('clients', client);
+            }
+            
+            for (const activity of backupData.activities) {
+                await addItem('activities', activity);
+            }
+            
+            for (const setting of backupData.settings) {
+                await addItem('settings', setting);
+            }
+            
+            // Registrar no log
+            await addItem('system_logs', {
+                date: new Date(),
+                type: 'restore',
+                message: 'Backup restaurado com sucesso',
+                details: `Data do backup: ${backupData.timestamp}`
+            });
+            
+            console.log('Restauração concluída com sucesso');
+            alert('Backup restaurado com sucesso!');
+            
+            // Recarregar configurações
+            loadAllSettings();
+            
+        } catch (error) {
+            console.error('Erro ao restaurar backup:', error);
+            alert('Erro ao restaurar backup: ' + error.message);
+        }
+    }
+    
+    function clearStore(storeName) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.clear();
+            
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    // =============================================
+    // GERENCIAMENTO DE CONFIGURAÇÕES
+    // =============================================
+    
+    // Salvar todas as configurações
+    async function saveAllSettings() {
+        try {
+            // Configurações Gerais
+            await saveSetting('companyName', document.getElementById('companyName').value);
+            await saveSetting('companyEmail', document.getElementById('companyEmail').value);
+            await saveSetting('companyPhone', document.getElementById('companyPhone').value);
+            await saveSetting('companyWebsite', document.getElementById('companyWebsite').value);
+            await saveSetting('companyAddress', document.getElementById('companyAddress').value);
+            await saveSetting('systemLanguage', document.getElementById('systemLanguage').value);
+            await saveSetting('systemCurrency', document.getElementById('systemCurrency').value);
+            await saveSetting('dateFormat', document.getElementById('dateFormat').value);
+            await saveSetting('timeFormat', document.getElementById('timeFormat').value);
+            
+            // Configurações de Aparência
+            await saveSetting('darkMode', document.getElementById('darkModeToggle').checked);
+            await saveSetting('systemTheme', document.getElementById('systemTheme').value);
+            await saveSetting('primaryColor', document.getElementById('primaryColor').value);
+            await saveSetting('secondaryColor', document.getElementById('secondaryColor').value);
+            await saveSetting('accentColor', document.getElementById('accentColor').value);
+            await saveSetting('successColor', document.getElementById('successColor').value);
+            await saveSetting('menuLayout', document.getElementById('menuLayout').value);
+            await saveSetting('informationDensity', document.getElementById('informationDensity').value);
+            
+            // Configurações de Backup
+            await saveSetting('backupFrequency', document.getElementById('backupFrequency').value);
+            await saveSetting('backupTime', document.getElementById('backupTime').value);
+            await saveSetting('backupProjects', document.getElementById('backupProjects').checked);
+            await saveSetting('backupClients', document.getElementById('backupClients').checked);
+            await saveSetting('backupSettings', document.getElementById('backupSettings').checked);
+            await saveSetting('backupActivities', document.getElementById('backupActivities').checked);
+            
+            // Aplicar configurações visuais imediatamente
+            applyVisualSettings();
+            
+            // Registrar no log
+            await addItem('system_logs', {
+                date: new Date(),
+                type: 'settings',
+                message: 'Configurações salvas com sucesso'
+            });
+            
+            alert('Configurações salvas com sucesso!');
+        } catch (error) {
+            console.error('Erro ao salvar configurações:', error);
+            alert('Erro ao salvar configurações: ' + error.message);
+        }
+    }
+    
+    // Carregar todas as configurações
+    async function loadAllSettings() {
+        try {
+            // Configurações Gerais
+            document.getElementById('companyName').value = await loadSetting('companyName', 'D.Pedro Soluções');
+            document.getElementById('companyEmail').value = await loadSetting('companyEmail', 'contato@dpedrosolucoes.com');
+            document.getElementById('companyPhone').value = await loadSetting('companyPhone', '+244 923 456 789');
+            document.getElementById('companyWebsite').value = await loadSetting('companyWebsite', 'https://dpedrosolucoes.com');
+            document.getElementById('companyAddress').value = await loadSetting('companyAddress', 'Luanda, Angola');
+            document.getElementById('systemLanguage').value = await loadSetting('systemLanguage', 'pt');
+            document.getElementById('systemCurrency').value = await loadSetting('systemCurrency', 'AOA');
+            document.getElementById('dateFormat').value = await loadSetting('dateFormat', 'dd/MM/yyyy');
+            document.getElementById('timeFormat').value = await loadSetting('timeFormat', '24');
+            
+            // Configurações de Aparência
+            document.getElementById('darkModeToggle').checked = await loadSetting('darkMode', false);
+            document.getElementById('systemTheme').value = await loadSetting('systemTheme', 'default');
+            document.getElementById('primaryColor').value = await loadSetting('primaryColor', '#2c3e50');
+            document.getElementById('secondaryColor').value = await loadSetting('secondaryColor', '#3498db');
+            document.getElementById('accentColor').value = await loadSetting('accentColor', '#e74c3c');
+            document.getElementById('successColor').value = await loadSetting('successColor', '#27ae60');
+            document.getElementById('menuLayout').value = await loadSetting('menuLayout', 'vertical');
+            document.getElementById('informationDensity').value = await loadSetting('informationDensity', 'comfortable');
+            
+            // Configurações de Backup
+            document.getElementById('backupFrequency').value = await loadSetting('backupFrequency', 'weekly');
+            document.getElementById('backupTime').value = await loadSetting('backupTime', '02:00');
+            document.getElementById('backupProjects').checked = await loadSetting('backupProjects', true);
+            document.getElementById('backupClients').checked = await loadSetting('backupClients', true);
+            document.getElementById('backupSettings').checked = await loadSetting('backupSettings', true);
+            document.getElementById('backupActivities').checked = await loadSetting('backupActivities', true);
+            
+            // Aplicar configurações visuais
+            applyVisualSettings();
+            
+        } catch (error) {
+            console.error('Erro ao carregar configurações:', error);
+        }
+    }
+    
+    // Aplicar configurações visuais
+    function applyVisualSettings() {
+        // Aplicar modo escuro
+        if (document.getElementById('darkModeToggle').checked) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+        
+        // Aplicar cores personalizadas
+        document.documentElement.style.setProperty('--primary-color', document.getElementById('primaryColor').value);
+        document.documentElement.style.setProperty('--secondary-color', document.getElementById('secondaryColor').value);
+        document.documentElement.style.setProperty('--accent-color', document.getElementById('accentColor').value);
+        document.documentElement.style.setProperty('--success-color', document.getElementById('successColor').value);
+    }
+    
+    // =============================================
+    // INICIALIZAÇÃO DA PÁGINA
+    // =============================================
+    
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Inicializar banco de dados
+        try {
+            await initDatabase();
+            console.log('Banco de dados inicializado com sucesso');
+            
+            // Carregar configurações
+            await loadAllSettings();
+            
+            // Inicializar sistema de tempo real
+            initRealTimeConnection();
+            
+        } catch (error) {
+            console.error('Erro ao inicializar o banco de dados:', error);
+        }
+        
+        // Configurar abas de configurações
+        const settingsTabs = document.querySelectorAll('.settings-tab');
+        settingsTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remover classe ativa de todas as abas
+                settingsTabs.forEach(t => t.classList.remove('active'));
+                
+                // Adicionar classe ativa à aba clicada
+                tab.classList.add('active');
+                
+                // Esconder todo o conteúdo
+                document.querySelectorAll('.settings-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Mostrar o conteúdo correspondente
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-content`).classList.add('active');
+            });
+        });
+        
+        // Botão salvar configurações
+        document.getElementById('saveAllSettings').addEventListener('click', saveAllSettings);
+        
+        // Botão fazer backup
+        document.getElementById('backupNow').addEventListener('click', createBackup);
+        
+        // Botão restaurar backup
+        document.getElementById('restoreBackup').addEventListener('click', async () => {
+            // Simulação: carregar o último backup
+            const backups = await getAllItems('backups');
+            if (backups.length > 0) {
+                const lastBackup = backups[backups.length - 1];
+                if (confirm('Tem certeza que deseja restaurar o backup?')) {
+                    await restoreBackup(JSON.parse(lastBackup.data));
+                }
+            } else {
+                alert('Nenhum backup encontrado para restaurar.');
+            }
+        });
+        
+        // Botão redefinir cores
+        document.getElementById('resetColors').addEventListener('click', () => {
+            document.getElementById('primaryColor').value = '#2c3e50';
+            document.getElementById('secondaryColor').value = '#3498db';
+            document.getElementById('accentColor').value = '#e74c3c';
+            document.getElementById('successColor').value = '#27ae60';
+            applyVisualSettings();
+        });
+        
+        // Aplicar mudanças imediatas nas cores
+        const colorPickers = document.querySelectorAll('.color-picker');
+        colorPickers.forEach(picker => {
+            picker.addEventListener('change', applyVisualSettings);
+        });
+        
+        // Aplicar mudanças imediatas no modo escuro
+        document.getElementById('darkModeToggle').addEventListener('change', applyVisualSettings);
+    });
+    </script>
+</body>
+</html>

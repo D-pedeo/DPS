@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrações - D.Pedro Soluções</title>
+    
+    <!-- Bibliotecas externas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+        /* ===== VARIÁVEIS CSS ===== */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        /* ===== ESTILOS GERAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ===== CABEÇALHO ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        /* ===== BOTÕES ===== */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* ===== DASHBOARD DE INTEGRAÇÃO ===== */
+        .integration-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: var(--success-color);
+        }
+
+        .change-negative {
+            color: var(--danger-color);
+        }
+
+        /* ===== ABAS ===== */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ===== TABELAS ===== */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(39, 174, 96, 0.15);
+            color: var(--success-color);
+        }
+
+        .status-inactive {
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+        }
+
+        .status-pending {
+            background: rgba(241, 196, 15, 0.15);
+            color: var(--warning-color);
+        }
+
+        /* ===== FORMULÁRIOS ===== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* ===== FILTROS ===== */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 200px;
+        }
+
+        /* ===== CARDS DE API ===== */
+        .api-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .api-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed);
+        }
+
+        .api-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .api-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .api-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .emailjs-icon {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .rest-icon {
+            background: linear-gradient(135deg, #27ae60, #219653);
+        }
+
+        .api-title {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        .api-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== ENDPOINT ===== */
+        .endpoint {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-family: monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .endpoint-method {
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .method-get {
+            background: rgba(52, 152, 219, 0.2);
+            color: #2980b9;
+        }
+
+        .method-post {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+        }
+
+        .method-put {
+            background: rgba(241, 196, 15, 0.2);
+            color: #f39c12;
+        }
+
+        .method-delete {
+            background: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+        }
+
+        /* ===== ÁREA DE TESTE ===== */
+        .test-area {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .test-result {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 768px) {
+            .integration-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .api-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                min-width: 100%;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 0;
+            }
+        }
+
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-plug"></i>
+                    Integrações
+                </h1>
+            </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiConfigModal">
+                <i class="fas fa-cog"></i> Configurações
+            </button>
+        </div>
+
+        <!-- Dashboard de Integração -->
+        <div class="integration-dashboard">
+            <div class="metric-card">
+                <div class="metric-value" id="apiCalls">1,248</div>
+                <div class="metric-title">Chamadas de API</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>18% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="emailsSent">842</div>
+                <div class="metric-title">E-mails Enviados</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>12% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="successRate">98.7%</div>
+                <div class="metric-title">Taxa de Sucesso</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>2% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="avgResponse">142ms</div>
+                <div class="metric-title">Tempo Médio de Resposta</div>
+                <div class="metric-change change-negative">
+                    <i class="fas fa-arrow-down"></i> <span>5% desde o último mês</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas de Conteúdo -->
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">Visão Geral</div>
+            <div class="tab" data-tab="emailjs">EmailJS</div>
+            <div class="tab" data-tab="api">API RESTful</div>
+            <div class="tab" data-tab="logs">Logs & Monitoramento</div>
+        </div>
+
+        <!-- Conteúdo da Aba Visão Geral -->
+        <div class="tab-content active" id="overview">
+            <div class="card">
+                <h2>Serviços de Integração</h2>
+                <p class="text-muted">Gerencie todas as suas integrações em um único lugar</p>
+                
+                <div class="api-cards">
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div class="api-icon emailjs-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h3 class="api-title">EmailJS</h3>
+                        </div>
+                        <p class="api-description">Integração completa com EmailJS para envio de e-mails transacionais diretamente do cliente.</p>
+                        <div class="endpoint">
+                            <div>
+                                <span class="endpoint-method method-post">POST</span>
+                                <span>/api/send-email</span>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="switchTab('emailjs')">
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div class="api-icon rest-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <h3 class="api-title">API RESTful</h3>
+                        </div>
+                        <p class="api-description">API completa para gerenciamento de conteúdo com operações CRUD para texto, imagens e vídeos.</p>
+                        <div class="endpoint">
+                            <div>
+                                <span class="endpoint-method method-get">GET</span>
+                                <span>/api/conteudo</span>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="switchTab('api')">
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Status dos Serviços</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>Status</th>
+                                <th>Uptime</th>
+                                <th>Performance</th>
+                                <th>Última Verificação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>EmailJS API</td>
+                                <td><div class="status-badge status-active">Operacional</div></td>
+                                <td>99.98%</td>
+                                <td>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: 95%"></div>
+                                    </div>
+                                </td>
+                                <td>Há 2 minutos</td>
+                            </tr>
+                            <tr>
+                                <td>API RESTful</td>
+                                <td><div class="status-badge status-active">Operacional</div></td>
+                                <td>99.95%</td>
+                                <td>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: 92%"></div>
+                                    </div>
+                                </td>
+                                <td>Há 2 minutos</td>
+                            </tr>
+                            <tr>
+                                <td>Banco de Dados</td>
+                                <td><div class="status-badge status-active">Operacional</div></td>
+                                <td>99.99%</td>
+                                <td>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: 98%"></div>
+                                    </div>
+                                </td>
+                                <td>Há 2 minutos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba EmailJS -->
+        <div class="tab-content" id="emailjs">
+            <div class="card">
+                <h2>Integração com EmailJS</h2>
+                <p class="text-muted">Envie e-mails transacionais diretamente do cliente sem backend</p>
+                
+                <div class="test-area">
+                    <h4>Testar Envio de E-mail</h4>
+                    <form id="emailForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Destinatário</label>
+                                    <input type="email" class="form-control" id="emailTo" required placeholder="email@exemplo.com">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Assunto</label>
+                                    <input type="text" class="form-control" id="emailSubject" required placeholder="Assunto do e-mail">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mensagem</label>
+                            <textarea class="form-control" id="emailMessage" rows="5" required placeholder="Digite sua mensagem aqui..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="sendEmailBtn">
+                            <i class="fas fa-paper-plane"></i> Enviar E-mail
+                        </button>
+                    </form>
+                    
+                    <div class="test-result" id="emailResult"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Configuração do EmailJS</h2>
+                <div class="form-group">
+                    <label class="form-label">Service ID</label>
+                    <input type="text" class="form-control" id="emailServiceId" placeholder="Seu Service ID do EmailJS">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Template ID</label>
+                    <input type="text" class="form-control" id="emailTemplateId" placeholder="Seu Template ID do EmailJS">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Public Key</label>
+                    <input type="text" class="form-control" id="emailPublicKey" placeholder="Sua Public Key do EmailJS">
+                </div>
+                <button class="btn btn-success" onclick="saveEmailJSConfig()">
+                    <i class="fas fa-save"></i> Salvar Configuração
+                </button>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba API RESTful -->
+        <div class="tab-content" id="api">
+            <div class="card">
+                <h2>API RESTful de Conteúdo</h2>
+                <p class="text-muted">Gerencie conteúdo de texto, imagens e vídeos através da API</p>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label class="form-label">Tipo de Conteúdo</label>
+                        <select class="form-control" id="contentTypeFilter">
+                            <option value="">Todos</option>
+                            <option value="texto">Texto</option>
+                            <option value="imagem">Imagem</option>
+                            <option value="video">Vídeo</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="form-label">Ordenar por</label>
+                        <select class="form-control" id="sortFilter">
+                            <option value="date">Data de Criação</option>
+                            <option value="title">Título</option>
+                            <option value="type">Tipo</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="justify-content: flex-end;">
+                        <button class="btn btn-primary" style="margin-top: 1.8rem;" data-bs-toggle="modal" data-bs-target="#addContentModal">
+                            <i class="fas fa-plus"></i> Novo Conteúdo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Tipo</th>
+                                <th>Data de Criação</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contentTable">
+                            <!-- Conteúdo preenchido por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Testar Endpoints da API</h2>
+                
+                <div class="test-area">
+                    <h4>Endpoint: /api/conteudo</h4>
+                    <div class="endpoint">
+                        <div>
+                            <span class="endpoint-method method-get">GET</span>
+                            <span>/api/conteudo</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="testApiEndpoint('GET', '/api/conteudo')">
+                            Testar
+                        </button>
+                    </div>
+                    
+                    <div class="endpoint">
+                        <div>
+                            <span class="endpoint-method method-post">POST</span>
+                            <span>/api/conteudo</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="testApiEndpoint('POST', '/api/conteudo')">
+                            Testar
+                        </button>
+                    </div>
+                    
+                    <div class="test-result" id="apiResult"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Logs -->
+        <div class="tab-content" id="logs">
+            <div class="card">
+                <h2>Logs de Integração</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data/Hora</th>
+                                <th>Serviço</th>
+                                <th>Endpoint</th>
+                                <th>Status</th>
+                                <th>Tempo de Resposta</th>
+                                <th>Detalhes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logsTable">
+                            <!-- Conteúdo preenchido por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Monitoramento em Tempo Real</h2>
+                <div class="chart-container">
+                    <canvas id="monitoringChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Configurações de API -->
+    <div class="modal fade" id="apiConfigModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-cog me-2"></i> Configurações de API</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="apiConfigForm">
+                        <div class="form-group">
+                            <label class="form-label">URL da API</label>
+                            <input type="url" class="form-control" id="apiUrl" value="http://localhost:3000/api">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Chave de API</label>
+                            <input type="password" class="form-control" id="apiKey" placeholder="Sua chave de API">
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="apiLogging">
+                            <label class="form-check-label" for="apiLogging">Ativar logging de requests</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="apiCaching">
+                            <label class="form-check-label" for="apiCaching">Ativar cache de responses</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="saveApiConfig()">Salvar Configurações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Adicionar Conteúdo -->
+    <div class="modal fade" id="addContentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-plus me-2"></i> Adicionar Conteúdo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addContentForm">
+                        <div class="form-group">
+                            <label class="form-label">Título</label>
+                            <input type="text" class="form-control" id="contentTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tipo de Conteúdo</label>
+                            <select class="form-control" id="contentType" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="texto">Texto</option>
+                                <option value="imagem">Imagem</option>
+                                <option value="video">Vídeo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Conteúdo</label>
+                            <textarea class="form-control" id="contentBody" rows="6" required></textarea>
+                        </div>
+                        <div class="form-group" id="contentUrlGroup" style="display: none;">
+                            <label class="form-label">URL</label>
+                            <input type="url" class="form-control" id="contentUrl" placeholder="https://...">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="addContent()">Adicionar Conteúdo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts externos -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script>
+    // =============================================
+    // INICIALIZAÇÃO DO SISTEMA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar abas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+                
+                // Inicializar gráficos quando a aba for clicada
+                if (this.dataset.tab === 'logs') {
+                    initMonitoringChart();
+                }
+            });
+        });
+
+        // Carregar dados iniciais
+        renderContentTable();
+        renderLogsTable();
+
+        // Configurar listener para tipo de conteúdo
+        document.getElementById('contentType').addEventListener('change', function() {
+            const urlGroup = document.getElementById('contentUrlGroup');
+            urlGroup.style.display = this.value === 'imagem' || this.value === 'video' ? 'block' : 'none';
+        });
+
+        // Configurar formulário de e-mail
+        document.getElementById('emailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            sendTestEmail();
+        });
+
+        // Inicializar EmailJS (em um caso real, use suas credenciais)
+        // emailjs.init("sua_public_key_aqui");
+    });
+
+    // =============================================
+    // FUNÇÕES DE CONTROLE DE ABAS
+    // =============================================
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+    }
+
+    // =============================================
+    // EMAILJS - ENVIO DE E-MAILS
+    // =============================================
+    function sendTestEmail() {
+        const sendBtn = document.getElementById('sendEmailBtn');
+        const originalText = sendBtn.innerHTML;
+        const emailTo = document.getElementById('emailTo').value;
+        const emailSubject = document.getElementById('emailSubject').value;
+        const emailMessage = document.getElementById('emailMessage').value;
+        
+        sendBtn.innerHTML = '<span class="loading"></span> Enviando...';
+        sendBtn.disabled = true;
+        
+        // Simular envio de e-mail (em um caso real, usaria EmailJS)
+        setTimeout(() => {
+            // Em um caso real, usaria:
+            /*
+            emailjs.send("service_id", "template_id", {
+                to_email: emailTo,
+                subject: emailSubject,
+                message: emailMessage
+            })
+            .then(function(response) {
+                showEmailResult('success', 'E-mail enviado com sucesso! ID: ' + response.status);
+            }, function(error) {
+                showEmailResult('error', 'Falha ao enviar e-mail: ' + error.text);
+            });
+            */
+            
+            // Simulação
+            const success = Math.random() > 0.2; // 80% de chance de sucesso
+            if (success) {
+                showEmailResult('success', 'E-mail enviado com sucesso para: ' + emailTo);
+                addLog('EmailJS', '/api/send-email', '200', '128ms');
+            } else {
+                showEmailResult('error', 'Falha ao enviar e-mail. Tente novamente.');
+                addLog('EmailJS', '/api/send-email', '500', '256ms');
+            }
+            
+            sendBtn.innerHTML = originalText;
+            sendBtn.disabled = false;
+        }, 1500);
+    }
+
+    function showEmailResult(type, message) {
+        const resultDiv = document.getElementById('emailResult');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = message;
+        resultDiv.className = 'test-result ' + (type === 'success' ? 'bg-success text-white' : 'bg-danger text-white');
+    }
+
+    function saveEmailJSConfig() {
+        const serviceId = document.getElementById('emailServiceId').value;
+        const templateId = document.getElementById('emailTemplateId').value;
+        const publicKey = document.getElementById('emailPublicKey').value;
+        
+        // Em um caso real, salvaríamos essas configurações
+        Swal.fire({
+            icon: 'success',
+            title: 'Configurações salvas!',
+            text: 'As configurações do EmailJS foram salvas com sucesso.',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        
+        addLog('EmailJS', 'Configuração', '200', '0ms');
+    }
+
+    // =============================================
+    // API RESTFUL - GERENCIAMENTO DE CONTEÚDO
+    // =============================================
+    function renderContentTable() {
+        const contentTable = document.getElementById('contentTable');
+        const contentTypeFilter = document.getElementById('contentTypeFilter').value;
+        const sortFilter = document.getElementById('sortFilter').value;
+        
+        // Simulação de dados (em um caso real, buscaria de uma API)
+        const sampleData = [
+            { id: 1, title: 'Introdução à API', type: 'texto', date: '2023-05-15', status: 'ativo' },
+            { id: 2, title: 'Logo da Empresa', type: 'imagem', date: '2023-05-18', status: 'ativo' },
+            { id: 3, title: 'Tutorial em Vídeo', type: 'video', date: '2023-05-20', status: 'inativo' },
+            { id: 4, title: 'Documentação Técnica', type: 'texto', date: '2023-05-22', status: 'ativo' },
+            { id: 5, title: 'Banner Promocional', type: 'imagem', date: '2023-05-25', status: 'ativo' }
+        ];
+        
+        // Aplicar filtros
+        let filteredData = [...sampleData];
+        if (contentTypeFilter) {
+            filteredData = filteredData.filter(item => item.type === contentTypeFilter);
+        }
+        
+        // Aplicar ordenação
+        filteredData.sort((a, b) => {
+            if (sortFilter === 'date') return new Date(b.date) - new Date(a.date);
+            if (sortFilter === 'title') return a.title.localeCompare(b.title);
+            if (sortFilter === 'type') return a.type.localeCompare(b.type);
+            return 0;
+        });
+        
+        // Renderizar tabela
+        contentTable.innerHTML = filteredData.map(item => `
+            <tr>
+                <td>${item.title}</td>
+                <td><span class="badge bg-secondary">${item.type}</span></td>
+                <td>${formatDate(item.date)}</td>
+                <td>
+                    <span class="status-badge ${item.status === 'ativo' ? 'status-active' : 'status-inactive'}">
+                        ${item.status === 'ativo' ? 'Ativo' : 'Inativo'}
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function addContent() {
+        const title = document.getElementById('contentTitle').value;
+        const type = document.getElementById('contentType').value;
+        const body = document.getElementById('contentBody').value;
+        const url = document.getElementById('contentUrl').value;
+        
+        // Em um caso real, enviaria para a API
+        Swal.fire({
+            icon: 'success',
+            title: 'Conteúdo adicionado!',
+            text: `"${title}" foi adicionado com sucesso.`,
+            timer: 2000,
+            showConfirmButton: false
+        });
+        
+        // Fechar o modal
+        bootstrap.Modal.getInstance(document.getElementById('addContentModal')).hide();
+        
+        // Limpar formulário
+        document.getElementById('addContentForm').reset();
+        
+        // Atualizar tabela
+        renderContentTable();
+        
+        addLog('API RESTful', '/api/conteudo', '201', '142ms');
+    }
+
+    function testApiEndpoint(method, endpoint) {
+        const resultDiv = document.getElementById('apiResult');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `<div class="text-center"><div class="loading"></div> Testando ${method} ${endpoint}...</div>`;
+        
+        // Simular chamada à API
+        setTimeout(() => {
+            const success = Math.random() > 0.1; // 90% de chance de sucesso
+            
+            if (success) {
+                resultDiv.innerHTML = `
+                    <strong>Status:</strong> 200 OK<br>
+                    <strong>Tempo de resposta:</strong> 142ms<br>
+                    <strong>Resposta:</strong><br>
+                    ${JSON.stringify({
+                        success: true,
+                        message: `${method} request to ${endpoint} was successful`,
+                        data: Array.from({length: 5}, (_, i) => ({
+                            id: i + 1,
+                            title: `Item ${i + 1}`,
+                            type: ['texto', 'imagem', 'video'][i % 3],
+                            created: new Date().toISOString()
+                        }))
+                    }, null, 2)}
+                `;
+                addLog('API RESTful', endpoint, '200', '142ms');
+            } else {
+                resultDiv.innerHTML = `
+                    <strong>Status:</strong> 503 Service Unavailable<br>
+                    <strong>Tempo de resposta:</strong> 256ms<br>
+                    <strong>Erro:</strong> Service temporarily unavailable. Please try again later.
+                `;
+                addLog('API RESTful', endpoint, '503', '256ms');
+            }
+        }, 1500);
+    }
+
+    // =============================================
+    // LOGS E MONITORAMENTO
+    // =============================================
+    function renderLogsTable() {
+        const logsTable = document.getElementById('logsTable');
+        
+        // Simulação de logs (em um caso real, buscaria de uma API)
+        const sampleLogs = [
+            { timestamp: new Date(Date.now() - 1000 * 60 * 2), service: 'EmailJS', endpoint: '/api/send-email', status: '200', responseTime: '128ms' },
+            { timestamp: new Date(Date.now() - 1000 * 60 * 5), service: 'API RESTful', endpoint: '/api/conteudo', status: '200', responseTime: '142ms' },
+            { timestamp: new Date(Date.now() - 1000 * 60 * 12), service: 'API RESTful', endpoint: '/api/conteudo/1', status: '404', responseTime: '89ms' },
+            { timestamp: new Date(Date.now() - 1000 * 60 * 25), service: 'EmailJS', endpoint: '/api/send-email', status: '200', responseTime: '156ms' },
+            { timestamp: new Date(Date.now() - 1000 * 60 * 40), service: 'API RESTful', endpoint: '/api/conteudo', status: '201', responseTime: '210ms' }
+        ];
+        
+        logsTable.innerHTML = sampleLogs.map(log => `
+            <tr>
+                <td>${formatDateTime(log.timestamp)}</td>
+                <td>${log.service}</td>
+                <td>${log.endpoint}</td>
+                <td>
+                    <span class="status-badge ${log.status === '200' || log.status === '201' ? 'status-active' : 'status-inactive'}">
+                        ${log.status}
+                    </span>
+                </td>
+                <td>${log.responseTime}</td>
+                <td><button class="btn btn-sm btn-secondary">Detalhes</button></td>
+            </tr>
+        `).join('');
+    }
+
+    function addLog(service, endpoint, status, responseTime) {
+        const logsTable = document.getElementById('logsTable');
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>${formatDateTime(new Date())}</td>
+            <td>${service}</td>
+            <td>${endpoint}</td>
+            <td>
+                <span class="status-badge ${status === '200' || status === '201' ? 'status-active' : 'status-inactive'}">
+                    ${status}
+                </span>
+            </td>
+            <td>${responseTime}</td>
+            <td><button class="btn btn-sm btn-secondary">Detalhes</button></td>
+        `;
+        logsTable.prepend(newRow);
+    }
+
+    function initMonitoringChart() {
+        const ctx = document.getElementById('monitoringChart').getContext('2d');
+        
+        // Dados simulados para o gráfico
+        const data = {
+            labels: Array.from({length: 24}, (_, i) => `${i}h`),
+            datasets: [
+                {
+                    label: 'Chamadas de API',
+                    data: Array.from({length: 24}, () => Math.floor(Math.random() * 100)),
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'E-mails Enviados',
+                    data: Array.from({length: 24}, () => Math.floor(Math.random() * 80)),
+                    borderColor: '#27ae60',
+                    backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        };
+        
+        // Configurações do gráfico
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Atividade das Integrações (últimas 24h)'
+                    },
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Quantidade'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Hora do dia'
+                        }
+                    }
+                }
+            }
+        };
+        
+        // Criar o gráfico
+        new Chart(ctx, config);
+    }
+
+    // =============================================
+    // CONFIGURAÇÕES DO SISTEMA
+    // =============================================
+    function saveApiConfig() {
+        const apiUrl = document.getElementById('apiUrl').value;
+        const apiKey = document.getElementById('apiKey').value;
+        const apiLogging = document.getElementById('apiLogging').checked;
+        const apiCaching = document.getElementById('apiCaching').checked;
+        
+        // Em um caso real, salvaríamos essas configurações
+        Swal.fire({
+            icon: 'success',
+            title: 'Configurações salvas!',
+            text: 'As configurações da API foram salvas com sucesso.',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        
+        // Fechar o modal
+        bootstrap.Modal.getInstance(document.getElementById('apiConfigModal')).hide();
+        
+        addLog('Sistema', 'Configurações de API', '200', '0ms');
+    }
+
+    // =============================================
+    // FUNÇÕES UTILITÁRIAS
+    // =============================================
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR');
+    }
+
+    function formatDateTime(date) {
+        return date.toLocaleString('pt-BR');
+    }
+
+    // Inicializar filtros
+    document.getElementById('contentTypeFilter').addEventListener('change', renderContentTable);
+    document.getElementById('sortFilter').addEventListener('change', renderContentTable);
+    </script>
+</body>
+</html>

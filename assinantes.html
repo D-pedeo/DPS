@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assinantes - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Dashboard de Assinantes */
+        .subscribers-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: var(--success-color);
+        }
+
+        .change-negative {
+            color: var(--danger-color);
+        }
+
+        /* Abas */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .tab.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Tabelas */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(39, 174, 96, 0.15);
+            color: var(--success-color);
+        }
+
+        .status-inactive {
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+        }
+
+        .status-pending {
+            background: rgba(241, 196, 15, 0.15);
+            color: var(--warning-color);
+        }
+
+        /* Planos de Assinatura */
+        .pricing-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--secondary-color);
+            transform: scale(1.03);
+        }
+
+        .pricing-card.featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.3rem 2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.03) translateY(-5px);
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #666;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features i {
+            color: var(--success-color);
+        }
+
+        /* Formulários */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Filtros */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        /* Gráficos */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .subscribers-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-plans {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 0;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-users"></i>
+                    Gestão de Assinantes
+                </h1>
+            </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newSubscriberModal">
+                <i class="fas fa-plus"></i> Novo Assinante
+            </button>
+        </div>
+
+        <!-- Dashboard de Métricas -->
+        <div class="subscribers-dashboard">
+            <div class="metric-card">
+                <div class="metric-value" id="totalSubscribers">248</div>
+                <div class="metric-title">Total de Assinantes</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>12% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="activeSubscribers">192</div>
+                <div class="metric-title">Assinantes Ativos</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>8% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="revenueValue">R$ 9.850</div>
+                <div class="metric-title">Receita Mensal</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>15% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="churnRate">5.2%</div>
+                <div class="metric-title">Taxa de Cancelamento</div>
+                <div class="metric-change change-negative">
+                    <i class="fas fa-arrow-down"></i> <span>2% desde o último mês</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas de Conteúdo -->
+        <div class="tabs">
+            <div class="tab active" data-tab="subscribers">Assinantes</div>
+            <div class="tab" data-tab="plans">Planos</div>
+            <div class="tab" data-tab="payments">Pagamentos</div>
+            <div class="tab" data-tab="reports">Relatórios</div>
+        </div>
+
+        <!-- Conteúdo da Aba Assinantes -->
+        <div class="tab-content active" id="subscribers">
+            <div class="card">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="statusFilter">
+                            <option value="">Todos</option>
+                            <option value="active">Ativo</option>
+                            <option value="inactive">Inativo</option>
+                            <option value="pending">Pendente</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="form-label">Plano</label>
+                        <select class="form-control" id="planFilter">
+                            <option value="">Todos</option>
+                            <option value="basic">Básico</option>
+                            <option value="pro">Profissional</option>
+                            <option value="enterprise">Empresarial</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="form-label">Data de Cadastro</label>
+                        <input type="date" class="form-control" id="dateFilter">
+                    </div>
+                    <div class="filter-group" style="justify-content: flex-end;">
+                        <button class="btn btn-secondary" style="margin-top: 1.8rem;">
+                            <i class="fas fa-filter"></i> Filtrar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Assinante</th>
+                                <th>Plano</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Data de Início</th>
+                                <th>Próxima Renovação</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subscribersTable">
+                            <!-- Conteúdo preenchido por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Planos -->
+        <div class="tab-content" id="plans">
+            <div class="card">
+                <h2>Planos de Assinatura</h2>
+                <p class="text-muted">Ofereça planos flexíveis para seus clientes</p>
+                
+                <div class="pricing-plans">
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Básico</h3>
+                        <div class="plan-price">R$ 29<span>/mês</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> Análise SEO básica</li>
+                            <li><i class="fas fa-check"></i> 5 relatórios mensais</li>
+                            <li><i class="fas fa-check"></i> Suporte por e-mail</li>
+                            <li><i class="fas fa-check"></i> Monitoramento de 10 palavras-chave</li>
+                            <li><i class="fas fa-times"></i> Análise de concorrentes</li>
+                        </ul>
+                        <button class="btn btn-primary">Selecionar Plano</button>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <h3 class="plan-name">Profissional</h3>
+                        <div class="plan-price">R$ 79<span>/mês</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> Análise SEO completa</li>
+                            <li><i class="fas fa-check"></i> Relatórios ilimitados</li>
+                            <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                            <li><i class="fas fa-check"></i> Monitoramento de 50 palavras-chave</li>
+                            <li><i class="fas fa-check"></i> Análise de 3 concorrentes</li>
+                        </ul>
+                        <button class="btn btn-primary">Selecionar Plano</button>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Empresarial</h3>
+                        <div class="plan-price">R$ 149<span>/mês</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> Análise SEO avançada</li>
+                            <li><i class="fas fa-check"></i> Relatórios personalizados</li>
+                            <li><i class="fas fa-check"></i> Suporte 24/7</li>
+                            <li><i class="fas fa-check"></i> Monitoramento ilimitado</li>
+                            <li><i class="fas fa-check"></i> Análise de 10 concorrentes</li>
+                        </ul>
+                        <button class="btn btn-primary">Selecionar Plano</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Pagamentos -->
+        <div class="tab-content" id="payments">
+            <div class="card">
+                <h2>Gestão de Pagamentos</h2>
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Últimos Pagamentos</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Assinante</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Método</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTable">
+                            <!-- Conteúdo preenchido por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Relatórios -->
+        <div class="tab-content" id="reports">
+            <div class="card">
+                <h2>Relatórios de Assinaturas</h2>
+                <div class="chart-container">
+                    <canvas id="subscriptionsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Relatórios Personalizados</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Tipo de Relatório</label>
+                            <select class="form-control">
+                                <option>Relatório de Crescimento</option>
+                                <option>Relatório de Receita</option>
+                                <option>Relatório de Cancelamentos</option>
+                                <option>Relatório de Planos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Período</label>
+                            <select class="form-control">
+                                <option>Últimos 7 dias</option>
+                                <option>Últimos 30 dias</option>
+                                <option>Últimos 3 meses</option>
+                                <option>Últimos 6 meses</option>
+                                <option>Último ano</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i> Gerar Relatório
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Novo Assinante -->
+    <div class="modal fade" id="newSubscriberModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-plus me-2"></i> Novo Assinante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newSubscriberForm">
+                        <div class="form-group">
+                            <label class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Plano</label>
+                            <select class="form-control" required>
+                                <option value="">Selecione um plano</option>
+                                <option value="basic">Básico (R$ 29/mês)</option>
+                                <option value="pro">Profissional (R$ 79/mês)</option>
+                                <option value="enterprise">Empresarial (R$ 149/mês)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Forma de Pagamento</label>
+                            <select class="form-control" required>
+                                <option value="">Selecione a forma de pagamento</option>
+                                <option value="credit_card">Cartão de Crédito</option>
+                                <option value="debit_card">Cartão de Débito</option>
+                                <option value="bank_slip">Boleto Bancário</option>
+                                <option value="pix">PIX</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="saveNewSubscriber()">Salvar Assinante</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    // =============================================
+    // DADOS DE EXEMPLO
+    // =============================================
+    const subscribersData = [
+        { name: "Carlos Silva", email: "carlos@empresa.com", plan: "Pro", value: "R$ 79,00", status: "active", startDate: "2023-05-15", renewalDate: "2023-11-15" },
+        { name: "Maria Santos", email: "maria@loja.com", plan: "Básico", value: "R$ 29,00", status: "active", startDate: "2023-06-22", renewalDate: "2023-12-22" },
+        { name: "João Oliveira", email: "joao@servicos.com", plan: "Empresarial", value: "R$ 149,00", status: "active", startDate: "2023-07-10", renewalDate: "2024-01-10" },
+        { name: "Ana Costa", email: "ana@consultoria.com", plan: "Pro", value: "R$ 79,00", status: "pending", startDate: "2023-08-05", renewalDate: "2024-02-05" },
+        { name: "Pedro Alves", email: "pedro@tech.com", plan: "Básico", value: "R$ 29,00", status: "inactive", startDate: "2023-04-18", renewalDate: "2023-10-18" },
+        { name: "Luiza Mendes", email: "luiza@marketing.com", plan: "Pro", value: "R$ 79,00", status: "active", startDate: "2023-09-01", renewalDate: "2024-03-01" },
+        { name: "Ricardo Lima", email: "ricardo@digital.com", plan: "Empresarial", value: "R$ 149,00", status: "active", startDate: "2023-07-28", renewalDate: "2024-01-28" }
+    ];
+
+    const paymentsData = [
+        { subscriber: "Carlos Silva", value: "R$ 79,00", date: "2023-10-15", method: "Cartão de Crédito", status: "Pago" },
+        { subscriber: "Maria Santos", value: "R$ 29,00", date: "2023-10-22", method: "PIX", status: "Pago" },
+        { subscriber: "João Oliveira", value: "R$ 149,00", date: "2023-10-10", method: "Cartão de Crédito", status: "Pago" },
+        { subscriber: "Ana Costa", value: "R$ 79,00", date: "2023-10-05", method: "Boleto", status: "Pendente" },
+        { subscriber: "Luiza Mendes", value: "R$ 79,00", date: "2023-10-01", method: "Cartão de Crédito", status: "Pago" },
+        { subscriber: "Ricardo Lima", value: "R$ 149,00", date: "2023-09-28", method: "Cartão de Crédito", status: "Pago" }
+    ];
+
+    // =============================================
+    // INICIALIZAÇÃO DO SISTEMA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar abas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+                
+                // Inicializar gráficos quando a aba for clicada
+                if (this.dataset.tab === 'payments') {
+                    initRevenueChart();
+                } else if (this.dataset.tab === 'reports') {
+                    initSubscriptionsChart();
+                }
+            });
+        });
+
+        // Carregar dados iniciais
+        renderSubscribersTable();
+        renderPaymentsTable();
+    });
+
+    // =============================================
+    // RENDERIZAÇÃO DE TABELAS
+    // =============================================
+    function renderSubscribersTable() {
+        const tableBody = document.getElementById('subscribersTable');
+        tableBody.innerHTML = '';
+        
+        subscribersData.forEach(item => {
+            const statusClass = item.status === 'active' ? 'status-active' : 
+                               item.status === 'inactive' ? 'status-inactive' : 'status-pending';
+            const statusText = item.status === 'active' ? 'Ativo' : 
+                              item.status === 'inactive' ? 'Inativo' : 'Pendente';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <div><strong>${item.name}</strong></div>
+                    <div class="text-muted small">${item.email}</div>
+                </td>
+                <td>${item.plan}</td>
+                <td>${item.value}</td>
+                <td>
+                    <div class="status-badge ${statusClass}">
+                        ${statusText}
+                    </div>
+                </td>
+                <td>${formatDate(item.startDate)}</td>
+                <td>${formatDate(item.renewalDate)}</td>
+                <td>
+                    <button class="btn btn-secondary btn-sm">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-secondary btn-sm">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    function renderPaymentsTable() {
+        const tableBody = document.getElementById('paymentsTable');
+        tableBody.innerHTML = '';
+        
+        paymentsData.forEach(item => {
+            const statusClass = item.status === 'Pago' ? 'status-active' : 'status-pending';
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.subscriber}</td>
+                <td>${item.value}</td>
+                <td>${formatDate(item.date)}</td>
+                <td>${item.method}</td>
+                <td>
+                    <div class="status-badge ${statusClass}">
+                        ${item.status}
+                    </div>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    // =============================================
+    // GRÁFICOS
+    // =============================================
+    function initRevenueChart() {
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                datasets: [{
+                    label: 'Receita (R$)',
+                    data: [5200, 5800, 6200, 7100, 7800, 8200, 8900, 9200, 9500, 9850, 10200, 10500],
+                    backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function initSubscriptionsChart() {
+        const ctx = document.getElementById('subscriptionsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Básico', 'Profissional', 'Empresarial'],
+                datasets: [{
+                    data: [85, 112, 51],
+                    backgroundColor: [
+                        'rgba(52, 152, 219, 0.7)',
+                        'rgba(46, 204, 113, 0.7)',
+                        'rgba(155, 89, 182, 0.7)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+    }
+
+    // =============================================
+    // FUNÇÕES AUXILIARES
+    // =============================================
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR');
+    }
+
+    function saveNewSubscriber() {
+        // Em um sistema real, isso salvaria os dados no banco de dados
+        alert('Assinante salvo com sucesso!');
+        document.getElementById('newSubscriberForm').reset();
+        
+        // Fechar o modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('newSubscriberModal'));
+        modal.hide();
+        
+        // Recarregar a tabela (em um sistema real, isso buscaria os dados atualizados)
+        renderSubscribersTable();
+    }
+
+    // =============================================
+    // EVENT LISTENERS ADICIONAIS
+    // =============================================
+    document.getElementById('statusFilter').addEventListener('change', function() {
+        renderSubscribersTable();
+    });
+
+    document.getElementById('planFilter').addEventListener('change', function() {
+        renderSubscribersTable();
+    });
+    </script>
+</body>
+</html>

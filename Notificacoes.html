@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificações - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Filtros e ações */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .actions-group {
+            margin-left: auto;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Lista de notificações */
+        .notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .notification-item {
+            display: flex;
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            background: white;
+            box-shadow: var(--box-shadow);
+            border-left: 4px solid var(--secondary-color);
+            transition: all var(--transition-speed);
+            position: relative;
+        }
+
+        .notification-item.unread {
+            background: #f8fafd;
+            border-left-width: 6px;
+        }
+
+        .notification-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .notification-message {
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .notification-category {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        .notification-action {
+            padding: 0.4rem;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .notification-action:hover {
+            background: #f0f0f0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        /* Status de leitura */
+        .unread-badge {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            margin-left: 0.5rem;
+        }
+
+        /* Cores para categorias */
+        .category-system {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .category-security {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+        }
+
+        .category-finance {
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--success-color);
+        }
+
+        .category-project {
+            background: rgba(155, 89, 182, 0.1);
+            color: #9b59b6;
+        }
+
+        .category-marketing {
+            background: rgba(241, 196, 15, 0.1);
+            color: #f1c40f;
+        }
+
+        .category-contract {
+            background: rgba(230, 126, 34, 0.1);
+            color: #e67e22;
+        }
+
+        /* Ícones por tipo */
+        .icon-system {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .icon-security {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+        }
+
+        .icon-finance {
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--success-color);
+        }
+
+        .icon-project {
+            background: rgba(155, 89, 182, 0.1);
+            color: #9b59b6;
+        }
+.logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+        .icon-marketing {
+            background: rgba(241, 196, 15, 0.1);
+            color: #f1c40f;
+        }
+
+        .icon-contract {
+            background: rgba(230, 126, 34, 0.1);
+            color: #e67e22;
+        }
+
+        .icon-alert {
+            background: rgba(243, 156, 18, 0.1);
+            color: var(--warning-color);
+        }
+
+        /* Badge de contador */
+        .badge {
+            padding: 0.35em 0.65em;
+            border-radius: 50rem;
+            font-size: 0.75em;
+            font-weight: 700;
+        }
+
+        .badge-primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        /* Modal de configurações */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-check {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group, .actions-group {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .notification-item {
+                flex-direction: column;
+            }
+            
+            .notification-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .notification-actions {
+                margin-top: 1rem;
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+		<div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-bell"></i>
+                Notificações
+                <span class="badge badge-primary" id="unreadCount">0</span>
+            </h1>
+            <button class="btn btn-primary" id="settingsBtn">
+                <i class="fas fa-cog"></i> Configurações
+            </button>
+        </div>
+
+        <!-- Filtros e ações -->
+        <div class="card">
+            <div class="filters-container">
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="unread">Não lidas</button>
+                    <button class="filter-btn" data-filter="system">Sistema</button>
+                    <button class="filter-btn" data-filter="security">Segurança</button>
+                    <button class="filter-btn" data-filter="finance">Financeiro</button>
+                    <button class="filter-btn" data-filter="project">Projetos</button>
+                </div>
+                <div class="actions-group">
+                    <button class="btn btn-secondary" id="markAllReadBtn">
+                        <i class="fas fa-check-double"></i> Marcar todas como lidas
+                    </button>
+                    <button class="btn btn-secondary" id="clearAllBtn">
+                        <i class="fas fa-trash"></i> Limpar todas
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de notificações -->
+        <div class="notifications-list" id="notificationsList">
+            <!-- Notificações serão carregadas via JavaScript -->
+        </div>
+
+        <!-- Estado vazio -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <i class="far fa-bell-slash"></i>
+            <h3>Nenhuma notificação</h3>
+            <p>Quando você receber notificações, elas aparecerão aqui.</p>
+        </div>
+
+        <!-- Modal de configurações -->
+        <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Configurações de Notificações</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="mb-3">Tipos de Notificação</h5>
+                        
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="systemNotifications" checked>
+                                <label class="form-check-label" for="systemNotifications">
+                                    Notificações do Sistema
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="securityNotifications" checked>
+                                <label class="form-check-label" for="securityNotifications">
+                                    Alertas de Segurança
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="financeNotifications" checked>
+                                <label class="form-check-label" for="financeNotifications">
+                                    Notificações Financeiras
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="projectNotifications" checked>
+                                <label class="form-check-label" for="projectNotifications">
+                                    Atualizações de Projetos
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="marketingNotifications" checked>
+                                <label class="form-check-label" for="marketingNotifications">
+                                    Notificações de Marketing
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="contractNotifications" checked>
+                                <label class="form-check-label" for="contractNotifications">
+                                    Alertas de Contratos
+                                </label>
+                            </div>
+                        </div>
+
+                        <h5 class="mb-3 mt-4">Preferências</h5>
+                        
+                        <div class="form-group">
+                            <label for="notificationSound" class="form-label">Som de Notificação</label>
+                            <select class="form-control" id="notificationSound">
+                                <option value="none">Nenhum</option>
+                                <option value="default" selected>Padrão</option>
+                                <option value="chime">Sino</option>
+                                <option value="alert">Alerta</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="desktopNotifications" checked>
+                                <label class="form-check-label" for="desktopNotifications">
+                                    Permitir notificações na área de trabalho
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="saveSettingsBtn">Salvar Configurações</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // DADOS DE EXEMPLO E ARMAZENAMENTO
+    // =============================================
+    let notifications = JSON.parse(localStorage.getItem('dps_notifications')) || [
+        {
+            id: 1,
+            title: "Atualização do Sistema",
+            message: "Uma nova versão do sistema está disponível. Clique para atualizar.",
+            category: "system",
+            icon: "fas fa-sync-alt",
+            timestamp: new Date(Date.now() - 2 * 3600000).toISOString(),
+            read: false,
+            source: "sistema"
+        },
+        {
+            id: 2,
+            title: "Alerta de Segurança",
+            message: "Tentativa de login suspeita detectada na sua conta.",
+            category: "security",
+            icon: "fas fa-shield-alt",
+            timestamp: new Date(Date.now() - 5 * 3600000).toISOString(),
+            read: false,
+            source: "segurança"
+        },
+        {
+            id: 3,
+            title: "Pagamento Recebido",
+            message: "O cliente Empresa A realizou o pagamento da fatura #2456.",
+            category: "finance",
+            icon: "fas fa-dollar-sign",
+            timestamp: new Date(Date.now() - 8 * 3600000).toISOString(),
+            read: true,
+            source: "financeiro"
+        },
+        {
+            id: 4,
+            title: "Projeto Atualizado",
+            message: "O projeto Sistema de Segurança foi atualizado para a fase de testes.",
+            category: "project",
+            icon: "fas fa-tasks",
+            timestamp: new Date(Date.now() - 1 * 86400000).toISOString(),
+            read: true,
+            source: "projetos"
+        },
+        {
+            id: 5,
+            title: "Novo Lead Capturado",
+            message: "Um novo lead foi capturado através do formulário de contato do site.",
+            category: "marketing",
+            icon: "fas fa-bullhorn",
+            timestamp: new Date(Date.now() - 2 * 86400000).toISOString(),
+            read: true,
+            source: "marketing"
+        },
+        {
+            id: 6,
+            title: "Contrato Próximo do Vencimento",
+            message: "O contrato com a Loja B vencerá em 15 dias. Renove agora.",
+            category: "contract",
+            icon: "fas fa-file-contract",
+            timestamp: new Date(Date.now() - 3 * 86400000).toISOString(),
+            read: false,
+            source: "contratos"
+        },
+        {
+            id: 7,
+            title: "Backup Realizado com Sucesso",
+            message: "O backup automático do sistema foi realizado com sucesso.",
+            category: "system",
+            icon: "fas fa-database",
+            timestamp: new Date(Date.now() - 4 * 86400000).toISOString(),
+            read: true,
+            source: "sistema"
+        },
+        {
+            id: 8,
+            title: "Nova Mensagem Recebida",
+            message: "Você recebeu uma nova mensagem de João Silva através do chat.",
+            category: "system",
+            icon: "fas fa-comment",
+            timestamp: new Date(Date.now() - 5 * 86400000).toISOString(),
+            read: true,
+            source: "comunicação"
+        }
+    ];
+
+    // =============================================
+    // FUNÇÕES DE INICIALIZAÇÃO
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carregar notificações
+        renderNotifications();
+        updateUnreadCount();
+        
+        // Configurar event listeners
+        document.getElementById('settingsBtn').addEventListener('click', openSettingsModal);
+        document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+        document.getElementById('markAllReadBtn').addEventListener('click', markAllAsRead);
+        document.getElementById('clearAllBtn').addEventListener('click', clearAllNotifications);
+        
+        // Filtros
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterNotifications(this.dataset.filter);
+            });
+        });
+
+        // Simular recebimento de notificações de outras páginas
+        simulateExternalNotifications();
+    });
+
+    // =============================================
+    // RENDERIZAÇÃO DE NOTIFICAÇÕES
+    // =============================================
+    function renderNotifications(notificationsToRender = notifications) {
+        const notificationsList = document.getElementById('notificationsList');
+        const emptyState = document.getElementById('emptyState');
+        
+        notificationsList.innerHTML = '';
+        
+        if (notificationsToRender.length === 0) {
+            emptyState.style.display = 'block';
+            return;
+        }
+        
+        emptyState.style.display = 'none';
+        
+        // Ordenar por data (mais recente primeiro)
+        const sortedNotifications = [...notificationsToRender].sort((a, b) => 
+            new Date(b.timestamp) - new Date(a.timestamp)
+        );
+        
+        sortedNotifications.forEach(notification => {
+            const notificationElement = document.createElement('div');
+            notificationElement.className = `notification-item ${notification.read ? '' : 'unread'}`;
+            notificationElement.style.borderLeftColor = getCategoryColor(notification.category);
+            
+            notificationElement.innerHTML = `
+                <div class="notification-icon ${getIconClass(notification.category)}">
+                    <i class="${notification.icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">
+                        ${notification.title}
+                        ${notification.read ? '' : '<span class="unread-badge"></span>'}
+                        <span class="notification-category category-${notification.category}">
+                            ${getCategoryName(notification.category)}
+                        </span>
+                    </div>
+                    <div class="notification-message">${notification.message}</div>
+                    <div class="notification-meta">
+                        <span>${formatDateTime(notification.timestamp)}</span>
+                        <span>Fonte: ${notification.source}</span>
+                    </div>
+                </div>
+                <div class="notification-actions">
+                    <div class="notification-action" title="Marcar como ${notification.read ? 'não lida' : 'lida'}" onclick="toggleReadStatus(${notification.id})">
+                        <i class="${notification.read ? 'far fa-envelope' : 'fas fa-envelope-open'}"></i>
+                    </div>
+                    <div class="notification-action" title="Excluir" onclick="deleteNotification(${notification.id})">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+            `;
+            
+            notificationsList.appendChild(notificationElement);
+        });
+    }
+
+    // =============================================
+    // FILTRAGEM DE NOTIFICAÇÕES
+    // =============================================
+    function filterNotifications(filter) {
+        let filteredNotifications = notifications;
+        
+        if (filter === 'unread') {
+            filteredNotifications = filteredNotifications.filter(notification => !notification.read);
+        } else if (filter !== 'all') {
+            filteredNotifications = filteredNotifications.filter(notification => notification.category === filter);
+        }
+        
+        renderNotifications(filteredNotifications);
+    }
+
+    // =============================================
+    // GESTÃO DE NOTIFICAÇÕES
+    // =============================================
+    function toggleReadStatus(id) {
+        const index = notifications.findIndex(n => n.id === id);
+        if (index !== -1) {
+            notifications[index].read = !notifications[index].read;
+            saveNotifications();
+            renderNotifications();
+            updateUnreadCount();
+        }
+    }
+
+    function markAllAsRead() {
+        notifications.forEach(notification => {
+            notification.read = true;
+        });
+        
+        saveNotifications();
+        renderNotifications();
+        updateUnreadCount();
+        
+        // Atualizar filtro se estiver mostrando apenas não lidas
+        if (document.querySelector('.filter-btn.active').dataset.filter === 'unread') {
+            filterNotifications('unread');
+        }
+    }
+
+    function deleteNotification(id) {
+        if (confirm("Tem certeza que deseja excluir esta notificação?")) {
+            notifications = notifications.filter(n => n.id !== id);
+            saveNotifications();
+            renderNotifications();
+            updateUnreadCount();
+        }
+    }
+
+    function clearAllNotifications() {
+        if (confirm("Tem certeza que deseja excluir todas as notificações?")) {
+            notifications = [];
+            saveNotifications();
+            renderNotifications();
+            updateUnreadCount();
+        }
+    }
+
+    function updateUnreadCount() {
+        const unreadCount = notifications.filter(n => !n.read).length;
+        document.getElementById('unreadCount').textContent = unreadCount;
+        
+        // Atualizar também o título da página
+        document.title = `(${unreadCount}) Notificações - D.Pedro Soluções`;
+    }
+
+    function saveNotifications() {
+        localStorage.setItem('dps_notifications', JSON.stringify(notifications));
+    }
+
+    // =============================================
+    // RECEBIMENTO DE NOTIFICAÇÕES EXTERNAS
+    // =============================================
+    function receiveExternalNotification(notification) {
+        // Gerar ID único
+        notification.id = notifications.length > 0 ? Math.max(...notifications.map(n => n.id)) + 1 : 1;
+        notification.timestamp = new Date().toISOString();
+        notification.read = false;
+        
+        // Adicionar à lista
+        notifications.unshift(notification);
+        saveNotifications();
+        
+        // Atualizar a interface
+        if (document.querySelector('.filter-btn.active').dataset.filter === 'all' || 
+            document.querySelector('.filter-btn.active').dataset.filter === 'unread') {
+            renderNotifications();
+        }
+        
+        updateUnreadCount();
+        
+        // Mostrar alerta (poderia ser uma notificação do navegador)
+        alert(`Nova notificação: ${notification.title}`);
+    }
+
+    // Simular notificações de outras partes do sistema
+    function simulateExternalNotifications() {
+        // Simular notificações recebidas a cada 30 segundos (apenas para demonstração)
+        setInterval(() => {
+            if (Math.random() > 0.7) {  // 30% de chance de receber notificação
+                const sources = [
+                    {category: 'project', icon: 'fas fa-tasks', source: 'projetos'},
+                    {category: 'finance', icon: 'fas fa-dollar-sign', source: 'financeiro'},
+                    {category: 'system', icon: 'fas fa-cog', source: 'sistema'},
+                    {category: 'security', icon: 'fas fa-shield-alt', source: 'segurança'}
+                ];
+                
+                const source = sources[Math.floor(Math.random() * sources.length)];
+                
+                const messages = [
+                    "Novo comentário adicionado ao projeto Sistema de Segurança.",
+                    "Relatório financeiro do mês anterior está disponível para visualização.",
+                    "Atualização de segurança crítica disponível para instalação.",
+                    "Novo usuário cadastrado no sistema através do formulário de registro."
+                ];
+                
+                const titles = [
+                    "Atualização de Projeto",
+                    "Relatório Financeiro Disponível",
+                    "Atualização de Segurança",
+                    "Novo Usuário Registrado"
+                ];
+                
+                const notification = {
+                    title: titles[Math.floor(Math.random() * titles.length)],
+                    message: messages[Math.floor(Math.random() * messages.length)],
+                    category: source.category,
+                    icon: source.icon,
+                    source: source.source
+                };
+                
+                receiveExternalNotification(notification);
+            }
+        }, 30000);
+    }
+
+    // =============================================
+    // CONFIGURAÇÕES
+    // =============================================
+    function openSettingsModal() {
+        // Carregar configurações salvas
+        const settings = JSON.parse(localStorage.getItem('dps_notification_settings')) || {};
+        
+        // Preencher formulário com valores salvos ou padrão
+        document.getElementById('systemNotifications').checked = settings.systemNotifications !== false;
+        document.getElementById('securityNotifications').checked = settings.securityNotifications !== false;
+        document.getElementById('financeNotifications').checked = settings.financeNotifications !== false;
+        document.getElementById('projectNotifications').checked = settings.projectNotifications !== false;
+        document.getElementById('marketingNotifications').checked = settings.marketingNotifications !== false;
+        document.getElementById('contractNotifications').checked = settings.contractNotifications !== false;
+        document.getElementById('notificationSound').value = settings.notificationSound || 'default';
+        document.getElementById('desktopNotifications').checked = settings.desktopNotifications !== false;
+        
+        const modal = new bootstrap.Modal(document.getElementById('settingsModal'));
+        modal.show();
+    }
+
+    function saveSettings() {
+        const settings = {
+            systemNotifications: document.getElementById('systemNotifications').checked,
+            securityNotifications: document.getElementById('securityNotifications').checked,
+            financeNotifications: document.getElementById('financeNotifications').checked,
+            projectNotifications: document.getElementById('projectNotifications').checked,
+            marketingNotifications: document.getElementById('marketingNotifications').checked,
+            contractNotifications: document.getElementById('contractNotifications').checked,
+            notificationSound: document.getElementById('notificationSound').value,
+            desktopNotifications: document.getElementById('desktopNotifications').checked
+        };
+        
+        localStorage.setItem('dps_notification_settings', JSON.stringify(settings));
+        
+        bootstrap.Modal.getInstance(document.getElementById('settingsModal')).hide();
+        alert('Configurações salvas com sucesso!');
+    }
+
+    // =============================================
+    // FUNÇÕES AUXILIARES
+    // =============================================
+    function getCategoryName(category) {
+        const categories = {
+            'system': 'Sistema',
+            'security': 'Segurança',
+            'finance': 'Financeiro',
+            'project': 'Projeto',
+            'marketing': 'Marketing',
+            'contract': 'Contrato'
+        };
+        return categories[category] || 'Geral';
+    }
+
+    function getCategoryColor(category) {
+        const colors = {
+            'system': '#3498db',
+            'security': '#e74c3c',
+            'finance': '#27ae60',
+            'project': '#9b59b6',
+            'marketing': '#f1c40f',
+            'contract': '#e67e22'
+        };
+        return colors[category] || '#3498db';
+    }
+
+    function getIconClass(category) {
+        const icons = {
+            'system': 'icon-system',
+            'security': 'icon-security',
+            'finance': 'icon-finance',
+            'project': 'icon-project',
+            'marketing': 'icon-marketing',
+            'contract': 'icon-contract'
+        };
+        return icons[category] || 'icon-system';
+    }
+
+    function formatDateTime(dateTimeString) {
+        const date = new Date(dateTimeString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 0) {
+            return 'Hoje, ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        } else if (diffDays === 1) {
+            return 'Ontem, ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        } else if (diffDays < 7) {
+            return `Há ${diffDays} dias`;
+        } else {
+            return date.toLocaleDateString('pt-BR');
+        }
+    }
+
+    // =============================================
+    // FUNÇÕES GLOBAIS PARA OUTRAS PÁGINAS
+    // =============================================
+    // Estas funções podem ser chamadas de outras páginas do sistema
+    window.DPSNotifications = {
+        sendNotification: function(notification) {
+            receiveExternalNotification(notification);
+        },
+        
+        getUnreadCount: function() {
+            return notifications.filter(n => !n.read).length;
+        },
+        
+        markAllAsRead: function() {
+            markAllAsRead();
+        }
+    };
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Senha - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f5f7fa; font-family: 'Roboto', sans-serif; }
+        .login-container { max-width: 400px; margin: 60px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); padding: 2rem; }
+        .login-title { font-family: 'Montserrat', sans-serif; font-size: 2rem; color: #e74c3c; margin-bottom: 1.5rem; text-align: center; }
+        .form-control { border-radius: 8px; }
+        .btn-danger { background: #e74c3c; border: none; border-radius: 8px; }
+        .btn-danger:hover { background: #c0392b; }
+        .login-links { margin-top: 1rem; text-align: center; }
+        .login-links a { color: #3498db; text-decoration: none; margin: 0 8px; }
+        .login-links a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-title"><i class="fas fa-key"></i> Recuperar Senha</div>
+        <form id="recuperarForm">
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail cadastrado" required>
+            </div>
+            <button type="submit" class="btn btn-danger w-100">Enviar link de recuperação</button>
+            <div id="recuperarMsg" style="margin-top:1rem;color:#e74c3c;text-align:center;"></div>
+        </form>
+        <div class="login-links">
+            <a href="login.html">Voltar ao login</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.getElementById('recuperarForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        fetch('http://localhost:3000/api/recuperar-senha', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('recuperarMsg').textContent = data.mensagem || data.erro || 'Erro ao recuperar senha.';
+        })
+        .catch(() => {
+            document.getElementById('recuperarMsg').textContent = 'Erro de conexão com o servidor.';
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanawa Soft - PDV (Ponto de Venda)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        .cart-item:hover {
+            background-color: #f0f9ff;
+        }
+        .payment-method {
+            transition: all 0.2s;
+        }
+        .payment-method:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .keyboard-key {
+            transition: all 0.1s;
+        }
+        .keyboard-key:active {
+            transform: scale(0.95);
+            background-color: #e0e7ff;
+        }
+        /* Estilos gerais */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Layout principal */
+        .flex {
+            display: flex;
+        }
+
+        .h-screen {
+            height: 100vh;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .w-16 {
+            width: 4rem;
+        }
+
+        .bg-blue-900 {
+            background-color: #1e3a8a;
+        }
+
+        .text-white {
+            color: #fff;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        /* Cart Items */
+        .cart-item:hover {
+            background-color: #f0f9ff;
+        }
+
+        /* Payment Methods */
+        .payment-method {
+            transition: all 0.2s;
+        }
+
+        .payment-method:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Keyboard */
+        .keyboard-key {
+            transition: all 0.1s;
+        }
+
+        .keyboard-key:active {
+            transform: scale(0.95);
+            background-color: #e0e7ff;
+        }
+
+        /* Modal */
+        .fixed {
+            position: fixed;
+        }
+
+        .inset-0 {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .bg-black {
+            background-color: #000;
+        }
+
+        .bg-opacity-50 {
+            --tw-bg-opacity: 0.5;
+        }
+
+        .z-50 {
+            z-index: 50;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans" id="app">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="w-16 bg-blue-900 text-white flex flex-col">
+            <div class="p-4 flex items-center justify-center border-b border-blue-800">
+                <i class="fas fa-cash-register text-2xl text-yellow-400"></i>
+            </div>
+            <nav class="flex-1 overflow-y-auto pt-4">
+                <ul class="space-y-4">
+                    <li class="flex justify-center">
+                        <a href="#" @click="openCashRegisterModal" class="p-2 rounded hover:bg-blue-800 text-white" title="Abrir Caixa">
+                            <i class="fas fa-cash-register text-xl"></i>
+                        </a>
+                    </li>
+                    <li class="flex justify-center">
+                        <a href="#" @click="openCloseRegisterModal" class="p-2 rounded hover:bg-blue-800 text-white" title="Fechar Caixa">
+                            <i class="fas fa-lock text-xl"></i>
+                        </a>
+                    </li>
+                    <li class="flex justify-center">
+                        <a href="products.html" class="p-2 rounded hover:bg-blue-800 text-white" title="Produtos">
+                            <i class="fas fa-boxes text-xl"></i>
+                        </a>
+                    </li>
+                    <li class="flex justify-center">
+                        <a href="customers.html" class="p-2 rounded hover:bg-blue-800 text-white" title="Clientes">
+                            <i class="fas fa-users text-xl"></i>
+                        </a>
+                    </li>
+                    <li class="flex justify-center">
+                        <a href="reports.html" class="p-2 rounded hover:bg-blue-800 text-white" title="Relatórios">
+                            <i class="fas fa-chart-bar text-xl"></i>
+                        </a>
+                    </li>
+                    <li class="flex justify-center">
+                        <a href="settings.html" class="p-2 rounded hover:bg-blue-800 text-white" title="Configurações">
+                            <i class="fas fa-cog text-xl"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="p-4 border-t border-blue-800 text-center text-xs text-blue-200">
+                PDV v5.0
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Bar -->
+            <header class="bg-white shadow-sm z-10">
+                <div class="flex items-center justify-between p-3">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <img v-if="settings.logo" :src="settings.logo" alt="Logo" class="h-10 w-auto rounded bg-white shadow p-1">
+                            <h1 class="text-xl font-bold text-gray-800">{{ settings.company_name || 'Ponto de Venda (PDV)' }}</h1>
+                        </div>
+                        <div :class="{'bg-green-100 text-green-800': cashRegisterStatus === 'open', 'bg-red-100 text-red-800': cashRegisterStatus === 'closed'}" 
+                             class="px-3 py-1 rounded-full text-sm flex items-center">
+                            <i class="fas fa-circle text-xs mr-1"></i>
+                            <span v-if="cashRegisterStatus === 'open'">Caixa Aberto</span>
+                            <span v-else>Caixa Fechado</span>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            Operador: <span class="font-medium">{{ usuario.nome }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="text-right">
+                            <div class="text-sm text-gray-500">Data/Hora</div>
+                            <div class="font-medium">{{ currentDateTime }}</div>
+                        </div>
+                        <div class="bg-blue-100 p-2 rounded-full">
+                            <i class="fas fa-user text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- PDV Content -->
+            <main class="flex-1 overflow-hidden flex">
+                <!-- Left Panel - Products -->
+                <div class="w-2/3 bg-white border-r border-gray-200 flex flex-col">
+                    <!-- Product Search -->
+                    <div class="p-3 border-b border-gray-200 bg-gray-50">
+                        <div class="relative">
+                            <input type="text" v-model="searchQuery" @input="searchProducts" 
+                                   class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   placeholder="Digite o código ou nome do produto...">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            <button @click="openBarcodeScanner" class="absolute right-3 top-2 text-blue-600">
+                                <i class="fas fa-barcode text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Categories -->
+                    <div class="p-3 border-b border-gray-200 bg-white overflow-x-auto">
+                        <div class="flex space-x-2">
+                            <button v-for="category in categories" :key="category.id" 
+                                    @click="selectCategory(category)"
+                                    :class="{'bg-blue-600 text-white': selectedCategory === category.id, 'bg-gray-100 text-gray-800': selectedCategory !== category.id}"
+                                    class="px-3 py-1 rounded-full text-sm whitespace-nowrap">
+                                {{ category.name }}
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Grid -->
+                    <div class="flex-1 overflow-y-auto p-3">
+                        <div v-if="loadingProducts" class="h-full flex items-center justify-center">
+                            <div class="spinner"></div>
+                        </div>
+                        
+                        <div v-else-if="filteredProducts.length === 0" class="h-full flex items-center justify-center text-gray-500">
+                            <div class="text-center">
+                                <i class="fas fa-box-open text-4xl mb-2"></i>
+                                <p>Nenhum produto encontrado</p>
+                            </div>
+                        </div>
+                        
+                        <div v-else class="product-grid">
+                            <div v-for="product in filteredProducts" :key="product.id" 
+                                 @click="addToCart(product)"
+                                 class="bg-white border border-gray-200 rounded-lg p-3 flex flex-col items-center cursor-pointer hover:bg-blue-50 hover:border-blue-200 transition">
+                                <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-2">
+                                    <i class="fas fa-box text-gray-400"></i>
+                                </div>
+                                <div class="text-center">
+                                    <h3 class="font-medium text-sm truncate w-full">{{ product.name }}</h3>
+                                    <p class="text-blue-600 font-bold text-sm">{{ formatCurrency(product.price) }}</p>
+                                    <p class="text-xs text-gray-500">Estoque: {{ product.stock }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Panel - Cart -->
+                <div class="w-1/3 bg-gray-50 flex flex-col">
+                    <!-- Customer Info -->
+                    <div class="p-3 border-b border-gray-200 bg-white">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-medium">Cliente</h3>
+                            <button @click="showCustomerModal = true" class="text-blue-600 text-sm">
+                                <i class="fas fa-plus mr-1"></i> Selecionar
+                            </button>
+                        </div>
+                        <div v-if="selectedCustomer" class="flex items-center justify-between bg-blue-50 p-2 rounded">
+                            <div>
+                                <p class="font-medium">{{ selectedCustomer.name }}</p>
+                                <p class="text-xs text-gray-600">{{ selectedCustomer.document }}</p>
+                            </div>
+                            <button @click="removeCustomer" class="text-red-500">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div v-else class="text-sm text-gray-500 italic">
+                            Cliente não selecionado
+                        </div>
+                    </div>
+                    
+                    <!-- Cart Items -->
+                    <div class="flex-1 overflow-y-auto p-3">
+                        <div v-if="cart.length === 0" class="h-full flex items-center justify-center text-gray-500">
+                            <div class="text-center">
+                                <i class="fas fa-shopping-cart text-4xl mb-2"></i>
+                                <p>Carrinho vazio</p>
+                                <p class="text-sm">Adicione produtos para começar</p>
+                            </div>
+                        </div>
+                        
+                        <div v-else class="space-y-2">
+                            <div v-for="(item, index) in cart" :key="index" 
+                                 class="cart-item bg-white p-3 rounded-lg border border-gray-200 flex justify-between items-center">
+                                <div class="flex-1">
+                                    <h4 class="font-medium">{{ item.product.name }}</h4>
+                                    <div class="flex items-center mt-1">
+                                        <button @click.stop="decreaseQuantity(item)" 
+                                                class="w-6 h-6 bg-gray-200 rounded flex items-center justify-center">
+                                            <i class="fas fa-minus text-xs"></i>
+                                        </button>
+                                        <input type="number" v-model.number="item.quantity" min="1" 
+                                               @change="updateQuantity(item)"
+                                               class="w-10 text-center mx-1 border border-gray-300 rounded">
+                                        <button @click.stop="increaseQuantity(item)" 
+                                                class="w-6 h-6 bg-gray-200 rounded flex items-center justify-center">
+                                            <i class="fas fa-plus text-xs"></i>
+                                        </button>
+                                        <span class="ml-2 text-sm text-gray-600">x {{ formatCurrency(item.product.price) }}</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold">{{ formatCurrency(item.product.price * item.quantity) }}</p>
+                                    <button @click.stop="removeFromCart(index)" class="text-red-500 text-sm mt-1">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart Summary -->
+                    <div class="p-3 border-t border-gray-200 bg-white">
+                        <div class="space-y-2 mb-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subtotal:</span>
+                                <span class="font-medium">{{ formatCurrency(subtotal) }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Desconto:</span>
+                                <div class="flex items-center">
+                                    <input type="number" v-model.number="discount" min="0" max="100" 
+                                           class="w-12 text-right border-b border-gray-300 focus:outline-none focus:border-blue-500">
+                                    <span class="ml-1">%</span>
+                                    <span class="ml-2 font-medium">{{ formatCurrency(discountAmount) }}</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between border-t border-gray-200 pt-2">
+                                <span class="text-gray-600 font-bold">Total:</span>
+                                <span class="text-xl font-bold text-blue-600">{{ formatCurrency(total) }}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Methods -->
+                        <div class="mb-3">
+                            <h4 class="font-medium mb-2">Forma de Pagamento</h4>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button v-for="method in paymentMethods" :key="method.id" 
+                                        @click="selectPaymentMethod(method)"
+                                        :class="{'bg-blue-600 text-white': selectedPaymentMethod === method.id, 'bg-white border border-gray-200': selectedPaymentMethod !== method.id}"
+                                        class="payment-method p-2 rounded-lg text-center text-sm">
+                                    <i :class="method.icon" class="block text-lg mb-1"></i>
+                                    {{ method.name }}
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Actions -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <button @click="cancelSale" 
+                                    class="bg-red-100 text-red-600 py-2 rounded-lg font-medium hover:bg-red-200 transition">
+                                Cancelar
+                            </button>
+                            <button @click="finishSale" 
+                                    :disabled="cart.length === 0 || cashRegisterStatus === 'closed'"
+                                    :class="{'bg-blue-600 hover:bg-blue-700 text-white': cart.length > 0 && cashRegisterStatus === 'open', 'bg-gray-200 text-gray-500 cursor-not-allowed': cart.length === 0 || cashRegisterStatus === 'closed'}"
+                                    class="py-2 rounded-lg font-medium transition">
+                                Finalizar Venda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modals (Customer, Payment, Receipt, etc.) -->
+    <!-- Modal de Abertura de Caixa -->
+    <div v-if="showCashRegisterModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Abrir Caixa</h3>
+                <button @click="showCashRegisterModal = false" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Valor Inicial</label>
+                <input type="number" v-model.number="cashRegisterInitialValue" min="0" step="0.01"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right font-mono text-lg">
+                <div class="mt-6 flex justify-end">
+                    <button @click="showCashRegisterModal = false"
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2 hover:bg-gray-300">
+                        Cancelar
+                    </button>
+                    <button @click="confirmOpenCashRegister"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Abrir Caixa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Fechamento de Caixa -->
+    <div v-if="showCloseRegisterModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Fechar Caixa</h3>
+                <button @click="showCloseRegisterModal = false" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Valor Final em Caixa</label>
+                <input type="number" v-model.number="cashRegisterFinalValue" min="0" step="0.01"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right font-mono text-lg">
+                <div class="mt-6 flex justify-end">
+                    <button @click="showCloseRegisterModal = false"
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2 hover:bg-gray-300">
+                        Cancelar
+                    </button>
+                    <button @click="confirmCloseCashRegister"
+                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                        Fechar Caixa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Modal -->
+    <div v-if="showCustomerModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Selecionar Cliente</h3>
+                <button @click="showCustomerModal = false" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="relative mb-4">
+                    <input type="text" v-model="customerSearch" placeholder="Buscar cliente..." 
+                           class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                
+                <div class="max-h-96 overflow-y-auto">
+                    <div v-if="loadingCustomers" class="text-center py-4">
+                        <div class="spinner mx-auto"></div>
+                    </div>
+                    
+                    <div v-else-if="filteredCustomers.length === 0" class="text-center py-4 text-gray-500">
+                        Nenhum cliente encontrado
+                    </div>
+                    
+                    <div v-for="customer in filteredCustomers" :key="customer.id" 
+                         class="p-3 border-b border-gray-100 hover:bg-blue-50 cursor-pointer flex justify-between items-center">
+                        <div @click="selectCustomer(customer)" class="flex-1">
+                            <p class="font-medium">{{ customer.name }}</p>
+                            <p class="text-sm text-gray-600">{{ customer.document }}</p>
+                            <p class="text-sm text-gray-600">{{ customer.phone }}</p>
+                        </div>
+                        <button @click.stop="openEditCustomerModal(customer)" class="ml-2 text-blue-600 hover:text-blue-800" title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mt-4 flex justify-end">
+                    <button @click="showCustomerModal = false" 
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2 hover:bg-gray-300">
+                        Cancelar
+                    </button>
+                    <button @click="openNewCustomerModal" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Novo Cliente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Customer Modal -->
+    <div v-if="showNewCustomerModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Novo Cliente</h3>
+                <button @click="showNewCustomerModal = false" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nome *</label>
+                        <input type="text" v-model="newCustomer.name" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Documento</label>
+                        <input type="text" v-model="newCustomer.document" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                        <input type="text" v-model="newCustomer.phone" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" v-model="newCustomer.email" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex justify-end">
+                    <button @click="showNewCustomerModal = false" 
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2 hover:bg-gray-300">
+                        Cancelar
+                    </button>
+                    <button @click="saveNewCustomer" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Salvar Cliente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div v-if="showPaymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Finalizar Venda</h3>
+                <button @click="showPaymentModal = false" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="mb-4 p-3 bg-blue-50 rounded-lg">
+                    <div class="flex justify-between font-bold text-lg mb-2">
+                        <span>Total:</span>
+                        <span>{{ formatCurrency(total) }}</span>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-600">
+                        <span>Itens:</span>
+                        <span>{{ cart.reduce((acc, item) => acc + item.quantity, 0) }}</span>
+                    </div>
+                </div>
+                
+                <div v-if="selectedPaymentMethod === 'money'" class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Valor Recebido *</label>
+                    <input type="number" v-model.number="receivedAmount" step="0.01" min="0"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right text-lg font-mono">
+                    <div v-if="receivedAmount > 0" class="mt-2 p-2 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between">
+                            <span>Troco:</span>
+                            <span class="font-bold">{{ formatCurrency(receivedAmount - total) }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <button @click="confirmPayment" 
+                            class="w-full py-3 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 flex items-center justify-center">
+                        <i class="fas fa-check-circle mr-2"></i> Confirmar Pagamento
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div v-if="showReceiptModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Venda Concluída</h3>
+                <button @click="finishSaleProcess" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="text-center mb-4">
+                    <i class="fas fa-check-circle text-5xl text-green-500 mb-2"></i>
+                    <h3 class="text-xl font-bold">Venda registrada com sucesso!</h3>
+                    <p class="text-gray-600">Nº {{ saleReceipt.number }}</p>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-4 mb-4 receipt-container">
+                    <div class="flex flex-col items-center mb-2">
+                        <img v-if="settings.logo" :src="settings.logo" alt="Logo" class="h-12 w-auto mb-2">
+                        <div class="text-center font-bold">RECIBO DE VENDA</div>
+                        <div class="text-center text-sm mb-2">{{ settings.company_name }} - {{ currentDateTime }}</div>
+                        <div class="text-xs text-gray-500">{{ settings.address }} | {{ settings.phone }}</div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Cliente:</span>
+                            <span>{{ saleReceipt.customer || 'Não informado' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Data/Hora:</span>
+                            <span>{{ saleReceipt.date }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Operador:</span>
+                            <span>{{ saleReceipt.operator }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Forma de Pagamento:</span>
+                            <span>{{ saleReceipt.paymentMethod }}</span>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 my-2 pt-2">
+                            <div v-for="(item, index) in saleReceipt.items" :key="index" class="flex justify-between">
+                                <span>{{ item.quantity }}x {{ item.name }}</span>
+                                <span>{{ formatCurrency(item.total) }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-2">
+                            <div class="flex justify-between font-bold">
+                                <span>TOTAL:</span>
+                                <span>{{ formatCurrency(saleReceipt.total) }}</span>
+                            </div>
+                            <div v-if="saleReceipt.paymentMethod === 'Dinheiro'" class="flex justify-between">
+                                <span>Troco:</span>
+                                <span>{{ formatCurrency(saleReceipt.change) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <button @click="printReceipt" 
+                            class="py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center">
+                        <i class="fas fa-print mr-2"></i> Imprimir
+                    </button>
+                    <button @click="finishSaleProcess" 
+                            class="py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                        Finalizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.31/dist/vue.global.min.js"></script>
+    <script>
+        const { createApp } = Vue;
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        createApp({
+            data() {
+                return {
+                    currentDateTime: this.getCurrentDateTime(),
+                    searchQuery: '',
+                    selectedCategory: null,
+                    selectedCustomer: null,
+                    selectedPaymentMethod: 'money',
+                    discount: 0,
+                    cart: [],
+                    showCustomerModal: false,
+                    showCloseRegisterModal: false,
+                    showBarcodeScanner: false,
+                    showPaymentModal: false,
+                    showReceiptModal: false,
+                    showNumericKeyboard: false,
+                    showCashRegisterModal: false,
+                    showNewCustomerModal: false,
+                    customerSearch: '',
+                    manualBarcode: '',
+                    receivedAmount: 0,
+                    cashRegisterInitialValue: 0,
+                    cashRegisterFinalValue: 0,
+                    cashRegisterStatus: 'closed',
+                    loadingProducts: false,
+                    loadingCustomers: false,
+                    newCustomer: {
+                        name: '',
+                        document: '',
+                        phone: '',
+                        email: ''
+                    },
+                    saleReceipt: {
+                        number: '',
+                        date: '',
+                        customer: '',
+                        operator: '',
+                        paymentMethod: '',
+                        items: [],
+                        total: 0,
+                        change: 0
+                    },
+                    categories: [],
+                    paymentMethods: [
+                        { id: 'money', name: 'Dinheiro', icon: 'fas fa-money-bill-wave' },
+                        { id: 'card', name: 'Cartão', icon: 'fas fa-credit-card' },
+                        { id: 'transfer', name: 'Transferência', icon: 'fas fa-exchange-alt' },
+                        { id: 'pix', name: 'PIX', icon: 'fas fa-qrcode' },
+                        { id: 'check', name: 'Cheque', icon: 'fas fa-money-check' },
+                        { id: 'credit', name: 'Crédito', icon: 'fas fa-hand-holding-usd' }
+                    ],
+                    customers: [],
+                    products: [],
+                    settings: {
+                        company_name: 'KanawaSoft PDV',
+                        address: '',
+                        phone: '',
+                        logo: ''
+                    },
+                    usuario: {
+                        id: 1,
+                        nome: 'Daniel Pedro',
+                        email: 'daniel@email.com',
+                        telefone: '(11) 91234-5678'
+                    }
+                }
+            },
+            computed: {
+                filteredProducts() {
+                    let filtered = this.products;
+                    
+                    // Filter by category
+                    if (this.selectedCategory && this.selectedCategory !== 1) {
+                        filtered = filtered.filter(p => p.category_id === this.selectedCategory);
+                    }
+                    
+                    // Filter by search query
+                    if (this.searchQuery) {
+                        const query = this.searchQuery.toLowerCase();
+                        filtered = filtered.filter(p => 
+                            p.name.toLowerCase().includes(query) || 
+                            (p.code && p.code.includes(query))
+                        );
+                    }
+                    
+                    return filtered;
+                },
+                filteredCustomers() {
+                    if (!this.customerSearch) return this.customers;
+                    const query = this.customerSearch.toLowerCase();
+                    return this.customers.filter(c => 
+                        c.name.toLowerCase().includes(query) || 
+                        (c.document && c.document.includes(query)) ||
+                        (c.phone && c.phone.includes(query)) ||
+                        (c.email && c.email.includes(query))
+                    );
+                },
+                subtotal() {
+                    return this.cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+                },
+                discountAmount() {
+                    return this.subtotal * (this.discount / 100);
+                },
+                total() {
+                    return this.subtotal - this.discountAmount;
+                }
+            },
+            async mounted() {
+                // Update date/time every second
+                setInterval(() => {
+                    this.currentDateTime = this.getCurrentDateTime();
+                }, 1000);
+                
+                // Load initial data
+                await this.loadCategories();
+                await this.loadProducts();
+                await this.loadSettings();
+                await this.checkCashRegisterStatus();
+            },
+            methods: {
+                // API methods
+                async loadCategories() {
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/categories`);
+                        this.categories = await response.json();
+                    } catch (error) {
+                        console.error('Erro ao carregar categorias:', error);
+                    }
+                },
+                
+                async loadProducts() {
+                    try {
+                        this.loadingProducts = true;
+                        const params = new URLSearchParams();
+                        if (this.selectedCategory && this.selectedCategory !== 1) {
+                            params.append('category', this.selectedCategory);
+                        }
+                        if (this.searchQuery) {
+                            params.append('search', this.searchQuery);
+                        }
+                        
+                        const response = await fetch(`${API_BASE_URL}/products?${params}`);
+                        this.products = await response.json();
+                    } catch (error) {
+                        console.error('Erro ao carregar produtos:', error);
+                    } finally {
+                        this.loadingProducts = false;
+                    }
+                },
+                
+                async loadCustomers() {
+                    try {
+                        this.loadingCustomers = true;
+                        const params = new URLSearchParams();
+                        if (this.customerSearch) {
+                            params.append('search', this.customerSearch);
+                        }
+                        
+                        const response = await fetch(`${API_BASE_URL}/customers?${params}`);
+                        this.customers = await response.json();
+                    } catch (error) {
+                        console.error('Erro ao carregar clientes:', error);
+                    } finally {
+                        this.loadingCustomers = false;
+                    }
+                },
+                
+                async loadSettings() {
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/settings`);
+                        const settings = await response.json();
+                        if (settings) {
+                            this.settings = { ...this.settings, ...settings };
+                        }
+                    } catch (error) {
+                        console.error('Erro ao carregar configurações:', error);
+                    }
+                },
+                
+                async checkCashRegisterStatus() {
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/cash-register/status`);
+                        const status = await response.json();
+                        this.cashRegisterStatus = status.status || 'closed';
+                    } catch (error) {
+                        console.error('Erro ao verificar status do caixa:', error);
+                    }
+                },
+                
+                async openCashRegister() {
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/cash-register/open`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                initial_value: this.cashRegisterInitialValue,
+                                operator_id: this.usuario.id,
+                                operator_name: this.usuario.nome
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            this.cashRegisterStatus = 'open';
+                            this.showCashRegisterModal = false;
+                            alert('Caixa aberto com sucesso!');
+                        } else {
+                            const error = await response.json();
+                            alert(error.error || 'Erro ao abrir o caixa.');
+                        }
+                    } catch (error) {
+                        console.error('Erro ao abrir caixa:', error);
+                        alert('Erro ao abrir o caixa.');
+                    }
+                },
+                
+                async closeCashRegister() {
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/cash-register/close`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                final_value: this.cashRegisterFinalValue,
+                                operator_id: this.usuario.id
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            this.cashRegisterStatus = 'closed';
+                            this.showCloseRegisterModal = false;
+                            alert('Caixa fechado com sucesso!');
+                        } else {
+                            const error = await response.json();
+                            alert(error.error || 'Erro ao fechar o caixa.');
+                        }
+                    } catch (error) {
+                        console.error('Erro ao fechar caixa:', error);
+                        alert('Erro ao fechar o caixa.');
+                    }
+                },
+                
+                async saveNewCustomer() {
+                    try {
+                        if (!this.newCustomer.name) {
+                            alert('Nome do cliente é obrigatório!');
+                            return;
+                        }
+                        
+                        const response = await fetch(`${API_BASE_URL}/customers`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(this.newCustomer)
+                        });
+                        
+                        if (response.ok) {
+                            await this.loadCustomers();
+                            this.showNewCustomerModal = false;
+                            alert('Cliente salvo com sucesso!');
+                        } else {
+                            alert('Erro ao salvar cliente.');
+                        }
+                    } catch (error) {
+                        console.error('Erro ao salvar cliente:', error);
+                        alert('Erro ao salvar cliente.');
+                    }
+                },
+                
+                async saveSale() {
+                    try {
+                        const saleData = {
+                            customer_id: this.selectedCustomer ? this.selectedCustomer.id : null,
+                            items: this.cart.map(item => ({
+                                product_id: item.product.id,
+                                product_name: item.product.name,
+                                quantity: item.quantity,
+                                price: item.product.price,
+                                total: item.product.price * item.quantity
+                            })),
+                            subtotal: this.subtotal,
+                            discount: this.discountAmount,
+                            discount_percent: this.discount,
+                            total: this.total,
+                            payment_method: this.selectedPaymentMethod,
+                            received_amount: this.receivedAmount,
+                            change_amount: this.selectedPaymentMethod === 'money' ? (this.receivedAmount - this.total) : 0,
+                            operator_id: this.usuario.id,
+                            operator_name: this.usuario.nome
+                        };
+                        
+                        const response = await fetch(`${API_BASE_URL}/sales`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(saleData)
+                        });
+                        
+                        if (response.ok) {
+                            const result = await response.json();
+                            return result;
+                        } else {
+                            throw new Error('Erro ao salvar venda');
+                        }
+                    } catch (error) {
+                        console.error('Erro ao salvar venda:', error);
+                        throw error;
+                    }
+                },
+                
+                // UI methods
+                getCurrentDateTime() {
+                    const now = new Date();
+                    const date = now.toLocaleDateString('pt-BR');
+                    const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                    return `${date} ${time}`;
+                },
+                
+                formatCurrency(value) {
+                    return new Intl.NumberFormat('pt-BR', { 
+                        style: 'currency', 
+                        currency: 'BRL' 
+                    }).format(value);
+                },
+                
+                selectCategory(category) {
+                    this.selectedCategory = category.id;
+                    this.loadProducts();
+                },
+                
+                searchProducts() {
+                    this.loadProducts();
+                },
+                
+                addToCart(product) {
+                    if (product.stock < 1) {
+                        alert('Produto sem estoque!');
+                        return;
+                    }
+                    
+                    const existingItem = this.cart.find(item => item.product.id === product.id);
+                    
+                    if (existingItem) {
+                        if (existingItem.quantity >= product.stock) {
+                            alert('Quantidade indisponível em estoque!');
+                            return;
+                        }
+                        existingItem.quantity++;
+                    } else {
+                        this.cart.push({
+                            product: { ...product },
+                            quantity: 1
+                        });
+                    }
+                },
+                
+                removeFromCart(index) {
+                    this.cart.splice(index, 1);
+                },
+                
+                increaseQuantity(item) {
+                    if (item.quantity >= item.product.stock) {
+                        alert('Quantidade indisponível em estoque!');
+                        return;
+                    }
+                    item.quantity++;
+                },
+                
+                decreaseQuantity(item) {
+                    if (item.quantity > 1) {
+                        item.quantity--;
+                    } else {
+                        const index = this.cart.findIndex(i => i.product.id === item.product.id);
+                        if (index !== -1) {
+                            this.cart.splice(index, 1);
+                        }
+                    }
+                },
+                
+                updateQuantity(item) {
+                    if (item.quantity < 1) {
+                        item.quantity = 1;
+                    }
+                    
+                    if (item.quantity > item.product.stock) {
+                        alert('Quantidade indisponível em estoque!');
+                        item.quantity = item.product.stock;
+                    }
+                },
+                
+                openCashRegisterModal() { 
+                    if (this.cashRegisterStatus === 'open') {
+                        alert('O caixa já está aberto!');
+                        return;
+                    }
+                    this.showCashRegisterModal = true; 
+                },
+                
+                openCloseRegisterModal() { 
+                    if (this.cashRegisterStatus === 'closed') {
+                        alert('O caixa já está fechado!');
+                        return;
+                    }
+                    this.showCloseRegisterModal = true; 
+                },
+                
+                confirmOpenCashRegister() {
+                    if (this.cashRegisterInitialValue >= 0) {
+                        this.openCashRegister();
+                    } else {
+                        alert('Valor inicial deve ser maior ou igual a zero.');
+                    }
+                },
+                
+                confirmCloseCashRegister() {
+                    if (this.cashRegisterFinalValue >= 0) {
+                        this.closeCashRegister();
+                    } else {
+                        alert('Valor final deve ser maior ou igual a zero.');
+                    }
+                },
+                
+                openNewCustomerModal() {
+                    this.newCustomer = { name: '', document: '', phone: '', email: '' };
+                    this.showNewCustomerModal = true;
+                },
+                
+                searchByBarcode() {
+                    const product = this.products.find(p => p.code === this.manualBarcode);
+                    if (product) {
+                        this.addToCart(product);
+                        this.showBarcodeScanner = false;
+                        this.manualBarcode = '';
+                    } else {
+                        alert('Produto não encontrado!');
+                    }
+                },
+                
+                selectPaymentMethod(method) {
+                    this.selectedPaymentMethod = method.id;
+                },
+                
+                cancelSale() {
+                    if (this.cart.length > 0 && !confirm('Deseja realmente cancelar esta venda?')) {
+                        return;
+                    }
+                    this.cart = [];
+                    this.selectedCustomer = null;
+                    this.discount = 0;
+                },
+                
+                finishSale() {
+                    if (this.cart.length === 0) {
+                        alert('Adicione produtos ao carrinho antes de finalizar a venda.');
+                        return;
+                    }
+                    
+                    if (this.cashRegisterStatus === 'closed') {
+                        alert('É necessário abrir o caixa antes de realizar uma venda.');
+                        this.openCashRegisterModal();
+                        return;
+                    }
+                    
+                    this.showPaymentModal = true;
+                    this.receivedAmount = this.total;
+                },
+                
+                async confirmPayment() {
+                    if (this.selectedPaymentMethod === 'money' && this.receivedAmount < this.total) {
+                        alert('Valor recebido insuficiente!');
+                        return;
+                    }
+                    
+                    try {
+                        const result = await this.saveSale();
+                        
+                        // Generate receipt
+                        this.saleReceipt = {
+                            number: result.sale_number,
+                            date: this.getCurrentDateTime(),
+                            customer: this.selectedCustomer ? this.selectedCustomer.name : 'Não informado',
+                            operator: this.usuario.nome,
+                            paymentMethod: this.paymentMethods.find(m => m.id === this.selectedPaymentMethod).name,
+                            items: this.cart.map(item => ({
+                                name: item.product.name,
+                                quantity: item.quantity,
+                                price: item.product.price,
+                                total: item.product.price * item.quantity
+                            })),
+                            total: this.total,
+                            change: this.selectedPaymentMethod === 'money' ? (this.receivedAmount - this.total) : 0
+                        };
+                        
+                        this.showPaymentModal = false;
+                        this.showReceiptModal = true;
+                    } catch (error) {
+                        alert('Erro ao processar venda. Tente novamente.');
+                        console.error('Erro ao processar venda:', error);
+                    }
+                },
+                
+                finishSaleProcess() {
+                    this.cart = [];
+                    this.selectedCustomer = null;
+                    this.discount = 0;
+                    this.showReceiptModal = false;
+                },
+                
+                printReceipt() {
+                    const receipt = document.querySelector('.receipt-container');
+                    if (receipt) {
+                        const printWindow = window.open('', '', 'width=600,height=800');
+                        printWindow.document.write('<html><head><title>Recibo</title>');
+                        printWindow.document.write('<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">');
+                        printWindow.document.write('<style>@media print { body { margin: 0; padding: 0; } }</style>');
+                        printWindow.document.write('</head><body>');
+                        printWindow.document.write(receipt.outerHTML);
+                        printWindow.document.write('</body></html>');
+                        printWindow.document.close();
+                        printWindow.focus();
+                        setTimeout(() => printWindow.print(), 500);
+                    }
+                },
+                
+                removeCustomer() {
+                    this.selectedCustomer = null;
+                },
+                
+                selectCustomer(customer) {
+                    this.selectedCustomer = customer;
+                    this.showCustomerModal = false;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

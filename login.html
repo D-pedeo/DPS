@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ===== VARIÁVEIS DE CORES E ESTILOS ===== */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        /* ===== ESTILOS GERAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            transition: color var(--transition-speed);
+        }
+
+        a:hover {
+            color: #2980b9;
+        }
+
+        /* ===== CONTAINER PRINCIPAL ===== */
+        .auth-container {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .auth-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .auth-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .auth-logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .auth-logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .auth-body {
+            padding: 2rem;
+        }
+
+        /* ===== FORMULÁRIOS ===== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group .form-control {
+            padding-right: 40px;
+        }
+
+        .input-group-append {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+        }
+
+        /* ===== UPLOAD DE FOTO ===== */
+        .avatar-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            color: #6c757d;
+        }
+
+        .avatar-upload-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .avatar-upload-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .avatar-upload input[type="file"] {
+            display: none;
+        }
+
+        /* ===== BOTÕES ===== */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        /* ===== LINKS E TEXTOS ===== */
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* ===== MENSAGENS DE ALERTA ===== */
+        .alert {
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background-color: rgba(39, 174, 96, 0.15);
+            color: var(--success-color);
+            border: 1px solid rgba(39, 174, 96, 0.2);
+        }
+
+        .alert-error {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        .alert-info {
+            background-color: rgba(52, 152, 219, 0.15);
+            color: var(--secondary-color);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 576px) {
+            .auth-container {
+                max-width: 100%;
+            }
+            
+            .auth-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="auth-logo">
+                <img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/>
+                <span>D.Pedro Soluções</span>
+            </div>
+            <h2 id="auth-title">Acessar Sistema</h2>
+        </div>
+        
+        <div class="auth-body">
+            <div id="login-form">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Use suas credenciais para acessar o sistema
+                </div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="loginEmail" placeholder="seu@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label">Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Sua senha" required>
+                            <span class="input-group-append" id="toggleLoginPassword">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Lembrar-me</label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </button>
+                    <div class="divider"><span>ou</span></div>
+                    <div style="display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;">
+                        <button id="loginFacebook" type="button" style="background:#4267B2;color:white;border:none;border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;box-shadow:0 2px 8px #4267B2;cursor:pointer;">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button id="loginGoogle" type="button" style="background:#fff;color:#4285F4;border:none;border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;box-shadow:0 2px 8px #4285F4;cursor:pointer;">
+                            <i class="fab fa-google"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>
+                        <a href="#" id="forgot-password-link">Esqueceu sua senha?</a>
+                    </p>
+                    <p>
+                        Não tem uma conta? <a href="#" id="register-link">Criar conta</a>
+                    </p>
+                </div>
+            </div>
+            
+            <div id="register-form" style="display: none;">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Preencha os dados para criar sua conta
+                </div>
+                
+                <form id="registerForm">
+                    <div class="avatar-upload">
+                        <div class="avatar-preview" id="avatarPreview">
+                            <div class="avatar-placeholder">
+                                <i class="fas fa-user fa-2x"></i>
+                            </div>
+                        </div>
+                        <label class="avatar-upload-btn">
+                            <i class="fas fa-camera"></i> Escolher Foto
+                            <input type="file" id="avatarInput" accept="image/*" />
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerName" class="form-label">Nome Completo</label>
+                        <input type="text" class="form-control" id="registerName" placeholder="Seu nome completo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerEmail" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="registerEmail" placeholder="seu@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerPassword" class="form-label">Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="registerPassword" placeholder="Crie uma senha segura" required>
+                            <span class="input-group-append" id="toggleRegisterPassword">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                        <small class="form-text text-muted">Mínimo de 8 caracteres, com letras e números</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="registerConfirmPassword" class="form-label">Confirmar Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Confirme sua senha" required>
+                            <span class="input-group-append" id="toggleRegisterConfirmPassword">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="termsAgree" required>
+                            <label class="form-check-label" for="termsAgree">
+                                Concordo com os <a href="#">termos de uso</a> e <a href="#">política de privacidade</a>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Criar Conta
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>
+                        Já tem uma conta? <a href="#" id="login-link">Fazer login</a>
+                    </p>
+                </div>
+            </div>
+            
+            <div id="forgot-password-form" style="display: none;">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Informe seu e-mail para recuperar a senha
+                </div>
+                
+                <form id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label for="recoveryEmail" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="recoveryEmail" placeholder="seu@email.com" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Enviar Link de Recuperação
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>
+                        <a href="#" id="back-to-login">Voltar para o login</a>
+                    </p>
+                </div>
+            </div>
+            
+            <div id="reset-password-form" style="display: none;">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Crie uma nova senha para sua conta
+                </div>
+                
+                <form id="resetPasswordForm">
+                    <div class="form-group">
+                        <label for="newPassword" class="form-label">Nova Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="newPassword" placeholder="Nova senha" required>
+                            <span class="input-group-append" id="toggleNewPassword">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                        <small class="form-text text-muted">Mínimo de 8 caracteres, com letras e números</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmNewPassword" class="form-label">Confirmar Nova Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmNewPassword" placeholder="Confirme a nova senha" required>
+                            <span class="input-group-append" id="toggleConfirmNewPassword">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i> Redefinir Senha
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>
+                        <a href="#" id="back-to-login-from-reset">Voltar para o login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // BANCO DE DADOS COM LOCALSTORAGE
+        // =============================================
+        const DB_NAME = 'DPSystemDB';
+        const DB_VERSION = 1;
+        
+        // Inicializar o banco de dados
+        function initDatabase() {
+            if (!localStorage.getItem(DB_NAME)) {
+                // Criar estrutura inicial do banco de dados
+                const initialDB = {
+                    users: [
+                        {
+                            id: 1,
+                            name: "Daniel Pedro",
+                            email: "daniel@dpedrosolucoes.com",
+                            password: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", // admin
+                            avatar: "https://i.postimg.cc/7YQvLZxX/user-avatar.jpg",
+                            createdAt: new Date().toISOString(),
+                            lastLogin: new Date().toISOString()
+                        }
+                    ],
+                    sessions: [],
+                    passwordResets: []
+                };
+                
+                localStorage.setItem(DB_NAME, JSON.stringify(initialDB));
+                console.log('Banco de dados inicializado');
+            }
+            
+            return JSON.parse(localStorage.getItem(DB_NAME));
+        }
+        
+        // Obter banco de dados
+        function getDatabase() {
+            return JSON.parse(localStorage.getItem(DB_NAME));
+        }
+        
+        // Salvar banco de dados
+        function saveDatabase(db) {
+            localStorage.setItem(DB_NAME, JSON.stringify(db));
+        }
+        
+        // =============================================
+        // FUNÇÕES DE CRIPTOGRAFIA
+        // =============================================
+        
+        // Hash de senha simples (apenas para demonstração)
+        // Em produção, use bibliotecas especializadas como bcrypt
+        function hashPassword(password) {
+            // Simulação simples de hash (SHA-256 em produção)
+            let hash = 0;
+            for (let i = 0; i < password.length; i++) {
+                const char = password.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return hash.toString();
+        }
+        
+        // =============================================
+        // FUNÇÕES DE AUTENTICAÇÃO
+        // =============================================
+        
+        // Verificar se usuário está logado
+        function isLoggedIn() {
+            return localStorage.getItem('currentUser') !== null;
+        }
+        
+        // Fazer login
+        function login(email, password) {
+            const db = getDatabase();
+            const user = db.users.find(u => u.email === email);
+            
+            if (!user) {
+                return { success: false, message: "E-mail não encontrado" };
+            }
+            
+            if (user.password !== hashPassword(password)) {
+                return { success: false, message: "Senha incorreta" };
+            }
+            
+            // Atualizar último login
+            user.lastLogin = new Date().toISOString();
+            saveDatabase(db);
+            
+            // Criar sessão
+            const session = {
+                userId: user.id,
+                token: Math.random().toString(36).substring(2) + Date.now().toString(36),
+                createdAt: new Date().toISOString(),
+                expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 dias
+            };
+            
+            db.sessions.push(session);
+            saveDatabase(db);
+            
+            // Salvar usuário atual
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('sessionToken', session.token);
+            
+            return { success: true, user };
+        }
+        
+        // Registrar novo usuário
+        function register(name, email, password, avatar = null) {
+            const db = getDatabase();
+            
+            // Verificar se e-mail já existe
+            if (db.users.some(u => u.email === email)) {
+                return { success: false, message: "E-mail já cadastrado" };
+            }
+            
+            // Se nenhum avatar foi fornecido, usar avatar padrão baseado no nome
+            let userAvatar = avatar;
+            if (!userAvatar) {
+                userAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3498db&color=fff`;
+            }
+            
+            // Criar novo usuário
+            const newUser = {
+                id: db.users.length > 0 ? Math.max(...db.users.map(u => u.id)) + 1 : 1,
+                name,
+                email,
+                password: hashPassword(password),
+                avatar: userAvatar,
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString()
+            };
+            
+            db.users.push(newUser);
+            saveDatabase(db);
+            
+            // Criar sessão automaticamente
+            const session = {
+                userId: newUser.id,
+                token: Math.random().toString(36).substring(2) + Date.now().toString(36),
+                createdAt: new Date().toISOString(),
+                expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 dias
+            };
+            
+            db.sessions.push(session);
+            saveDatabase(db);
+            
+            // Salvar usuário atual
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            localStorage.setItem('sessionToken', session.token);
+            
+            return { success: true, user: newUser };
+        }
+        
+        // Solicitar recuperação de senha
+        function requestPasswordReset(email) {
+            const db = getDatabase();
+            const user = db.users.find(u => u.email === email);
+            
+            if (!user) {
+                return { success: false, message: "E-mail não encontrado" };
+            }
+            
+            // Gerar token de recuperação
+            const resetToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
+            
+            // Salvar solicitação de recuperação
+            const passwordReset = {
+                email,
+                token: resetToken,
+                createdAt: new Date().toISOString(),
+                expiresAt: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString() // 1 hora
+            };
+            
+            db.passwordResets.push(passwordReset);
+            saveDatabase(db);
+            
+            // Simular envio de e-mail
+            console.log(`Link de recuperação: https://dpedrosolucoes.com/reset-password?token=${resetToken}`);
+            
+            return { success: true, message: "E-mail de recuperação enviado" };
+        }
+        
+        // Redefinir senha
+        function resetPassword(token, newPassword) {
+            const db = getDatabase();
+            
+            // Encontrar solicitação de recuperação
+            const resetRequest = db.passwordResets.find(r => r.token === token && new Date(r.expiresAt) > new Date());
+            
+            if (!resetRequest) {
+                return { success: false, message: "Token inválido ou expirado" };
+            }
+            
+            // Encontrar usuário
+            const user = db.users.find(u => u.email === resetRequest.email);
+            
+            if (!user) {
+                return { success: false, message: "Usuário não encontrado" };
+            }
+            
+            // Atualizar senha
+            user.password = hashPassword(newPassword);
+            
+            // Remover solicitação de recuperação
+            db.passwordResets = db.passwordResets.filter(r => r.token !== token);
+            
+            saveDatabase(db);
+            
+            return { success: true, message: "Senha redefinida com sucesso" };
+        }
+        
+        // Fazer logout
+        function logout() {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('sessionToken');
+            window.location.href = 'login.html';
+        }
+        
+        // =============================================
+        // FUNÇÕES DE UPLOAD DE FOTO
+        // =============================================
+        
+        // Preview da imagem selecionada
+        function setupAvatarPreview() {
+            const avatarInput = document.getElementById('avatarInput');
+            const avatarPreview = document.getElementById('avatarPreview');
+            
+            avatarInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.addEventListener('load', function() {
+                        avatarPreview.innerHTML = `<img src="${this.result}" alt="Preview">`;
+                    });
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        // Converter imagem para base64
+        function getAvatarBase64() {
+            const avatarInput = document.getElementById('avatarInput');
+            if (avatarInput.files && avatarInput.files[0]) {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        resolve(e.target.result);
+                    };
+                    reader.readAsDataURL(avatarInput.files[0]);
+                });
+            }
+            return null;
+        }
+        
+        // =============================================
+        // FUNÇÕES DE INTERFACE
+        // =============================================
+        
+        // Alternar entre formulários
+        function showForm(formId) {
+            // Esconder todos os formulários
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('forgot-password-form').style.display = 'none';
+            document.getElementById('reset-password-form').style.display = 'none';
+            
+            // Mostrar o formulário solicitado
+            document.getElementById(formId).style.display = 'block';
+            
+            // Atualizar título
+            const titles = {
+                'login-form': 'Acessar Sistema',
+                'register-form': 'Criar Conta',
+                'forgot-password-form': 'Recuperar Senha',
+                'reset-password-form': 'Redefinir Senha'
+            };
+            
+            document.getElementById('auth-title').textContent = titles[formId];
+        }
+        
+        // Alternar visibilidade da senha
+        function setupPasswordToggles() {
+            // Login
+            document.getElementById('toggleLoginPassword').addEventListener('click', function() {
+                const passwordInput = document.getElementById('loginPassword');
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+            
+            // Registro
+            document.getElementById('toggleRegisterPassword').addEventListener('click', function() {
+                const passwordInput = document.getElementById('registerPassword');
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+            
+            // Confirmação de registro
+            document.getElementById('toggleRegisterConfirmPassword').addEventListener('click', function() {
+                const passwordInput = document.getElementById('registerConfirmPassword');
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+            
+            // Nova senha
+            document.getElementById('toggleNewPassword').addEventListener('click', function() {
+                const passwordInput = document.getElementById('newPassword');
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+            
+            // Confirmação de nova senha
+            document.getElementById('toggleConfirmNewPassword').addEventListener('click', function() {
+                const passwordInput = document.getElementById('confirmNewPassword');
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        }
+        
+        // =============================================
+        // INICIALIZAÇÃO
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar banco de dados
+            initDatabase();
+            
+            // Configurar toggles de senha
+            setupPasswordToggles();
+            
+            // Configurar preview do avatar
+            setupAvatarPreview();
+            
+            // Verificar se há parâmetros de token na URL (para redefinição de senha)
+            const urlParams = new URLSearchParams(window.location.search);
+            const resetToken = urlParams.get('token');
+            
+            if (resetToken) {
+                showForm('reset-password-form');
+            }
+            
+            // Se já estiver logado, redirecionar para a página principal
+            if (isLoggedIn()) {
+                window.location.href = 'DPS.html';
+            }
+            
+            // Event Listeners para links de formulários
+            document.getElementById('register-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                showForm('register-form');
+            });
+            
+            document.getElementById('login-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                showForm('login-form');
+            });
+            
+            document.getElementById('forgot-password-link').addicionarEventListener('click', function(e) {
+                e.preventDefault();
+                showForm('forgot-password-form');
+            });
+            
+            document.getElementById('back-to-login').addEventListener('click', function(e) {
+                e.preventDefault();
+                showForm('login-form');
+            });
+            
+            document.getElementById('back-to-login-from-reset').addEventListener('click', function(e) {
+                e.preventDefault();
+                showForm('login-form');
+            });
+            
+            // Event Listeners para envio de formulários
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                const result = login(email, password);
+                
+                if (result.success) {
+                    alert('Login realizado com sucesso!');
+                    window.location.href = 'DPS.html';
+                } else {
+                    alert('Erro: ' + result.message);
+                }
+            });
+            
+            document.getElementById('registerForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    alert('As senhas não coincidem');
+                    return;
+                }
+                
+                if (password.length < 8) {
+                    alert('A senha deve ter pelo menos 8 caracteres');
+                    return;
+                }
+                
+                // Obter avatar em base64 se foi selecionado
+                let avatarBase64 = null;
+                try {
+                    avatarBase64 = await getAvatarBase64();
+                } catch (error) {
+                    console.error('Erro ao processar a imagem:', error);
+                }
+                
+                const result = register(name, email, password, avatarBase64);
+                
+                if (result.success) {
+                    alert('Conta criada com sucesso!');
+                    window.location.href = 'DPS.html';
+                } else {
+                    alert('Erro: ' + result.message);
+                }
+            });
+            
+            document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('recoveryEmail').value;
+                
+                const result = requestPasswordReset(email);
+                
+                if (result.success) {
+                    alert('E-mail de recuperação enviado. Verifique sua caixa de entrada.');
+                    showForm('login-form');
+                } else {
+                    alert('Erro: ' + result.message);
+                }
+            });
+            
+            document.getElementById('resetPasswordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const urlParams = new URLSearchParams(window.location.search);
+                const token = urlParams.get('token');
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+                
+                if (newPassword !== confirmNewPassword) {
+                    alert('As senhas não coincidem');
+                    return;
+                }
+                
+                if (newPassword.length < 8) {
+                    alert('A senha deve ter pelo menos 8 caracteres');
+                    return;
+                }
+                
+                if (!token) {
+                    alert('Token de recuperação não encontrado');
+                    return;
+                }
+                
+                const result = resetPassword(token, newPassword);
+                
+                if (result.success) {
+                    alert('Senha redefinida com sucesso!');
+                    showForm('login-form');
+                    
+                    // Limpar parâmetros da URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } else {
+                    alert('Erro: ' + result.message);
+                }
+            });
+        });
+    
+
+    // Ações de exemplo para login social
+    document.addEventListener('DOMContentLoaded', function() {
+        var fbBtn = document.getElementById('loginFacebook');
+        var gBtn = document.getElementById('loginGoogle');
+        if (fbBtn) {
+            fbBtn.onclick = function() {
+                alert('Login com Facebook: será redirecionado para autenticação.');
+                // Aqui você implementaria o fluxo OAuth do Facebook
+            };
+        }
+        if (gBtn) {
+            gBtn.onclick = function() {
+                alert('Login com Google:https://github.com/panva/openid-client.git');
+                // Aqui você implementaria o fluxo OAuth do Google
+            };
+        }
+    });
+</script>
+</body>
+</html>

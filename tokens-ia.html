@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokens de IA - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --ai-color: #6e3bce;
+            --facebook-color: #3b5998;
+            --instagram-color: #e1306c;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-ai {
+            background-color: var(--ai-color);
+            color: white;
+        }
+
+        .btn-ai:hover {
+            background-color: #5a2fa8;
+            color: white;
+        }
+
+        .btn-facebook {
+            background-color: var(--facebook-color);
+            color: white;
+        }
+
+        .btn-facebook:hover {
+            background-color: #2d4373;
+            color: white;
+        }
+
+        .btn-instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+        }
+
+        .btn-instagram:hover {
+            background: linear-gradient(45deg, #da7c1f, #d25629, #c81f43, #b21a5a, #9e1570);
+            color: white;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+            transition: transform var(--transition-speed);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Dashboard de IA */
+        .ai-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: var(--success-color);
+        }
+
+        .change-negative {
+            color: var(--danger-color);
+        }
+
+        /* Abas */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: var(--ai-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Tabelas */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(39, 174, 96, 0.15);
+            color: var(--success-color);
+        }
+
+        .status-paused {
+            background: rgba(241, 196, 15, 0.15);
+            color: var(--warning-color);
+        }
+
+        .status-inactive {
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+        }
+
+        .status-error {
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--danger-color);
+        }
+
+        /* Formulários */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--ai-color);
+            box-shadow: 0 0 0 3px rgba(110, 59, 206, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Filtros */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 200px;
+        }
+
+        /* Cards de API */
+        .api-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .api-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed);
+            border-left: 4px solid var(--ai-color);
+        }
+
+        .api-card.facebook {
+            border-left-color: var(--facebook-color);
+        }
+
+        .api-card.instagram {
+            border-left-color: var(--instagram-color);
+        }
+
+        .api-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .api-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .api-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            background: linear-gradient(135deg, var(--ai-color), #8a63d2);
+        }
+
+        .api-icon.facebook {
+            background: linear-gradient(135deg, var(--facebook-color), #4c70ba);
+        }
+
+        .api-icon.instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .api-title {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        .api-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Tokens */
+        .token-value {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            font-family: monospace;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .token-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Utilização */
+        .usage-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .usage-progress {
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .usage-low {
+            background: var(--success-color);
+            width: 35%;
+        }
+
+        .usage-medium {
+            background: var(--warning-color);
+            width: 65%;
+        }
+
+        .usage-high {
+            background: var(--danger-color);
+            width: 90%;
+        }
+
+        /* Alertas */
+        .alert {
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert-error {
+            background-color: rgba(231, 76, 60, 0.15);
+            border-left: 4px solid var(--danger-color);
+            color: #c0392b;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .ai-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .api-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                min-width: 100%;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 0;
+            }
+            
+            .token-value {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .token-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-key"></i>
+                    Tokens de IA
+                </h1>
+            </div>
+            <button class="btn btn-ai" data-bs-toggle="modal" data-bs-target="#generateTokenModal">
+                <i class="fas fa-plus"></i> Gerar Novo Token
+            </button>
+        </div>
+
+        <!-- Dashboard de IA -->
+        <div class="ai-dashboard">
+            <div class="metric-card">
+                <div class="metric-value" id="totalTokens">21</div>
+                <div class="metric-title">Tokens Ativos</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>8 desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="apiCalls">28.5K</div>
+                <div class="metric-title">Chamadas de API</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>15% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="tokenUsage">68%</div>
+                <div class="metric-title">Uso Médio de Tokens</div>
+                <div class="metric-change change-negative">
+                    <i class="fas fa-arrow-down"></i> <span>5% desde o último mês</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="activeModels">9</div>
+                <div class="metric-title">Modelos de IA Ativos</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>3 desde o último mês</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas de Conteúdo -->
+        <div class="tabs">
+            <div class="tab active" data-tab="tokens">Meus Tokens</div>
+            <div class="tab" data-tab="social">Redes Sociais</div>
+            <div class="tab" data-tab="usage">Uso e Estatísticas</div>
+            <div class="tab" data-tab="models">Modelos de IA</div>
+            <div class="tab" data-tab="api">Documentação da API</div>
+        </div>
+
+        <!-- Conteúdo da Aba Tokens -->
+        <div class="tab-content active" id="tokens">
+            <div class="card">
+                <h2>Gerenciamento de Tokens de API</h2>
+                <p class="text-muted">Gerencie seus tokens de acesso aos serviços de IA</p>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="statusFilter">
+                            <option value="">Todos</option>
+                            <option value="active">Ativos</option>
+                            <option value="paused">Pausados</option>
+                            <option value="expired">Expirados</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="form-label">Modelo de IA</label>
+                        <select class="form-control" id="modelFilter">
+                            <option value="">Todos</option>
+                            <option value="gpt4">GPT-4</option>
+                            <option value="dall-e">DALL-E</option>
+                            <option value="claude">Claude</option>
+                            <option value="llama">Llama 2</option>
+                            <option value="stable-diffusion">Stable Diffusion</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="justify-content: flex-end;">
+                        <button class="btn btn-secondary" style="margin-top: 1.8rem;">
+                            <i class="fas fa-filter"></i> Filtrar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nome do Token</th>
+                                <th>Chave de API</th>
+                                <th>Modelo</th>
+                                <th>Criado em</th>
+                                <th>Expira em</th>
+                                <th>Limite Diário</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tokensTable">
+                            <!-- Conteúdo preenchido por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Tokens de Acesso</h2>
+                
+                <div class="api-cards">
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div class="api-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3 class="api-title">GPT-4 API Key</h3>
+                        </div>
+                        <p class="api-description">Token de acesso para o modelo GPT-4 da OpenAI</p>
+                        
+                        <div class="token-value">
+                            <span>sk-...5Fk3</span>
+                            <div class="token-actions">
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="usage-bar">
+                            <div class="usage-progress usage-medium"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small>65% utilizado hoje</small>
+                            <small>3.2K/5K tokens</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="status-badge status-active">Ativo</div>
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fas fa-pause"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div class="api-icon">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <h3 class="api-title">DALL-E API Key</h3>
+                        </div>
+                        <p class="api-description">Token de acesso para o modelo DALL-E de geração de imagens</p>
+                        
+                        <div class="token-value">
+                            <span>sk-...8Gh2</span>
+                            <div class="token-actions">
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="usage-bar">
+                            <div class="usage-progress usage-low"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small>35% utilizado hoje</small>
+                            <small>87/250 imagens</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="status-badge status-active">Ativo</div>
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fas fa-pause"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div class="api-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="api-title">Claude API Key</h3>
+                        </div>
+                        <p class="api-description">Token de acesso para o modelo Claude da Anthropic</p>
+                        
+                        <div class="token-value">
+                            <span>sk-...2Jq7</span>
+                            <div class="token-actions">
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="usage-bar">
+                            <div class="usage-progress usage-high"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small>90% utilizado hoje</small>
+                            <small>9K/10K tokens</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="status-badge status-active">Ativo</div>
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fas fa-pause"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Redes Sociais (NOVA ABA) -->
+        <div class="tab-content" id="social">
+            <div class="card">
+                <h2>Tokens de Redes Sociais</h2>
+                <p class="text-muted">Gerencie suas chaves de API para redes sociais</p>
+                
+                <div class="api-cards">
+                    <div class="api-card facebook">
+                        <div class="api-header">
+                            <div class="api-icon facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            <h3 class="api-title">Facebook API Key</h3>
+                        </div>
+                        <p class="api-description">Token de acesso para a API do Facebook</p>
+                        
+                        <div class="token-value">
+                            <span>741176208741513|Tvdho2UW4h9Duf10uNmeqjmfTR4</span>
+                            <div class="token-actions">
+                                <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('741176208741513|Tvdho2UW4h9Duf10uNmeqjmfTR4')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="usage-bar">
+                            <div class="usage-progress usage-medium"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small>60% utilizado hoje</small>
+                            <small>120/200 requisições</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="status-badge status-active">Ativo</div>
+                            <button class="btn btn-facebook btn-sm">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="api-card instagram">
+                        <div class="api-header">
+                            <div class="api-icon instagram">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <h3 class="api-title">Instagram API Key</h3>
+                        </div>
+                        <p class="api-description">Token de acesso para a API do Instagram (mesmo do Facebook)</p>
+                        
+                        <div class="token-value">
+                            <span>741176208741513|Tvdho2UW4h9Duf10uNmeqjmfTR4</span>
+                            <div class="token-actions">
+                                <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('741176208741513|Tvdho2UW4h9Duf10uNmeqjmfTR4')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="usage-bar">
+                            <div class="usage-progress usage-high"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small>85% utilizado hoje</small>
+                            <small>170/200 requisições</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="status-badge status-active">Ativo</div>
+                            <button class="btn btn-instagram btn-sm">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div class="api-icon">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <h3 class="api-title">OpenAI API Key</h3>
+                        </div>
+                        <p class="api-description">Token de acesso para a API da OpenAI</p>
+                        
+                        <div class="token-value">
+                            <span>sk-a637e02c4c7642199e888387a53b55e0</span>
+                            <div class="token-actions">
+                                <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('sk-a637e02c4c7642199e888387a53b55e0')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="usage-bar">
+                            <div class="usage-progress usage-low"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small>40% utilizado hoje</small>
+                            <small>4K/10K tokens</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="status-badge status-active">Ativo</div>
+                            <button class="btn btn-ai btn-sm">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Status das APIs de Redes Sociais</h2>
+                <p class="text-muted">Verifique o status e erros das suas APIs</p>
+                
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>Erro na API do Instagram</strong>
+                        <p>Um token de acesso ativo deve ser usado para consultar informações sobre o usuário atual. (Código: 2500, fbtrace_id: A-t_sZfMamzNzU5zJY2wC0W)</p>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Plataforma</th>
+                                <th>Última Verificação</th>
+                                <th>Status</th>
+                                <th>Requisições Restantes</th>
+                                <th>Próxima Atualização</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fab fa-facebook me-2"></i> Facebook</td>
+                                <td>2023-10-25 14:30</td>
+                                <td><div class="status-badge status-active">Ativo</div></td>
+                                <td>80/200</td>
+                                <td>2023-10-26 00:00</td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><i class="fab fa-instagram me-2"></i> Instagram</td>
+                                <td>2023-10-25 15:45</td>
+                                <td><div class="status-badge status-error">Erro</div></td>
+                                <td>30/200</td>
+                                <td>2023-10-26 00:00</td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Uso e Estatísticas -->
+        <div class="tab-content" id="usage">
+            <div class="card">
+                <h2>Estatísticas de Uso</h2>
+                <p class="text-muted">Acompanhe o uso dos seus tokens de IA</p>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label class="form-label">Período</label>
+                        <select class="form-control" id="periodFilter">
+                            <option value="7">Últimos 7 dias</option>
+                            <option value="14">Últimos 14 dias</option>
+                            <option value="30" selected>Últimos 30 dias</option>
+                            <option value="90">Últimos 90 dias</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="form-label">Modelo</label>
+                        <select class="form-control" id="usageModelFilter">
+                            <option value="">Todos os modelos</option>
+                            <option value="gpt4">GPT-4</option>
+                            <option value="dall-e">DALL-E</option>
+                            <option value="claude">Claude</option>
+                            <option value="llama">Llama 2</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="justify-content: flex-end;">
+                        <button class="btn btn-secondary" style="margin-top: 1.8rem;">
+                            <i class="fas fa-filter"></i> Aplicar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Modelo</th>
+                                <th>Tokens Utilizados</th>
+                                <th>Chamadas</th>
+                                <th>Custo Estimado</th>
+                                <th>Média por Dia</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GPT-4</td>
+                                <td>124,582</td>
+                                <td>3,458</td>
+                                <td>R$ 248,75</td>
+                                <td>4,152</td>
+                                <td><div class="status-badge status-active">Ativo</div></td>
+                            </tr>
+                            <tr>
+                                <td>DALL-E</td>
+                                <td>N/A</td>
+                                <td>987</td>
+                                <td>R$ 149,50</td>
+                                <td>33</td>
+                                <td><div class="status-badge status-active">Ativo</div></td>
+                            </tr>
+                            <tr>
+                                <td>Claude</td>
+                                <td>87,451</td>
+                                <td>2,145</td>
+                                <td>R$ 174,90</td>
+                                <td>2,915</td>
+                                <td><div class="status-badge status-active">Ativo</div></td>
+                            </tr>
+                            <tr>
+                                <td>Llama 2</td>
+                                <td>65,784</td>
+                                <td>1,874</td>
+                                <td>R$ 98,75</td>
+                                <td>2,193</td>
+                                <td><div class="status-badge status-paused">Pausado</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Gráfico de Uso</h2>
+                <div id="usageChartContainer" style="height: 300px; width: 100%;">
+                    <canvas id="usageChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Modelos de IA -->
+        <div class="tab-content" id="models">
+            <div class="card">
+                <h2>Modelos de IA Disponíveis</h2>
+                <p class="text-muted">Selecione e configure os modelos de IA para seus projetos</p>
+                
+                <div class="api-cards">
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div class="api-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3 class="api-title">GPT-4</h3>
+                        </div>
+                        <p class="api-description">Modelo de linguagem avançado da OpenAI para tarefas complexas.</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Fornecedor:</strong> OpenAI</li>
+                            <li><strong>Versão:</strong> 4.0</li>
+                            <li><strong>Custo:</strong> R$ 0,02 / 1K tokens</li>
+                            <li><strong>Contexto:</strong> 8.192 tokens</li>
+                        </ul>
+                        <button class="btn btn-primary w-100 mt-3">
+                            <i class="fas fa-bolt"></i> Ativar Modelo
+                        </button>
+                    </div>
+                    
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div class="api-icon">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <h3 class="api-title">DALL-E</h3>
+                        </div>
+                        <p class="api-description">Modelo de geração de imagens a partir de descrições textuais.</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Fornecedor:</strong> OpenAI</li>
+                            <li><strong>Versão:</strong> 3.0</li>
+                            <li><strong>Custo:</strong> R$ 0,15 / imagem</li>
+                            <li><strong>Resolução:</strong> Até 1024x1024</li>
+                        </ul>
+                        <button class="btn btn-primary w-100 mt-3">
+                            <i class="fas fa-bolt"></i> Ativar Modelo
+                        </button>
+                    </div>
+                    
+                    <div class="api-card">
+                        <div class="api-header">
+                            <div class="api-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="api-title">Claude</h3>
+                        </div>
+                        <p class="api-description">Modelo de IA conversacional focado em helpfulness e segurança.</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Fornecedor:</strong> Anthropic</li>
+                            <li><strong>Versão:</strong> 2.1</li>
+                            <li><strong>Custo:</strong> R$ 0,018 / 1K tokens</li>
+                            <li><strong>Contexto:</strong> 100.000 tokens</li>
+                        </ul>
+                        <button class="btn btn-primary w-100 mt-3">
+                            <i class="fas fa-bolt"></i> Ativar Modelo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba Documentação da API -->
+        <div class="tab-content" id="api">
+            <div class="card">
+                <h2>Documentação da API</h2>
+                <p class="text-muted">Como integrar e usar os tokens de IA em suas aplicações</p>
+                
+                <div class="accordion" id="apiDocsAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                Autenticação com Tokens
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#apiDocsAccordion">
+                            <div class="accordion-body">
+                                <p>Para autenticar suas requisições à API de IA, inclua seu token no cabeçalho Authorization:</p>
+                                <pre><code>curl -X POST \
+  https://api.dpedrosolucoes.com/ai/v1/chat/completions \
+  -H 'Authorization: Bearer SEU_TOKEN_AQUI' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "gpt-4",
+    "messages": [{"role": "user", "content": "Olá, como você está?"}]
+  }'</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                Endpoints Disponíveis
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#apiDocsAccordion">
+                            <div class="accordion-body">
+                                <h5>Completions de Chat</h5>
+                                <p><strong>POST</strong> <code>/ai/v1/chat/completions</code></p>
+                                <p>Cria uma completion de chat para a mensagem fornecida.</p>
+                                
+                                <h5>Geração de Imagens</h5>
+                                <p><strong>POST</strong> <code>/ai/v1/images/generations</code></p>
+                                <p>Cria uma imagem com base em um prompt textual.</p>
+                                
+                                <h5>Moderação de Conteúdo</h5>
+                                <p><strong>POST</strong> <code>/ai/v1/moderations</code></p>
+                                <p>Classifica se o texto viola as políticas de conteúdo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                Limites e Cotas
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#apiDocsAccordion">
+                            <div class="accordion-body">
+                                <p>Seus tokens de API estão sujeitos aos seguintes limites:</p>
+                                <ul>
+                                    <li><strong>Requisições por minuto:</strong> 60 requisições</li>
+                                    <li><strong>Tokens por dia:</strong> Variável conforme seu plano</li>
+                                    <li><strong>Tamanho máximo de requisição:</strong> 4MB</li>
+                                    <li><strong>Tempo limite de requisição:</strong> 30 segundos</li>
+                                </ul>
+                                <p>Você pode verificar seu uso atual a qualquer momento através desta interface.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Gerar Token -->
+    <div class="modal fade" id="generateTokenModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-key me-2"></i> Gerar Novo Token</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="generateTokenForm">
+                        <div class="form-group">
+                            <label class="form-label">Nome do Token</label>
+                            <input type="text" class="form-control" placeholder="Ex: Token para App Mobile" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Plataforma</label>
+                            <select class="form-control" id="platformSelect" required>
+                                <option value="">Selecione uma plataforma</option>
+                                <option value="openai">OpenAI (GPT-4, DALL-E)</option>
+                                <option value="anthropic">Anthropic (Claude)</option>
+                                <option value="meta">Meta (Facebook/Instagram)</option>
+                                <option value="other">Outra plataforma</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Modelo de IA</label>
+                            <select class="form-control" id="modelSelect" required>
+                                <option value="">Selecione um modelo</option>
+                                <option value="gpt4">GPT-4</option>
+                                <option value="dall-e">DALL-E</option>
+                                <option value="claude">Claude</option>
+                                <option value="llama">Llama 2</option>
+                                <option value="stable-diffusion">Stable Diffusion</option>
+                                <option value="facebook">Facebook Graph API</option>
+                                <option value="instagram">Instagram Graph API</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Permissões</label>
+                            <select class="form-control" required>
+                                <option value="read">Somente Leitura</option>
+                                <option value="write">Leitura e Escrita</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Limite de Tokens por Dia</label>
+                            <input type="number" class="form-control" value="10000" min="1000" max="1000000">
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="tokenExpiration" checked>
+                            <label class="form-check-label" for="tokenExpiration">Expiração automática (30 dias)</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-ai" onclick="generateNewToken()">
+                        <i class="fas fa-key"></i> Gerar Token
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    // =============================================
+    // INICIALIZAÇÃO DO SISTEMA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar abas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+                
+                // Inicializar gráficos quando a aba for clicada
+                if (this.dataset.tab === 'usage') {
+                    initUsageChart();
+                }
+            });
+        });
+
+        // Configurar dependência entre seleção de plataforma e modelo
+        document.getElementById('platformSelect').addEventListener('change', function() {
+            const modelSelect = document.getElementById('modelSelect');
+            modelSelect.innerHTML = '<option value="">Selecione um modelo</option>';
+            
+            switch(this.value) {
+                case 'openai':
+                    modelSelect.innerHTML += `
+                        <option value="gpt4">GPT-4</option>
+                        <option value="dall-e">DALL-E</option>
+                    `;
+                    break;
+                case 'anthropic':
+                    modelSelect.innerHTML += `
+                        <option value="claude">Claude</option>
+                    `;
+                    break;
+                case 'meta':
+                    modelSelect.innerHTML += `
+                        <option value="facebook">Facebook Graph API</option>
+                        <option value="instagram">Instagram Graph API</option>
+                    `;
+                    break;
+                case 'other':
+                    modelSelect.innerHTML += `
+                        <option value="llama">Llama 2</option>
+                        <option value="stable-diffusion">Stable Diffusion</option>
+                    `;
+                    break;
+            }
+        });
+
+        // Carregar dados iniciais
+        renderTokensTable();
+    });
+
+    // =============================================
+    // GERENCIAMENTO DE TOKENS
+    // =============================================
+    const sampleTokens = [
+        { name: "GPT-4 App Mobile", key: "sk-...5Fk3", model: "GPT-4", created: "2023-10-15", expires: "2023-11-15", limit: "5.000", status: "active" },
+        { name: "DALL-E Marketing", key: "sk-...8Gh2", model: "DALL-E", created: "2023-10-12", expires: "2023-11-12", limit: "250", status: "active" },
+        { name: "Claude Analytics", key: "sk-...2Jq7", model: "Claude", created: "2023-10-10", expires: "2023-11-10", limit: "10.000", status: "active" },
+        { name: "Llama 2 Testes", key: "sk-...9Rp4", model: "Llama 2", created: "2023-09-28", expires: "2023-10-28", limit: "8.000", status: "expired" },
+        { name: "Stable Diffusion R&D", key: "sk-...1Tm6", model: "Stable Diffusion", created: "2023-10-05", expires: "2023-11-05", limit: "500", status: "paused" },
+        { name: "Facebook API", key: "741176208741513|Tvdho2UW4h9Duf10uNmeqjmfTR4", model: "Facebook", created: "2023-10-20", expires: "2024-01-20", limit: "200", status: "active" },
+        { name: "Instagram API", key: "741176208741513|Tvdho2UW4h9Duf10uNmeqjmfTR4", model: "Instagram", created: "2023-10-20", expires: "2024-01-20", limit: "200", status: "active" },
+        { name: "OpenAI General", key: "sk-a637e02c4c7642199e888387a53b55e0", model: "OpenAI", created: "2023-10-18", expires: "2024-01-18", limit: "10.000", status: "active" }
+    ];
+
+    function renderTokensTable() {
+        const tableBody = document.getElementById('tokensTable');
+        tableBody.innerHTML = '';
+        
+        const statusFilter = document.getElementById('statusFilter').value;
+        const modelFilter = document.getElementById('modelFilter').value;
+        
+        const filteredTokens = sampleTokens.filter(token => {
+            return (!statusFilter || token.status === statusFilter) && 
+                   (!modelFilter || token.model.toLowerCase().includes(modelFilter.toLowerCase()));
+        });
+        
+        filteredTokens.forEach(token => {
+            const statusClass = token.status === 'active' ? 'status-active' : 
+                               token.status === 'paused' ? 'status-paused' : 'status-inactive';
+            const statusText = token.status === 'active' ? 'Ativo' : 
+                              token.status === 'paused' ? 'Pausado' : 'Expirado';
+            
+            // Formatar a chave para exibição (mostrar apenas parte)
+            const displayKey = token.key.length > 15 ? token.key.substring(0, 6) + '...' + token.key.substring(token.key.length - 4) : token.key;
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${token.name}</td>
+                <td>${displayKey}</td>
+                <td>${token.model}</td>
+                <td>${formatDate(token.created)}</td>
+                <td>${formatDate(token.expires)}</td>
+                <td>${token.limit}</td>
+                <td>
+                    <div class="status-badge ${statusClass}">
+                        ${statusText}
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('${token.key}')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    function generateNewToken() {
+        // Simular geração de token
+        const generateBtn = document.querySelector('#generateTokenForm ~ .modal-footer .btn-ai');
+        const originalText = generateBtn.innerHTML;
+        
+        generateBtn.innerHTML = '<span class="loading"></span> Gerando...';
+        
+        setTimeout(() => {
+            // Em um sistema real, isso criaria um token via API
+            alert('Token gerado com sucesso! Sua chave de API é: sk-' + Math.random().toString(36).substr(2, 16));
+            
+            // Fechar o modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('generateTokenModal'));
+            modal.hide();
+            
+            generateBtn.innerHTML = originalText;
+            document.getElementById('generateTokenForm').reset();
+            
+            // Recarregar a tabela
+            renderTokensTable();
+        }, 1500);
+    }
+
+    // =============================================
+    // FUNÇÕES AUXILIARES
+    // =============================================
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            // Mostrar mensagem de sucesso
+            alert('Token copiado para a área de transferência!');
+        }).catch(err => {
+            console.error('Erro ao copiar texto: ', err);
+            alert('Erro ao copiar o token. Tente novamente.');
+        });
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR');
+    }
+
+    // =============================================
+    // GRÁFICOS E ESTATÍSTICAS
+    // =============================================
+    function initUsageChart() {
+        const ctx = document.getElementById('usageChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+                datasets: [
+                    {
+                        label: 'GPT-4',
+                        data: [1200, 1900, 1500, 2100, 1800, 2500, 2200, 1800, 2100, 2400, 2600, 2800, 3000, 3200, 3100, 2900, 2700, 2500, 2800, 3100, 3300, 3500, 3700, 3900, 4100, 4300, 4200, 4000, 3800, 3500],
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'DALL-E',
+                        data: [15, 22, 18, 25, 20, 28, 24, 20, 26, 30, 35, 40, 38, 42, 45, 40, 38, 42, 45, 48, 50, 52, 55, 58, 60, 62, 65, 60, 58, 55],
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Claude',
+                        data: [800, 1200, 950, 1100, 1300, 1500, 1400, 1200, 1350, 1600, 1800, 2000, 1900, 2100, 2200, 2000, 1850, 1950, 2100, 2300, 2500, 2700, 2900, 3100, 3300, 3500, 3400, 3200, 3000, 2800],
+                        borderColor: '#27ae60',
+                        backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Tokens Utilizados'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Dias'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Configurar event listeners para filtros
+    document.getElementById('statusFilter').addEventListener('change', renderTokensTable);
+    document.getElementById('modelFilter').addEventListener('change', renderTokensTable);
+    </script>
+</body>
+</html>

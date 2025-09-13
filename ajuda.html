@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ===== VARIÁVEIS DE CORES E ESTILOS ===== */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        /* ===== ESTILOS GERAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color var(--transition-speed);
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - var(--header-height));
+            padding-top: var(--header-height);
+        }
+
+        /* ===== CABEÇALHO ===== */
+        .kanawa-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .top-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .top-icons .menu-item {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+        }
+
+        .top-icons .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* ===== BARRA LATERAL ===== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--box-shadow);
+            overflow-y: auto;
+            transition: all var(--transition-speed);
+            z-index: 900;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            color: #555;
+            transition: all var(--transition-speed);
+            border-left: 4px solid transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .menu-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .menu-item:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+        }
+
+        .menu-item.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        /* ===== CONTEÚDO PRINCIPAL ===== */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        /* ===== WIDGETS DO DASHBOARD ===== */
+        .dashboard-widget {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform var(--transition-speed);
+        }
+
+        .dashboard-widget:hover {
+            transform: translateY(-5px);
+        }
+
+        .widget-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.3rem;
+        }
+
+        .widget-icon i {
+            color: white;
+        }
+
+        .widget-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .widget-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* ===== BOTÕES ===== */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219955;
+            transform: translateY(-2px);
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        /* ===== NOTIFICAÇÕES ===== */
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== ASSISTENTE DE IA ===== */
+        .ai-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* ===== BOTÃO DE MODO ESCURO ===== */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            z-index: 990;
+            transition: all var(--transition-speed);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        /* ===== FORMULÁRIOS ===== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+
+        /* ===== CHAT ===== */
+        .chat-container {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            max-width: 80%;
+            position: relative;
+        }
+
+        .bot-message {
+            background-color: white;
+            align-self: flex-start;
+            border: 1px solid #eee;
+        }
+
+        .user-message {
+            background-color: var(--secondary-color);
+            color: white;
+            align-self: flex-end;
+        }
+
+        /* ===== ACORDEÃO FAQ ===== */
+        .accordion-item {
+            border: none;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .accordion-button {
+            border-radius: var(--border-radius) !important;
+            font-weight: 600;
+            padding: 1.2rem;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            box-shadow: none;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: var(--secondary-color);
+        }
+
+        .accordion-body {
+            padding: 1.2rem;
+        }
+
+        /* ===== CANAIS DE SUPORTE ===== */
+        .support-channels {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .support-channel {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed);
+            text-align: center;
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .support-channel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .channel-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+            background-color: var(--secondary-color);
+        }
+
+        .channel-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .channel-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ===== MODO ESCURO ===== */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .sidebar,
+        body.dark-mode .card,
+        body.dark-mode .dashboard-widget,
+        body.dark-mode .support-channel,
+        body.dark-mode .accordion-item {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .menu-item:hover {
+            background-color: #3d3d3d;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #3d3d3d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .menu-item {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode h1, 
+        body.dark-mode h2, 
+        body.dark-mode h3, 
+        body.dark-mode h4, 
+        body.dark-mode h5, 
+        body.dark-mode h6 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .accordion-button {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .accordion-button:not(.collapsed) {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: var(--secondary-color);
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 1200px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                height: calc(100vh - var(--header-height));
+                top: var(--header-height);
+                z-index: 999;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+
+            .support-channels {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kanawa-header {
+                padding: 0 1rem;
+            }
+            
+            .top-icons .menu-item span {
+                display: none;
+            }
+            
+            .top-icons .menu-item {
+                font-size: 1.2rem;
+                padding: 0.5rem;
+            }
+            
+            .logo span {
+                font-size: 1.1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .dashboard-widget {
+                min-width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .ai-assistant, .dark-mode-toggle {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .dark-mode-toggle {
+                bottom: 6rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .kanawa-header {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding-top: 90px;
+            }
+            
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="kanawa-header">
+        <div class="logo">
+            <a href='DPS.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+            <span>D.Pedro Soluções</span>
+        </div>
+        <div class="top-icons">
+            <a href="index.html" class="menu-item"><i class="fas fa-home"></i> <span>Página Principal</span></a>
+            <a href="martketing/marketing.html" class="menu-item"><i class="fas fa-users"></i> <span>MARKETING DIGITAL</span></a>
+            <a href="contratos.html" class="menu-item"><i class="fas fa-file-contract"></i> <span>Contratos</span></a>
+            <a href="cursos.html" class="menu-item"><i class="fas fa-graduation-cap"></i> <span>Cursos</span></a>
+            <a href="servicos.html" class="menu-item"><i class="fas fa-briefcase"></i> <span>Serviços</span></a>
+            <a href="lojas.html" class="menu-item"><i class="fas fa-store"></i> <span>Lojas</span></a>
+            <a href="download.html" class="menu-item"><i class="fas fa-download"></i> <span>Aplicativos</span></a>
+            
+            <div style="position:relative;">
+                <a href="#" id="notificationsBtn" style="color:white;position:relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                <div id="notificationsDropdown">
+                    <h5 style="margin-bottom:1rem;">Notificações</h5>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Novo tutorial disponível</strong></p>
+                        <small>Há 2 horas</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Sua solicitação foi respondida</strong></p>
+                        <small>Hoje, 09:30</small>
+                    </div>
+                    <div class="notification-item">
+                        <p style="margin-bottom:0.2rem;"><strong>Atualização do sistema</strong></p>
+                        <small>Ontem, 16:45</small>
+                    </div>
+                    <a href="#" style="display:block;text-align:center;margin-top:1rem;color:var(--secondary-color);">Ver todas</a>
+                </div>
+            </div>
+            
+            <div style="position:relative;">
+                <a href="#" id="userMenuBtn" style="color:white;display:flex;align-items:center;">
+                    <img src="https://i.postimg.cc/7YQvLZxX/user-avatar.jpg" alt="User" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
+                    <span>Daniel Pedro</span>
+                </a>
+                <div id="userMenuDropdown">
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-user"></i> Perfil</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-cog"></i> Configurações</a>
+                    <a href="#" class="menu-item" style="padding:0.5rem 0;display:block;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <a href="tokens-ia.html" class="menu-item"><i class="fas fa-robot"></i> Tokens de IA</a>
+            <a href="recursos.html" class="menu-item"><i class="fas fa-box-open"></i> Recursos Disponíveis</a>
+            <a href="atualizacoes.html" class="menu-item"><i class="fas fa-sync-alt"></i> Atualizações/Postagens</a>
+            <a href="notificacoes.html" class="menu-item"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="loja-virtual.html" class="menu-item"><i class="fas fa-shopping-cart"></i> Loja</a>
+            <a href="comunicacao.html" class="menu-item"><i class="fas fa-comments"></i> Meios de comunicação</a>
+            <a href="seo.html" class="menu-item"><i class="fas fa-search-plus"></i> Otimização SEO</a>
+            <a href="recursos-indisponiveis.html" class="menu-item"><i class="fas fa-ban"></i> Recursos Indisponíveis</a>
+            <a href="modelos.html" class="menu-item"><i class="fas fa-clone"></i> Modelos</a>
+            <a href="cardapio.html" class="menu-item"><i class="fas fa-utensils"></i> Cardápio</a>
+            <a href="analise.html" class="menu-item"><i class="fas fa-chart-bar"></i> Análise</a>
+            <a href="assinantes.html" class="menu-item"><i class="fas fa-users"></i> Assinantes</a>
+            <a href="dominio.html" class="menu-item"><i class="fas fa-globe"></i> Domínio</a>
+            <a href="integracao.html" class="menu-item"><i class="fas fa-plug"></i> Integração</a>
+            <a href="manutencao.html" class="menu-item"><i class="fas fa-tools"></i> Manutenção</a>
+            <a href="indicar.html" class="menu-item"><i class="fas fa-gift"></i> Indique e ganhe</a>
+            <a href="ajuda.html" class="menu-item active"><i class="fas fa-question-circle"></i> Sobre e ajuda</a>
+            <a href="sair.html" class="menu-item"><i class="fas fa-sign-out-alt"></i> Produtos</a>
+        </aside>
+
+        <main class="content">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-question-circle"></i>
+                    Central de Ajuda
+                </h1>
+                <div>
+                    <button class="btn btn-primary" id="contactSupportBtn">
+                        <i class="fas fa-headset"></i> Contatar Suporte
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Dashboard Widgets -->
+            <div class="row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--secondary-color);">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="widget-value" id="guidesCount">42</div>
+                    <div class="widget-title">Guias Disponíveis</div>
+                    <small style="color: var(--secondary-color);">
+                        <i class="fas fa-arrow-up"></i> <span id="guidesGrowth">5</span> novos esta semana
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--success-color);">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="widget-value" id="solvedTickets">28</div>
+                    <div class="widget-title">Chamados Resolvidos</div>
+                    <small style="color: var(--success-color);">
+                        <i class="fas fa-arrow-up"></i> <span id="solvedGrowth">92%</span> taxa de sucesso
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--warning-color);">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="widget-value" id="pendingTickets">3</div>
+                    <div class="widget-title">Chamados Pendentes</div>
+                    <small style="color: var(--warning-color);">
+                        <i class="fas fa-clock"></i> Tempo médio: 2h
+                    </small>
+                </div>
+                
+                <div class="dashboard-widget">
+                    <div class="widget-icon" style="background-color: var(--info-color);">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="widget-value" id="responseTime">15min</div>
+                    <div class="widget-title">Tempo de Resposta</div>
+                    <small style="color: var(--info-color);">
+                        <i class="fas fa-arrow-down"></i> <span id="responseGrowth">20%</span> mais rápido
+                    </small>
+                </div>
+            </div>
+            
+            <!-- Pesquisa de Ajuda -->
+            <div class="card">
+                <h2>Como podemos ajudar?</h2>
+                <p>Encontre respostas para suas dúvidas em nossa base de conhecimento ou entre em contato com nossa equipe de suporte.</p>
+                
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="helpSearch" placeholder="Digite sua pergunta...">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-search"></i> Pesquisar
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-cog"></i> Configurações
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-credit-card"></i> Pagamentos
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-rocket"></i> Começando
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-exclamation-triangle"></i> Problemas Comuns
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Canais de Suporte -->
+            <div class="card">
+                <h2>Canais de Suporte</h2>
+                <p>Escolha a forma de contato que preferir. Nossa equipe está disponível para ajudá-lo.</p>
+                
+                <div class="support-channels">
+                    <div class="support-channel">
+                        <div class="channel-icon" style="background-color: #25d366;">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="channel-title">WhatsApp</div>
+                        <div class="channel-description">Suporte rápido via WhatsApp</div>
+                        <button class="btn btn-success">
+                            <i class="fab fa-whatsapp"></i> Iniciar Conversa
+                        </button>
+                    </div>
+                    
+                    <div class="support-channel">
+                        <div class="channel-icon" style="background-color: #7289da;">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                        <div class="channel-title">Discord</div>
+                        <div class="channel-description">Comunidade e suporte no Discord</div>
+                        <button class="btn btn-primary">
+                            <i class="fab fa-discord"></i> Entrar no Servidor
+                        </button>
+                    </div>
+                    
+                    <div class="support-channel">
+                        <div class="channel-icon" style="background-color: #db4437;">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="channel-title">E-mail</div>
+                        <div class="channel-description">Suporte por e-mail</div>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i> Enviar E-mail
+                        </button>
+                    </div>
+                    
+                    <div class="support-channel">
+                        <div class="channel-icon" style="background-color: #ff0000;">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div class="channel-title">YouTube</div>
+                        <div class="channel-description">Tutoriais em vídeo</div>
+                        <button class="btn btn-secondary">
+                            <i class="fab fa-youtube"></i> Ver Tutoriais
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Perguntas Frequentes -->
+            <div class="card">
+                <h2>Perguntas Frequentes</h2>
+                <p>Encontre respostas para as dúvidas mais comuns sobre nossos produtos e serviços.</p>
+                
+                <div class="accordion" id="helpAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                                Como criar uma conta na D.Pedro Soluções?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <p>Para criar uma conta, clique em "Cadastrar" no canto superior direito da página inicial. Preencha seus dados pessoais, e-mail e crie uma senha segura. Em seguida, verifique seu e-mail clicando no link que enviaremos e sua conta estará ativa.</p>
+                                <p>Se você tiver algum problema durante o cadastro, entre em contato com nosso suporte.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                                Quais são as formas de pagamento aceitas?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <p>Aceitamos as seguintes formas de pagamento:</p>
+                                <ul>
+                                    <li>Cartão de crédito (Visa, Mastercard, American Express)</li>
+                                    <li>Cartão de débito</li>
+                                    <li>PIX</li>
+                                    <li>Transferência bancária</li>
+                                    <li>Boleto bancário</li>
+                                </ul>
+                                <p>Todos os pagamentos são processados de forma segura através de nossos parceiros de pagamento.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                                Como funciona o sistema de tokens de IA?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <p>Os tokens de IA são a moeda de uso para nossos recursos de inteligência artificial. Cada ação consome uma quantidade específica de tokens:</p>
+                                <ul>
+                                    <li>Geração de texto: 1 token por 100 caracteres</li>
+                                    <li>Processamento de imagem: 5 tokens por imagem</li>
+                                    <li>Análise de dados: 10 tokens por análise</li>
+                                </ul>
+                                <p>Você pode adquirir tokens através de nossos planos de assinatura ou comprando pacotes avulsos.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                                Como cancelar minha assinatura?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <p>Para cancelar sua assinatura:</p>
+                                <ol>
+                                    <li>Acesse sua conta no sistema</li>
+                                    <li>Vá até a seção "Assinatura"</li>
+                                    <li>Clique em "Gerenciar Assinatura"</li>
+                                    <li>Selecione a opção "Cancelar Assinatura"</li>
+                                    <li>Confirme o cancelamento</li>
+                                </ol>
+                                <p>O cancelamento será efetivado no final do período atual já pago. Você continuará tendo acesso aos serviços até essa data.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" aria-expanded="false" aria-controls="faq5">
+                                Como recuperar minha senha?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                            <div class="accordion-body">
+                                <p>Se você esqueceu sua senha:</p>
+                                <ol>
+                                    <li>Na página de login, clique em "Esqueci minha senha"</li>
+                                    <li>Informe o e-mail associado à sua conta</li>
+                                    <li>Verifique sua caixa de entrada e clique no link de redefinição</li>
+                                    <li>Crie uma nova senha segura</li>
+                                    <li>Confirme a nova senha</li>
+                                </ol>
+                                <p>Se você não receber o e-mail de redefinição, verifique sua pasta de spam ou entre em contato conosco.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tutoriais em Destaque -->
+            <div class="card">
+                <h2>Tutoriais em Destaque</h2>
+                <p>Aprenda a usar nossos recursos com estes tutoriais selecionados:</p>
+                
+                <div class="row" style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="card">
+                            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--border-radius) var(--border-radius) 0 0;">
+                                <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="Tutorial" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                                <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">
+                                    10:25
+                                </div>
+                            </div>
+                            <div style="padding: 1rem;">
+                                <h4>Como usar o Editor de Imagens AI</h4>
+                                <p>Aprenda a editar imagens com inteligência artificial em nosso sistema.</p>
+                                <button class="btn btn-sm btn-primary">Assistir Tutorial</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="card">
+                            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--border-radius) var(--border-radius) 0 0;">
+                                <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="Tutorial" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                                <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">
+                                    15:42
+                                </div>
+                            </div>
+                            <div style="padding: 1rem;">
+                                <h4>Configurando Integrações</h4>
+                                <p>Veja como integrar nosso sistema com outras plataformas.</p>
+                                <button class="btn btn-sm btn-primary">Assistir Tutorial</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="card">
+                            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--border-radius) var(--border-radius) 0 0;">
+                                <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="Tutorial" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                                <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">
+                                    8:17
+                                </div>
+                            </div>
+                            <div style="padding: 1rem;">
+                                <h4>Otimizando SEO com Nossas Ferramentas</h4>
+                                <p>Aprenda a melhorar seu SEO usando nossos recursos.</p>
+                                <button class="btn btn-sm btn-primary">Assistir Tutorial</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-video"></i> Ver Todos os Tutoriais
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Contatar Suporte -->
+            <div class="card">
+                <h2>Contatar Suporte</h2>
+                <p>Não encontrou o que procurava? Entre em contato conosco e nossa equipe terá prazer em ajudá-lo.</p>
+                
+                <form id="supportForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="supportName" class="form-label">Nome Completo</label>
+                                <input type="text" class="form-control" id="supportName" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="supportEmail" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="supportEmail" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="supportSubject" class="form-label">Assunto</label>
+                        <select class="form-control" id="supportSubject" required>
+                            <option value="">Selecione um assunto</option>
+                            <option value="technical">Problema Técnico</option>
+                            <option value="billing">Dúvida sobre Cobrança</option>
+                            <option value="account">Problema com Conta</option>
+                            <option value="suggestion">Sugestão</option>
+                            <option value="other">Outro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="supportMessage" class="form-label">Mensagem</label>
+                        <textarea class="form-control" id="supportMessage" rows="5" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="supportAttachment" class="form-label">Anexo (opcional)</label>
+                        <input type="file" class="form-control" id="supportAttachment">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Enviar Mensagem
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Assistant Button -->
+    <div class="ai-assistant">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- AI Assistant Chat Modal -->
+    <div class="modal fade" id="aiAssistantModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-robot"></i> Assistente de IA - Ajuda
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="chat-container" id="aiChatContainer">
+                        <div class="message bot-message">
+                            Olá! Sou seu assistente virtual de ajuda. Posso responder suas perguntas sobre nossos produtos, ajudar com problemas técnicos ou guiá-lo para os recursos certos. Como posso ajudá-lo hoje?
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="aiChatInput" placeholder="Digite sua pergunta...">
+                        <button class="btn btn-primary" id="aiSendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Funções de inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar eventos
+            initEvents();
+            
+            // Verificar preferência de modo escuro
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('.dark-mode-toggle i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        });
+
+        // Inicializar eventos
+        function initEvents() {
+            // Botão de contatar suporte
+            document.getElementById('contactSupportBtn').addEventListener('click', function() {
+                document.getElementById('supportForm').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Formulário de suporte
+            document.getElementById('supportForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Sua mensagem foi enviada com sucesso! Nossa equipe entrará em contato em breve.');
+                this.reset();
+            });
+            
+            // Notificações dropdown
+            document.getElementById('notificationsBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('notificationsDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Fechar outros dropdowns
+                document.getElementById('userMenuDropdown').style.display = 'none';
+            });
+            
+            // User menu dropdown
+            document.getElementById('userMenuBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('userMenuDropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                
+                // Fechar outros dropdowns
+                document.getElementById('notificationsDropdown').style.display = 'none';
+            });
+            
+            // Fechar dropdowns ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#notificationsBtn') && !e.target.closest('#notificationsDropdown')) {
+                    document.getElementById('notificationsDropdown').style.display = 'none';
+                }
+                
+                if (!e.target.closest('#userMenuBtn') && !e.target.closest('#userMenuDropdown')) {
+                    document.getElementById('userMenuDropdown').style.display = 'none';
+                }
+            });
+            
+            // Dark mode toggle
+            document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                const icon = this.querySelector('i');
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // AI Assistant
+            document.querySelector('.ai-assistant').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('aiAssistantModal'));
+                modal.show();
+            });
+            
+            // Enviar mensagem para o assistente de IA
+            document.getElementById('aiSendBtn').addEventListener('click', function() {
+                sendAIMessage();
+            });
+            
+            document.getElementById('aiChatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendAIMessage();
+                }
+            });
+            
+            // Botões de tutoriais
+            document.querySelectorAll('.btn-sm.btn-primary').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tutorialTitle = this.closest('.card').querySelector('h4').textContent;
+                    alert(`Iniciando tutorial: ${tutorialTitle}`);
+                });
+            });
+            
+            // Botões de canal de suporte
+            document.querySelectorAll('.support-channel .btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const channel = this.closest('.support-channel').querySelector('.channel-title').textContent;
+                    alert(`Redirecionando para: ${channel}`);
+                });
+            });
+        }
+
+        // Enviar mensagem para o assistente de IA
+        function sendAIMessage() {
+            const input = document.getElementById('aiChatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Adicionar mensagem do usuário ao chat
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            document.getElementById('aiChatContainer').appendChild(userMessage);
+            
+            // Limpar input
+            input.value = '';
+            
+            // Simular resposta da IA após um pequeno delay
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot-message';
+                
+                // Respostas pré-definidas baseadas em palavras-chave
+                if (message.toLowerCase().includes('conta') || message.toLowerCase().includes('cadastro')) {
+                    botMessage.textContent = 'Para criar uma conta, clique em "Cadastrar" na página inicial. Se você está com problemas para acessar sua conta, posso ajudar com a recuperação de senha ou verificar problemas de login.';
+                } else if (message.toLowerCase().includes('pagamento') || message.toLowerCase().includes('assinatura')) {
+                    botMessage.textContent = 'Aceitamos cartão de crédito, PIX, boleto e transferência bancária. Para gerenciar sua assinatura, acesse a seção "Assinatura" em seu painel de controle. Posso ajudar com algo específico sobre pagamentos?';
+                } else if (message.toLowerCase().includes('token') || message.toLowerCase().includes('ia')) {
+                    botMessage.textContent = 'Nossos tokens de IA são usados para acessar recursos de inteligência artificial. Cada ação consome uma quantidade específica de tokens. Você pode ver seu saldo de tokens e comprar mais na seção "Tokens de IA".';
+                } else if (message.toLowerCase().includes('problema') || message.toLowerCase().includes('erro')) {
+                    botMessage.textContent = 'Lamento que você esteja enfrentando problemas. Para me ajudar a resolver, por favor descreva o problema com mais detalhes. Inclua mensagens de erro, o que você estava tentando fazer e quando o problema começou.';
+                } else if (message.toLowerCase().includes('suporte') || message.toLowerCase().includes('contato')) {
+                    botMessage.textContent = 'Você pode entrar em contato com nosso suporte através de WhatsApp, Discord, e-mail ou preenchendo o formulário na seção "Contatar Suporte". Nosso tempo médio de resposta é de 15 minutos durante o horário comercial.';
+                } else {
+                    botMessage.textContent = 'Como assistente de ajuda, posso responder perguntas sobre sua conta, pagamentos, tokens de IA, problemas técnicos e muito mais. Sobre o que você gostaria de saber?';
+                }
+                
+                document.getElementById('aiChatContainer').appendChild(botMessage);
+                
+                // Rolagem automática para a última mensagem
+                document.getElementById('aiChatContainer').scrollTop = document.getElementById('aiChatContainer').scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

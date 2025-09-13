@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Candidatos – D.Pedro Soluções</title>
+  <style>
+    body{margin:0;font-family:sans-serif;background:#0f172a;color:#e5e7eb}
+    header{background:#0b1225;padding:1rem 0}
+    .container{width:min(1100px,92vw);margin:auto}
+    .logo{display:flex;align-items:center;gap:.5rem;font-weight:700;color:#e5e7eb}
+    .logo img{width:36px;height:36px;border-radius:8px}
+    nav a{margin-left:1rem;color:#94a3b8;text-decoration:none}
+    section{padding:2rem 0}
+    h1{margin-bottom:1rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+    .card{background:#111827;border-radius:12px;padding:1rem;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+    .card img{width:100%;max-width:200px;height:200px;object-fit:cover;border-radius:8px;margin-bottom:.8rem}
+    .card button{background:#22c55e;color:#fff;border:none;padding:.6rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:600}
+    .card button:hover{background:#16a34a}
+    footer{padding:2rem 0;color:#94a3b8;text-align:center;border-top:1px solid rgba(255,255,255,.1)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center">
+      <div class="logo">
+        <a href='index.html'><img src='https://i.postimg.cc/fks90nbK/DPS-ICO.jpg' alt='DPS-ICO'/></a>
+        <span>D.Pedro Soluções</span>
+      </div>
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="servicos.html">Serviços</a>
+        <a href="candidatos.html">Candidatos</a>
+        <a href="oferecemos.html">Oferecemos</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h1>Nossos Candidatos</h1>
+      <p>Veja abaixo alguns dos profissionais disponíveis para contratação imediata.</p>
+      <div class="grid">
+        <div class="card">
+          <img src="https://via.placeholder.com/200x200" alt="Maria José" />
+          <h2>Maria José</h2>
+          <p>Experiência: 5 anos como empregada doméstica. Especialidade em limpeza e organização.</p>
+          <button onclick="contratar('Maria José')">Contratar</button>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/200x200" alt="Ana Silva" />
+          <h2>Ana Silva</h2>
+          <p>Experiência: 3 anos como babá. Cuidadora atenciosa e responsável.</p>
+          <button onclick="contratar('Ana Silva')">Contratar</button>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/200x200" alt="João Manuel" />
+          <h2>João Manuel</h2>
+          <p>Experiência: 8 anos como motorista particular e empresarial.</p>
+          <button onclick="contratar('João Manuel')">Contratar</button>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/200x200" alt="Helena Costa" />
+          <h2>Helena Costa</h2>
+          <p>Experiência: 6 anos como cuidadora de idosos, com referências comprovadas.</p>
+          <button onclick="contratar('Helena Costa')">Contratar</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> D.Pedro Soluções – Serviços Domésticos 24/7</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    function contratar(nome){
+      const texto = encodeURIComponent(`Olá, quero contratar o(a) candidato(a) ${nome}.`);
+      const url = `https://wa.me/244926536480?text=${texto}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>

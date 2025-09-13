@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja Virtual - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #229954;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+        }
+
+        /* Barra de pesquisa e filtros */
+        .store-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 40px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Layout da loja */
+        .store-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .store-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Categorias */
+        .categories-sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .categories-list {
+            list-style: none;
+        }
+
+        .categories-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .categories-list li:last-child {
+            border-bottom: none;
+        }
+
+        .categories-list li:hover {
+            color: var(--secondary-color);
+        }
+
+        .categories-list li.active {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        /* Produtos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-new {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .badge-sale {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .badge-popular {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+            flex-grow: 1;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 0.8rem;
+            color: #f39c12;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .original-price {
+            font-size: 1rem;
+            text-decoration: line-through;
+            color: #777;
+        }
+
+        .discount {
+            color: var(--danger-color);
+            font-weight: 600;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        /* Carrinho de compras */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-content {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-item-price {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .quantity-value {
+            width: 30px;
+            text-align: center;
+        }
+
+        .remove-item {
+            color: var(--danger-color);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .cart-summary {
+            margin-bottom: 1rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-top: 1px solid #eee;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Checkout */
+        .checkout-modal .modal-dialog {
+            max-width: 800px;
+        }
+
+        .checkout-steps {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checkout-step {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .checkout-step.active {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .checkout-step.active:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--secondary-color);
+        }
+
+        .checkout-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Overlay para o carrinho */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .cart-overlay.open {
+            display: block;
+        }
+
+        /* Badge do carrinho */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .store-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: center;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-store"></i>
+                    Loja Virtual
+                </h1>
+            </div>
+            <div style="position: relative;">
+                <button class="btn btn-primary" id="cartButton">
+                    <i class="fas fa-shopping-cart"></i> Carrinho
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Controles da loja -->
+        <div class="card">
+            <div class="store-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar produtos...">
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="featured">Destaques</button>
+                    <button class="filter-btn" data-filter="sale">Promoções</button>
+                    <button class="filter-btn" data-filter="new">Novidades</button>
+                </div>
+                <div class="sort-group">
+                    <select class="form-control" id="sortSelect">
+                        <option value="popular">Mais populares</option>
+                        <option value="price-asc">Preço: menor ao maior</option>
+                        <option value="price-desc">Preço: maior ao menor</option>
+                        <option value="name">Ordem alfabética</option>
+                        <option value="newest">Mais recentes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="store-container">
+            <!-- Sidebar de categorias -->
+            <div class="categories-sidebar">
+                <h3>Categorias</h3>
+                <ul class="categories-list">
+                    <li class="active" data-category="all">Todas as categorias</li>
+                    <li data-category="software">Software</li>
+                    <li data-category="security">Segurança</li>
+                    <li data-category="hardware">Hardware</li>
+                    <li data-category="network">Redes</li>
+                    <li data-category="cloud">Cloud</li>
+                    <li data-category="services">Serviços</li>
+                    <li data-category="consulting">Consultoria</li>
+                    <li data-category="training">Treinamentos</li>
+                </ul>
+
+                <h3 style="margin-top: 2rem;">Filtrar por preço</h3>
+                <div class="price-filter">
+                    <div id="priceRange" style="margin: 1rem 0;"></div>
+                    <div class="price-values">
+                        <span id="minPrice">0 AOA</span> - <span id="maxPrice">500.000 AOA</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Aplicar filtro</button>
+                </div>
+            </div>
+
+            <!-- Grade de produtos -->
+            <div class="products-container">
+                <div class="products-grid" id="productsGrid">
+                    <!-- Produtos carregados via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Carrinho de compras -->
+        <div class="cart-overlay" id="cartOverlay"></div>
+        <div class="cart-sidebar" id="cartSidebar">
+            <div class="cart-header">
+                <h3>Seu Carrinho</h3>
+                <button class="btn btn-secondary" id="closeCart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-body" id="cartItems">
+                <!-- Itens do carrinho carregados via JavaScript -->
+                <div class="empty-cart" id="emptyCart">
+                    <div style="text-align: center; padding: 2rem; color: #888;">
+                        <i class="fas fa-shopping-cart" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p>Seu carrinho está vazio</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal">0 AOA</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Frete:</span>
+                        <span id="cartShipping">0 AOA</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total:</span>
+                        <span id="cartTotal">0 AOA</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" id="checkoutButton" disabled>
+                    Finalizar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Checkout -->
+    <div class="modal fade checkout-modal" id="checkoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Finalizar Compra</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="checkout-steps">
+                        <div class="checkout-step active" data-step="1">Carrinho</div>
+                        <div class="checkout-step" data-step="2">Entrega</div>
+                        <div class="checkout-step" data-step="3">Pagamento</div>
+                        <div class="checkout-step" data-step="4">Confirmação</div>
+                    </div>
+
+                    <div class="checkout-content">
+                        <!-- Etapa 1: Revisão do Carrinho -->
+                        <div class="checkout-step-content" id="step1">
+                            <h4>Revise seus itens</h4>
+                            <div id="checkoutItems"></div>
+                        </div>
+
+                        <!-- Etapa 2: Informações de Entrega -->
+                        <div class="checkout-step-content" id="step2" style="display: none;">
+                            <h4>Informações de Entrega</h4>
+                            <div class="checkout-form">
+                                <div class="form-group">
+                                    <label class="form-label">Nome completo</label>
+                                    <input type="text" class="form-control" id="customerName">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">E-mail</label>
+                                    <input type="email" class="form-control" id="customerEmail">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Telefone</label>
+                                    <input type="tel" class="form-control" id="customerPhone">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Endereço</label>
+                                    <input type="text" class="form-control" id="customerAddress">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Cidade</label>
+                                    <input type="text" class="form-control" id="customerCity">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">CEP</label>
+                                    <input type="text" class="form-control" id="customerZip">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 3: Pagamento -->
+                        <div class="checkout-step-content" id="step3" style="display: none;">
+                            <h4>Método de Pagamento</h4>
+                            <div class="payment-methods">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="paymentCard" checked>
+                                    <label class="form-check-label" for="paymentCard">
+                                        <i class="fas fa-credit-card"></i> Cartão de Crédito
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="paymentTransfer">
+                                    <label class="form-check-label" for="paymentTransfer">
+                                        <i class="fas fa-university"></i> Transferência Bancária
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="paymentCash">
+                                    <label class="form-check-label" for="paymentCash">
+                                        <i class="fas fa-money-bill-wave"></i> Dinheiro na Entrega
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="card-details" id="cardDetails" style="margin-top: 1.5rem;">
+                                <div class="checkout-form">
+                                    <div class="form-group">
+                                        <label class="form-label">Número do cartão</label>
+                                        <input type="text" class="form-control" placeholder="0000 0000 0000 0000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Nome no cartão</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                        <div>
+                                            <label class="form-label">Validade</label>
+                                            <input type="text" class="form-control" placeholder="MM/AA">
+                                        </div>
+                                        <div>
+                                            <label class="form-label">CVV</label>
+                                            <input type="text" class="form-control" placeholder="000">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 4: Confirmação -->
+                        <div class="checkout-step-content" id="step4" style="display: none;">
+                            <div style="text-align: center; padding: 2rem;">
+                                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success-color); margin-bottom: 1rem;"></i>
+                                <h4>Compra Realizada com Sucesso!</h4>
+                                <p>Obrigado por sua compra. Seu pedido #<span id="orderNumber">12345</span> foi confirmado.</p>
+                                <p>Vous receberá um e-mail com os detalhes do seu pedido.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="prevStepButton" style="display: none;">Anterior</button>
+                    <button type="button" class="btn btn-primary" id="nextStepButton">Próximo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // DADOS DE EXEMPLO
+    // =============================================
+    const products = [
+        {
+            id: 1,
+            name: "Sistema de Gestão Empresarial",
+            category: "software",
+            price: 249900,
+            originalPrice: 299900,
+            image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.8,
+            reviews: 42,
+            badge: "sale",
+            description: "Sistema completo de gestão empresarial com módulos financeiro, estoque, vendas e RH."
+        },
+        {
+            id: 2,
+            name: "Pacote de Segurança CFTV",
+            category: "security",
+            price: 187500,
+            image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.6,
+            reviews: 28,
+            badge: "popular",
+            description: "Sistema completo de CFTV com 4 câmeras de alta resolução e gravador digital."
+        },
+        {
+            id: 3,
+            name: "Servidor Enterprise",
+            category: "hardware",
+            price: 1250000,
+            image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.9,
+            reviews: 15,
+            badge: "new",
+            description: "Servidor de alta performance para empresas, com processador Xeon e 32GB RAM."
+        },
+        {
+            id: 4,
+            name: "Software Antivirus Corporativo",
+            category: "software",
+            price: 89900,
+            originalPrice: 119900,
+            image: "https://images.unsplash.com/photo-1563207153-f403bf289096?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.5,
+            reviews: 37,
+            badge: "sale",
+            description: "Proteção completa contra vírus, malware e ransomwares para até 50 dispositivos."
+        },
+        {
+            id: 5,
+            name: "Consultoria em TI",
+            category: "consulting",
+            price: 150000,
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 19,
+            description: "Consultoria especializada em transformação digital e infraestrutura de TI."
+        },
+        {
+            id: 6,
+            name: "Roteador Enterprise",
+            category: "network",
+            price: 225000,
+            image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.4,
+            reviews: 22,
+            description: "Roteador de alta performance para redes corporativas com gerenciamento avançado."
+        },
+        {
+            id: 7,
+            name: "Curso de Cybersecurity",
+            category: "training",
+            price: 75000,
+            originalPrice: 99000,
+            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.9,
+            reviews: 31,
+            badge: "sale",
+            description: "Curso completo de cybersecurity com certificação internacional."
+        },
+        {
+            id: 8,
+            name: "Solução em Nuvem",
+            category: "cloud",
+            price: 49900,
+            image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.3,
+            reviews: 26,
+            badge: "popular",
+            description: "Solução completa de cloud computing com armazenamento e backup automatizado."
+        },
+        // Novos produtos adicionados
+        {
+            id: 9,
+            name: "Firewall de Segurança Avançado",
+            category: "security",
+            price: 325000,
+            originalPrice: 399000,
+            image: "https://images.unsplash.com/photo-1562408590-e32931084e23?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 18,
+            badge: "sale",
+            description: "Firewall de última geração com proteção contra ameaças avançadas e VPN integrada."
+        },
+        {
+            id: 10,
+            name: "Notebook Workstation",
+            category: "hardware",
+            price: 750000,
+            image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.8,
+            reviews: 24,
+            badge: "new",
+            description: "Notebook de alta performance para profissionais de TI com processador i7 e 32GB RAM."
+        },
+        {
+            id: 11,
+            name: "Software de Backup em Nuvem",
+            category: "software",
+            price: 120000,
+            originalPrice: 149900,
+            image: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.6,
+            reviews: 33,
+            badge: "sale",
+            description: "Solução automatizada de backup em nuvem com criptografia de dados."
+        },
+        {
+            id: 12,
+            name: "Switch Gerenciável 48 Portas",
+            category: "network",
+            price: 289000,
+            image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.5,
+            reviews: 16,
+            description: "Switch layer 3 gerenciável com 48 portas Gigabit e 4 portas SFP+."
+        },
+        {
+            id: 13,
+            name: "Serviço de Monitoramento 24/7",
+            category: "services",
+            price: 89900,
+            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.9,
+            reviews: 29,
+            badge: "popular",
+            description: "Monitoramento contínuo de infraestrutura de TI com suporte especializado."
+        },
+        {
+            id: 14,
+            name: "Tablet Corporativo Resistente",
+            category: "hardware",
+            price: 215000,
+            originalPrice: 259900,
+            image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.4,
+            reviews: 21,
+            badge: "sale",
+            description: "Tablet robusto para uso em campo com resistência a poeira e água."
+        },
+        {
+            id: 15,
+            name: "Software de Gestão de Projetos",
+            category: "software",
+            price: 112000,
+            image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 38,
+            description: "Plataforma completa para gestão de projetos com metodologias ágeis."
+        },
+        {
+            id: 16,
+            name: "Access Point Enterprise",
+            category: "network",
+            price: 145000,
+            image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.3,
+            reviews: 17,
+            badge: "new",
+            description: "Access Point Wi-Fi 6 para alta densidade de usuários em ambientes corporativos."
+        },
+        {
+            id: 17,
+            name: "Consultoria em Cloud Migration",
+            category: "consulting",
+            price: 275000,
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.8,
+            reviews: 14,
+            description: "Serviço especializado em migração de infraestrutura para nuvem."
+        },
+        {
+            id: 18,
+            name: "Treinamento em DevOps",
+            category: "training",
+            price: 98000,
+            originalPrice: 120000,
+            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.9,
+            reviews: 27,
+            badge: "sale",
+            description: "Curso prático de metodologias DevOps com ferramentas modernas."
+        },
+        {
+            id: 19,
+            name: "Servidor de Armazenamento NAS",
+            category: "hardware",
+            price: 420000,
+            image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.6,
+            reviews: 19,
+            description: "Sistema de armazenamento em rede com capacidade expansível até 80TB."
+        },
+        {
+            id: 20,
+            name: "Software de CRM Empresarial",
+            category: "software",
+            price: 187000,
+            originalPrice: 225000,
+            image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.5,
+            reviews: 41,
+            badge: "sale",
+            description: "Sistema de gestão de relacionamento com clientes com automação de marketing."
+        },
+        {
+            id: 21,
+            name: "Sistema de Detecção de Intrusão",
+            category: "security",
+            price: 315000,
+            image: "https://images.unsplash.com/photo-1562408590-e32931084e23?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 12,
+            badge: "new",
+            description: "Sistema de detecção e prevenção de intrusões em redes corporativas."
+        },
+        {
+            id: 22,
+            name: "Serviços Gerenciados de TI",
+            category: "services",
+            price: 150000,
+            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.8,
+            reviews: 23,
+            description: "Pacote de serviços gerenciados de TI para pequenas e médias empresas."
+        },
+        {
+            id: 23,
+            name: "Monitor 34'' Ultrawide",
+            category: "hardware",
+            price: 285000,
+            originalPrice: 325000,
+            image: "https://images.unsplash.com/photo-1546538915-a9e2c8d6b00a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.6,
+            reviews: 31,
+            badge: "sale",
+            description: "Monitor ultra-wide curvado para produtividade e multitarefa."
+        },
+        {
+            id: 24,
+            name: "Software de Business Intelligence",
+            category: "software",
+            price: 325000,
+            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.9,
+            reviews: 18,
+            badge: "popular",
+            description: "Ferramenta avançada de análise de dados e business intelligence."
+        },
+        {
+            id: 25,
+            name: "Serviço de Recuperação de Desastres",
+            category: "services",
+            price: 175000,
+            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 15,
+            description: "Solução completa de recuperação de desastres e continuidade de negócios."
+        },
+        {
+            id: 26,
+            name: "Roteador Wi-Fi Mesh",
+            category: "network",
+            price: 189000,
+            image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.4,
+            reviews: 26,
+            badge: "new",
+            description: "Sistema mesh para cobertura Wi-Fi em grandes áreas e múltiplos andares."
+        },
+        {
+            id: 27,
+            name: "Workstation para Design",
+            category: "hardware",
+            price: 895000,
+            image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.9,
+            reviews: 13,
+            description: "Workstation de alta performance para designers e profissionais criativos."
+        },
+        {
+            id: 28,
+            name: "Consultoria em Segurança da Informação",
+            category: "consulting",
+            price: 225000,
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.8,
+            reviews: 17,
+            badge: "popular",
+            description: "Auditoria e consultoria especializada em segurança da informação."
+        },
+        {
+            id: 29,
+            name: "Software de Virtualização",
+            category: "software",
+            price: 275000,
+            originalPrice: 325000,
+            image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 22,
+            badge: "sale",
+            description: "Plataforma de virtualização para servidores e desktops."
+        },
+        {
+            id: 30,
+            name: "Impressora Multifuncional Laser",
+            category: "hardware",
+            price: 185000,
+            image: "https://images.unsplash.com/photo-1499363536502-87642509e31b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.3,
+            reviews: 28,
+            description: "Impressora laser multifuncional com rede Wi-Fi e duplex automático."
+        },
+        {
+            id: 31,
+            name: "Solução de Backup Híbrido",
+            category: "services",
+            price: 125000,
+            image: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.6,
+            reviews: 19,
+            badge: "new",
+            description: "Solução combinada de backup local e em nuvem para proteção de dados."
+        },
+        {
+            id: 32,
+            name: "Switch PoE 24 Portas",
+            category: "network",
+            price: 195000,
+            image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.5,
+            reviews: 21,
+            description: "Switch gerenciável com 24 portas Gigabit e PoE+ para dispositivos compatíveis."
+        },
+        {
+            id: 33,
+            name: "Treinamento em Cloud Computing",
+            category: "training",
+            price: 115000,
+            originalPrice: 145000,
+            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.8,
+            reviews: 25,
+            badge: "sale",
+            description: "Curso completo de cloud computing com laboratórios práticos."
+        },
+        {
+            id: 34,
+            name: "Servidor Rack 2U",
+            category: "hardware",
+            price: 685000,
+            image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 14,
+            description: "Servidor em rack para datacenter com dupla fonte e gerenciamento remoto."
+        },
+        {
+            id: 35,
+            name: "Software de Gestão de Ativos de TI",
+            category: "software",
+            price: 145000,
+            image: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.4,
+            reviews: 32,
+            badge: "popular",
+            description: "Sistema para controle e gestão de ativos de tecnologia da informação."
+        },
+        {
+            id: 36,
+            name: "Sistema de UPS Enterprise",
+            category: "hardware",
+            price: 225000,
+            originalPrice: 275000,
+            image: "https://images.unsplash.com/photo-1562408590-e32931084e23?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.6,
+            reviews: 23,
+            badge: "sale",
+            description: "Sistema de nobreak para proteção de servidores e equipamentos críticos."
+        },
+        {
+            id: 37,
+            name: "Consultoria em Transformação Digital",
+            category: "consulting",
+            price: 350000,
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.9,
+            reviews: 16,
+            description: "Consultoria estratégica para processos de transformação digital em empresas."
+        },
+        {
+            id: 38,
+            name: "Solução de Videoconferência",
+            category: "services",
+            price: 275000,
+            image: "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.5,
+            reviews: 27,
+            badge: "new",
+            description: "Sistema completo de videoconferência para salas de reunião."
+        },
+        {
+            id: 39,
+            name: "Access Point Outdoor",
+            category: "network",
+            price: 165000,
+            image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.3,
+            reviews: 18,
+            description: "Access Point resistente para ambientes externos com proteção IP67."
+        },
+        {
+            id: 40,
+            name: "Software de Controle de Acesso",
+            category: "software",
+            price: 185000,
+            image: "https://images.unsplash.com/photo-1563207153-f403bf289096?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 21,
+            description: "Sistema de controle de acesso físico e lógico com biometria e cartões."
+        },
+        {
+            id: 41,
+            name: "Serviço de Suporte Técnico Remoto",
+            category: "services",
+            price: 75000,
+            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.6,
+            reviews: 35,
+            badge: "popular",
+            description: "Pacote de suporte técnico remoto para resolução de problemas de TI."
+        },
+        {
+            id: 42,
+            name: "Workstation Mobile",
+            category: "hardware",
+            price: 625000,
+            originalPrice: 725000,
+            image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.8,
+            reviews: 17,
+            badge: "sale",
+            description: "Workstation móvel para profissionais que precisam de alta performance em qualquer lugar."
+        },
+        {
+            id: 43,
+            name: "Software de Gestão de Serviços de TI",
+            category: "software",
+            price: 295000,
+            image: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 24,
+            description: "Plataforma ITSM para gestão de serviços de tecnologia da informação."
+        },
+        {
+            id: 44,
+            name: "Firewall de Próxima Geração",
+            category: "security",
+            price: 425000,
+            image: "https://images.unsplash.com/photo-1562408590-e32931084e23?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.9,
+            reviews: 15,
+            badge: "new",
+            description: "Firewall com inspeção profunda de pacotes e proteção contra ameaças avançadas."
+        },
+        {
+            id: 45,
+            name: "Serviço de Hospedagem Gerenciada",
+            category: "services",
+            price: 95000,
+            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.5,
+            reviews: 29,
+            description: "Hospedagem gerenciada de sites e aplicações com suporte 24/7."
+        },
+        {
+            id: 46,
+            name: "Switch Core 10GbE",
+            category: "network",
+            price: 485000,
+            image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.8,
+            reviews: 12,
+            description: "Switch core para backbone de rede com interfaces 10Gb Ethernet."
+        },
+        {
+            id: 47,
+            name: "Treinamento em Gestão de Projetos",
+            category: "training",
+            price: 135000,
+            originalPrice: 165000,
+            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.9,
+            reviews: 22,
+            badge: "sale",
+            description: "Curso de gestão de projetos com foco em metodologias ágeis e tradicionais."
+        },
+        {
+            id: 48,
+            name: "Sistema de Armazenamento SAN",
+            category: "hardware",
+            price: 895000,
+            image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.7,
+            reviews: 11,
+            description: "Sistema de armazenamento em rede de alta performance para ambientes enterprise."
+        },
+        {
+            id: 49,
+            name: "Software de Automação de Marketing",
+            category: "software",
+            price: 215000,
+            image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.6,
+            reviews: 33,
+            badge: "popular",
+            description: "Plataforma de automação de marketing digital com analytics integrado."
+        },
+        {
+            id: 50,
+            name: "Consultoria em LGPD",
+            category: "consulting",
+            price: 185000,
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            rating: 4.8,
+            reviews: 19,
+            description: "Consultoria especializada em adequação à Lei Geral de Proteção de Dados."
+        }
+    ];
+
+    // =============================================
+    // FUNÇÕES DA LOJA
+    // =============================================
+    let cart = [];
+    let currentStep = 1;
+
+    // Formatar preço em AOA
+    function formatPrice(price) {
+        return new Intl.NumberFormat('pt-AO', { style: 'currency', currency: 'AOA' }).format(price);
+    }
+
+    // Renderizar produtos
+    function renderProducts(productsToRender) {
+        const productsGrid = document.getElementById('productsGrid');
+        productsGrid.innerHTML = '';
+
+        if (productsToRender.length === 0) {
+            productsGrid.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                    <i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                    <h3>Nenhum produto encontrado</h3>
+                    <p>Tente ajustar os filtros ou termos de busca</p>
+                </div>
+            `;
+            return;
+        }
+
+        productsToRender.forEach(product => {
+            const discount = product.originalPrice 
+                ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) 
+                : 0;
+
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                    ${product.badge ? `<span class="product-badge badge-${product.badge}">${product.badge === 'sale' ? 'PROMO' : product.badge === 'new' ? 'NOVO' : 'POPULAR'}</span>` : ''}
+                </div>
+                <div class="product-content">
+                    <div class="product-category">${product.category}</div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <div class="product-rating">
+                        ${Array.from({length: 5}, (_, i) => 
+                            `<i class="fas fa-star${i < Math.floor(product.rating) ? '' : '-half-alt'}"></i>`
+                        ).join('')}
+                        <span>(${product.reviews})</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">${formatPrice(product.price)}</span>
+                        ${product.originalPrice ? `<span class="original-price">${formatPrice(product.originalPrice)}</span>` : ''}
+                        ${discount > 0 ? `<span class="discount">-${discount}%</span>` : ''}
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-secondary" onclick="viewProduct(${product.id})">
+                            <i class="fas fa-eye"></i> Detalhes
+                        </button>
+                        <button class="btn btn-primary" onclick="addToCart(${product.id})">
+                            <i class="fas fa-cart-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            `;
+            productsGrid.appendChild(productCard);
+        });
+    }
+
+    // Adicionar ao carrinho
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        const existingItem = cart.find(item => item.id === productId);
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                ...product,
+                quantity: 1
+            });
+        }
+
+        updateCart();
+        showNotification(`${product.name} adicionado ao carrinho!`);
+    }
+
+    // Visualizar produto
+    function viewProduct(productId) {
+        // Em uma implementação real, isso abriria uma página de detalhes do produto
+        alert(`Visualizando produto ${productId}`);
+    }
+
+    // Atualizar carrinho
+    function updateCart() {
+        const cartItems = document.getElementById('cartItems');
+        const cartBadge = document.getElementById('cartBadge');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        const cartShipping = document.getElementById('cartShipping');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutButton = document.getElementById('checkoutButton');
+        const emptyCart = document.getElementById('emptyCart');
+
+        // Atualizar badge
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartBadge.textContent = totalItems;
+
+        // Mostrar/ocultar carrinho vazio
+        if (cart.length === 0) {
+            emptyCart.style.display = 'block';
+            checkoutButton.disabled = true;
+        } else {
+            emptyCart.style.display = 'none';
+            checkoutButton.disabled = false;
+        }
+
+        // Calcular totais
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const shipping = subtotal > 100000 ? 0 : 5000; // Frete grátis para compras acima de 100.000 AOA
+        const total = subtotal + shipping;
+
+        cartSubtotal.textContent = formatPrice(subtotal);
+        cartShipping.textContent = formatPrice(shipping);
+        cartTotal.textContent = formatPrice(total);
+
+        // Renderizar itens do carrinho
+        cartItems.innerHTML = '';
+        cart.forEach(item => {
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <div class="cart-item-image">
+                    <img src="${item.image}" alt="${item.name}">
+                </div>
+                <div class="cart-item-content">
+                    <h4 class="cart-item-title">${item.name}</h4>
+                    <div class="cart-item-price">${formatPrice(item.price)}</div>
+                    <div class="cart-item-actions">
+                        <div class="quantity-control">
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                            <span class="quantity-value">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart(${item.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            cartItems.appendChild(cartItem);
+        });
+    }
+
+    // Atualizar quantidade
+    function updateQuantity(productId, newQuantity) {
+        if (newQuantity < 1) {
+            removeFromCart(productId);
+            return;
+        }
+
+        const item = cart.find(item => item.id === productId);
+        if (item) {
+            item.quantity = newQuantity;
+            updateCart();
+        }
+    }
+
+    // Remover do carrinho
+    function removeFromCart(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        updateCart();
+        showNotification('Produto removido do carrinho');
+    }
+
+    // Mostrar notificação
+    function showNotification(message) {
+        // Criar elemento de notificação
+        const notification = document.createElement('div');
+        notification.style.position = 'fixed';
+        notification.style.bottom = '20px';
+        notification.style.right = '20px';
+        notification.style.backgroundColor = '#333';
+        notification.style.color = 'white';
+        notification.style.padding = '1rem 1.5rem';
+        notification.style.borderRadius = '5px';
+        notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+        notification.style.zIndex = '1000';
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.3s';
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        // Mostrar notificação
+        setTimeout(() => {
+            notification.style.opacity = '1';
+        }, 10);
+
+        // Esconder e remover após 3 segundos
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
+    // Filtros e busca
+    function setupFilters() {
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const categoryItems = document.querySelectorAll('.categories-list li');
+        const sortSelect = document.getElementById('sortSelect');
+
+        // Função para filtrar produtos
+        function filterProducts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            const activeCategory = document.querySelector('.categories-list li.active').dataset.category;
+
+            let filteredProducts = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                                     product.description.toLowerCase().includes(searchTerm);
+                
+                const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
+                
+                let matchesFilter = true;
+                if (activeFilter === 'featured') {
+                    matchesFilter = product.rating >= 4.5;
+                } else if (activeFilter === 'sale') {
+                    matchesFilter = product.originalPrice !== undefined;
+                } else if (activeFilter === 'new') {
+                    matchesFilter = product.badge === 'new';
+                }
+                
+                return matchesSearch && matchesCategory && matchesFilter;
+            });
+
+            // Ordenar produtos
+            const sortValue = sortSelect.value;
+            switch(sortValue) {
+                case 'price-asc':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'name':
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => b.id - a.id);
+                    break;
+                default: // popular
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+            }
+
+            renderProducts(filteredProducts);
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', filterProducts);
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                filterProducts();
+            });
+        });
+        
+        categoryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                categoryItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                filterProducts();
+            });
+        });
+        
+        sortSelect.addEventListener('change', filterProducts);
+
+        // Filtro inicial
+        filterProducts();
+    }
+
+    // Checkout
+    function setupCheckout() {
+        const checkoutButton = document.getElementById('checkoutButton');
+        const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+        const nextStepButton = document.getElementById('nextStepButton');
+        const prevStepButton = document.getElementById('prevStepButton');
+        const checkoutSteps = document.querySelectorAll('.checkout-step');
+
+        checkoutButton.addEventListener('click', () => {
+            // Preencher itens do checkout
+            const checkoutItems = document.getElementById('checkoutItems');
+            checkoutItems.innerHTML = '';
+            
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="cart-item-content">
+                        <h4 class="cart-item-title">${item.name}</h4>
+                        <div class="cart-item-price">${formatPrice(item.price)} x ${item.quantity}</div>
+                    </div>
+                `;
+                checkoutItems.appendChild(itemElement);
+            });
+
+            // Reiniciar para a primeira etapa
+            currentStep = 1;
+            updateCheckoutSteps();
+            checkoutModal.show();
+        });
+
+        nextStepButton.addEventListener('click', () => {
+            if (currentStep < 4) {
+                currentStep++;
+                updateCheckoutSteps();
+            } else {
+                // Finalizar compra
+                checkoutModal.hide();
+                cart = [];
+                updateCart();
+                showNotification('Compra finalizada com sucesso!');
+            }
+        });
+
+        prevStepButton.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateCheckoutSteps();
+            }
+        });
+
+        function updateCheckoutSteps() {
+            // Atualizar etapas visíveis
+            document.querySelectorAll('.checkout-step-content').forEach((content, index) => {
+                content.style.display = index + 1 === currentStep ? 'block' : 'none';
+            });
+
+            // Atualizar indicadores de etapa
+            checkoutSteps.forEach((step, index) => {
+                if (index + 1 === currentStep) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+
+            // Atualizar botões
+            prevStepButton.style.display = currentStep > 1 ? 'block' : 'none';
+            nextStepButton.textContent = currentStep === 4 ? 'Finalizar Compra' : 'Próximo';
+
+            // Gerar número de pedido aleatório na etapa 4
+            if (currentStep === 4) {
+                document.getElementById('orderNumber').textContent = Math.floor(10000 + Math.random() * 90000);
+            }
+        }
+    }
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+        // Renderizar produtos iniciais
+        renderProducts(products);
+        
+        // Configurar filtros
+        setupFilters();
+        
+        // Configurar checkout
+        setupCheckout();
+        
+        // Configurar carrinho
+        const cartButton = document.getElementById('cartButton');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const closeCart = document.getElementById('closeCart');
+
+        cartButton.addEventListener('click', () => {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('open');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('open');
+        });
+
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('open');
+        });
+
+        // Inicializar carrinho
+        updateCart();
+    });
+    </script>
+</body>
+</html>

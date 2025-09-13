@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas de Segurança - D.Pedro Soluções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #2980b9;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: none;
+            transition: transform var(--transition-speed);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Dashboard de Segurança */
+        .security-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: var(--success-color);
+        }
+
+        .change-negative {
+            color: var(--danger-color);
+        }
+
+        /* Abas */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Sistema de Cards */
+        .security-systems {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .system-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed);
+        }
+
+        .system-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .system-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .system-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+
+        .system-card:hover .system-image img {
+            transform: scale(1.05);
+        }
+
+        .system-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .system-content {
+            padding: 1.5rem;
+        }
+
+        .system-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .system-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .system-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .system-features li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .system-features i {
+            color: var(--success-color);
+        }
+
+        /* Formulários */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Filtros */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 200px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .security-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .security-systems {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                min-width: 100%;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 0;
+            }
+            
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da página -->
+        <div class="header">
+            <div class="logo-container">
+                <a href="DPS.html">
+                    <img src="https://i.postimg.cc/fks90nbK/DPS-ICO.jpg" alt="D.Pedro Soluções" class="logo">
+                </a>
+                <h1 class="page-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Sistemas de Segurança
+                </h1>
+            </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">
+                <i class="fas fa-envelope"></i> Solicitar Orçamento
+            </button>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">Proteção Completa para seu Patrimônio</h1>
+            <p class="hero-description">Soluções integradas de segurança para residências, empresas e condomínios</p>
+            <button class="btn btn-primary btn-lg pulse">
+                <i class="fas fa-phone-alt"></i> Fale com um Especialista
+            </button>
+        </div>
+
+        <!-- Dashboard de Segurança -->
+        <div class="security-dashboard">
+            <div class="metric-card">
+                <div class="metric-value">500+</div>
+                <div class="metric-title">Sistemas Instalados</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>15% desde o último ano</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">98%</div>
+                <div class="metric-title">Satisfação do Cliente</div>
+                <div class="metric-change change-positive">
+                    <i class="fas fa-arrow-up"></i> <span>3% desde o último ano</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">24/7</div>
+                <div class="metric-title">Monitoramento</div>
+                <div class="metric-change">
+                    <i class="fas fa-clock"></i> <span>Suporte permanente</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">15</div>
+                <div class="metric-title">Anos de Experiência</div>
+                <div class="metric-change">
+                    <i class="fas fa-award"></i> <span>Desde 2008</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas de Conteúdo -->
+        <div class="tabs">
+            <div class="tab active" data-tab="all">Todos os Sistemas</div>
+            <div class="tab" data-tab="cctv">CFTV e Vigilância</div>
+            <div class="tab" data-tab="alarms">Alarmes e Sensores</div>
+            <div class="tab" data-tab="access">Controle de Acesso</div>
+            <div class="tab" data-tab="fire">Prevenção a Incêndio</div>
+        </div>
+
+        <!-- Conteúdo da Aba Todos os Sistemas -->
+        <div class="tab-content active" id="all">
+            <div class="filters">
+                <div class="filter-group">
+                    <label class="form-label">Tipo de Sistema</label>
+                    <select class="form-control" id="systemTypeFilter">
+                        <option value="">Todos</option>
+                        <option value="cctv">CFTV e Vigilância</option>
+                        <option value="alarm">Alarmes e Sensores</option>
+                        <option value="access">Controle de Acesso</option>
+                        <option value="fire">Prevenção a Incêndio</option>
+                        <option value="perimeter">Proteção Perimetral</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="form-label">Aplicação</label>
+                    <select class="form-control" id="applicationFilter">
+                        <option value="">Todas</option>
+                        <option value="residential">Residencial</option>
+                        <option value="commercial">Comercial</option>
+                        <option value="industrial">Industrial</option>
+                        <option value="condominium">Condomínios</option>
+                    </select>
+                </div>
+                <div class="filter-group" style="justify-content: flex-end;">
+                    <button class="btn btn-secondary" style="margin-top: 1.8rem;">
+                        <i class="fas fa-filter"></i> Filtrar
+                    </button>
+                </div>
+            </div>
+
+            <div class="security-systems">
+                <!-- Câmeras de segurança (CFTV) -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Sistema de CFTV">
+                        <div class="system-badge">CFTV</div>
+                    </div>
+                    <div class="system-content">
+                        <h3 class="system-title">Câmeras de Segurança (CFTV)</h3>
+                        <p class="system-description">Sistemas completos de videovigilância para monitoramento interno e externo.</p>
+                        <ul class="system-features">
+                            <li><i class="fas fa-check"></i> Câmeras HD e 4K</li>
+                            <li><i class="fas fa-check"></i> Visão noturna</li>
+                            <li><i class="fas fa-check"></i> Gravação contínua</li>
+                            <li><i class="fas fa-check"></i> Acesso remoto</li>
+                            <li><i class="fas fa-check"></i> Detecção de movimento</li>
+                        </ul>
+                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#systemModal" data-system="CFTV">
+                            <i class="fas fa-info-circle"></i> Saber Mais
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Alarmes de intrusão -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="https://images.unsplash.com/photo-1586300911235-d36c7833aaaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Alarme de intrusão">
+                        <div class="system-badge">Alarmes</div>
+                    </div>
+                    <div class="system-content">
+                        <h3 class="system-title">Alarmes de Intrusão</h3>
+                        <p class="system-description">Sistemas de detecção e alerta de invasões com monitoramento 24h.</p>
+                        <ul class="system-features">
+                            <li><i class="fas fa-check"></i> Sensores de movimento</li>
+                            <li><i class="fas fa-check"></i> Controle via aplicativo</li>
+                            <li><i class="fas fa-check"></i> Alertas instantâneos</li>
+                            <li><i class="fas fa-check"></i> Integração com CFTV</li>
+                            <li><i class="fas fa-check"></i> Bateria de backup</li>
+                        </ul>
+                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#systemModal" data-system="Alarmes">
+                            <i class="fas fa-info-circle"></i> Saber Mais
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Controle de acesso -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="https://images.unsplash.com/photo-1616595876986-582e9acbefc4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Controle de acesso">
+                        <div class="system-badge">Acesso</div>
+                    </div>
+                    <div class="system-content">
+                        <h3 class="system-title">Controle de Acesso</h3>
+                        <p class="system-description">Sistemas biométricos, cartões magnéticos e senhas para controle de entrada.</p>
+                        <ul class="system-features">
+                            <li><i class="fas fa-check"></i> Leitores biométricos</li>
+                            <li><i class="fas fa-check"></i> Cartões de proximidade</li>
+                            <li><i class="fas fa-check"></i> Senhas numéricas</li>
+                            <li><i class="fas fa-check"></i> Controle de horários</li>
+                            <li><i class="fas fa-check"></i> Relatórios de acesso</li>
+                        </ul>
+                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#systemModal" data-system="Controle de Acesso">
+                            <i class="fas fa-info-circle"></i> Saber Mais
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sistemas de combate a incêndio -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="https://images.unsplash.com/photo-1616595876986-582e9acbefc4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Sistema de incêndio">
+                        <div class="system-badge">Incêndio</div>
+                    </div>
+                    <div class="system-content">
+                        <h3 class="system-title">Sistemas de Detecção e Combate a Incêndio</h3>
+                        <p class="system-description">Prevenção, detecção e combate a incêndios com equipamentos certificados.</p>
+                        <ul class="system-features">
+                            <li><i class="fas fa-check"></i> Sensores de fumaça e calor</li>
+                            <li><i class="fas fa-check"></i> Alarme sonoro e visual</li>
+                            <li><i class="fas fa-check"></i> Extintores e hidrantes</li>
+                            <li><i class="fas fa-check"></i> Sistema de sprinklers</li>
+                            <li><i class="fas fa-check"></i> Interface com bombeiros</li>
+                        </ul>
+                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#systemModal" data-system="Combate a Incêndio">
+                            <i class="fas fa-info-circle"></i> Saber Mais
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cerca elétrica e concertina -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="https://images.unsplash.com/photo-1628745327856-45c5c43ab53a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cerca elétrica">
+                        <div class="system-badge">Perimetral</div>
+                    </div>
+                    <div class="system-content">
+                        <h3 class="system-title">Cerca Elétrica e Concertina</h3>
+                        <p class="system-description">Sistemas de proteção perimetral para impedir invasões.</p>
+                        <ul class="system-features">
+                            <li><i class="fas fa-check"></i> Pulso elétrico de alta tensão</li>
+                            <li><i class="fas fa-check"></i> Sensor de tentativa de invasão</li>
+                            <li><i class="fas fa-check"></i> Arame concertina</li>
+                            <li><i class="fas fa-check"></i> Isoladores especiais</li>
+                            <li><i class="fas fa-check"></i> Alarme sonoro integrado</li>
+                        </ul>
+                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#systemModal" data-system="Cerca Elétrica">
+                            <i class="fas fa-info-circle"></i> Saber Mais
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interfones e vídeo-porteiros -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="https://images.unsplash.com/photo-1586473219010-2ffc57b0d282?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Vídeo porteiro">
+                        <div class="system-badge">Comunicação</div>
+                    </div>
+                    <div class="system-content">
+                        <h3 class="system-title">Interfones e Vídeo-porteiros</h3>
+                        <p class="system-description">Sistemas de comunicação para condomínios e residências.</p>
+                        <ul class="system-features">
+                            <li><i class="fas fa-check"></i> Áudio e vídeo de alta qualidade</li>
+                            <li><i class="fas fa-check"></i> Abertura remota de portões</li>
+                            <li><i class="fas fa-check"></i> Múltiplas unidades internas</li>
+                            <li><i class="fas fa-check"></i> Gravação de imagens</li>
+                            <li><i class="fas fa-check"></i> Integração com smartphones</li>
+                        </ul>
+                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#systemModal" data-system="Vídeo-porteiros">
+                            <i class="fas fa-info-circle"></i> Saber Mais
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo das outras abas (simplificado para exemplo) -->
+        <div class="tab-content" id="cctv">
+            <div class="card">
+                <h2>Sistemas de CFTV e Vigilância</h2>
+                <p>Conteúdo específico para sistemas de CFTV...</p>
+            </div>
+        </div>
+
+        <div class="tab-content" id="alarms">
+            <div class="card">
+                <h2>Alarmes e Sensores</h2>
+                <p>Conteúdo específico para alarmes e sensores...</p>
+            </div>
+        </div>
+
+        <div class="tab-content" id="access">
+            <div class="card">
+                <h2>Controle de Acesso</h2>
+                <p>Conteúdo específico para controle de acesso...</p>
+            </div>
+        </div>
+
+        <div class="tab-content" id="fire">
+            <div class="card">
+                <h2>Prevenção a Incêndio</h2>
+                <p>Conteúdo específico para prevenção a incêndio...</p>
+            </div>
+        </div>
+
+        <!-- Seção de Contato -->
+        <div class="contact-section">
+            <h2 class="text-center mb-4">Entre em Contato Conosco</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mensagem</label>
+                            <textarea class="form-control" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-paper-plane"></i> Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Informações de Contato</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fas fa-phone text-primary me-2"></i>
+                                    <strong>Telefone:</strong> +244 946 299 834
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-envelope text-primary me-2"></i>
+                                    <strong>E-mail:</strong> info@dpedrosolucoes.com
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                                    <strong>Endereço:</strong> Luanda, Angola
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-clock text-primary me-2"></i>
+                                    <strong>Horário:</strong> Seg-Sex: 8h-18h | Sáb: 9h-13h
+                                </li>
+                            </ul>
+                            <div class="mt-4">
+                                <h4 class="mb-3">Siga-nos</h4>
+                                <div class="d-flex gap-3">
+                                    <a href="#" class="btn btn-secondary"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#" class="btn btn-secondary"><i class="fab fa-instagram"></i></a>
+                                    <a href="#" class="btn btn-secondary"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="btn btn-secondary"><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes do Sistema -->
+    <div class="modal fade" id="systemModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="systemModalTitle">Detalhes do Sistema</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="systemModalContent">
+                        <!-- Conteúdo carregado via JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        <i class="fas fa-tags"></i> Solicitar Orçamento
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Contato -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Solicitar Orçamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="budgetForm">
+                        <div class="form-group">
+                            <label class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Sistema de Interesse</label>
+                            <select class="form-control" required>
+                                <option value="">Selecione um sistema</option>
+                                <option value="cftv">Câmeras de Segurança (CFTV)</option>
+                                <option value="alarm">Alarmes de Intrusão</option>
+                                <option value="access">Controle de Acesso</option>
+                                <option value="fire">Combate a Incêndio</option>
+                                <option value="fence">Cerca Elétrica</option>
+                                <option value="video">Vídeo-porteiros</option>
+                                <option value="other">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tipo de Propriedade</label>
+                            <select class="form-control" required>
+                                <option value="">Selecione uma opção</option>
+                                <option value="house">Casa Residencial</option>
+                                <option value="apartment">Apartamento</option>
+                                <option value="commercial">Comércio</option>
+                                <option value="office">Escritório</option>
+                                <option value="industry">Indústria</option>
+                                <option value="condominium">Condomínio</option>
+                                <option value="other">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mensagem</label>
+                            <textarea class="form-control" rows="3" placeholder="Detalhes adicionais..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="submitBudgetRequest()">Enviar Solicitação</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // =============================================
+    // INICIALIZAÇÃO DO SISTEMA
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar abas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Configurar formulários
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitContactForm();
+        });
+
+        // Configurar modal de sistema
+        const systemModal = document.getElementById('systemModal');
+        systemModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const system = button.getAttribute('data-system');
+            const modalTitle = systemModal.querySelector('.modal-title');
+            const modalBody = systemModal.querySelector('.modal-body');
+            
+            modalTitle.textContent = system;
+            modalBody.innerHTML = getSystemDetails(system);
+        });
+    });
+
+    // =============================================
+    // FUNÇÕES DE FORMULÁRIO
+    // =============================================
+    function submitContactForm() {
+        // Simular envio de formulário
+        const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = '<span class="loading"></span> Enviando...';
+        submitBtn.disabled = true;
+        
+        setTimeout(() => {
+            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+            document.getElementById('contactForm').reset();
+            
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }, 1500);
+    }
+
+    function submitBudgetRequest() {
+        // Simular envio de orçamento
+        const submitBtn = document.querySelector('#budgetForm ~ .modal-footer .btn-primary');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = '<span class="loading"></span> Enviando...';
+        submitBtn.disabled = true;
+        
+        setTimeout(() => {
+            alert('Solicitação de orçamento enviada com sucesso! Entraremos em contato em breve.');
+            
+            // Fechar o modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('contactModal'));
+            modal.hide();
+            
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            document.getElementById('budgetForm').reset();
+        }, 1500);
+    }
+
+    // =============================================
+    // DETALHES DOS SISTEMAS
+    // =============================================
+    function getSystemDetails(system) {
+        const systems = {
+            'CFTV': {
+                title: 'Sistema de Câmeras de Segurança (CFTV)',
+                description: 'Soluções completas de videovigilância para monitoramento interno e externo de sua propriedade.',
+                features: [
+                    'Câmeras em alta definição (HD e 4K)',
+                    'Visão noturna com infravermelho',
+                    'Gravação contínua ou por detecção de movimento',
+                    'Acesso remoto via smartphone e computador',
+                    'Armazenamento em nuvem ou local (DVR/NVR)',
+                    'Notificações instantâneas por e-mail ou app',
+                    'Resistência a intempéries (IP66 ou superior)'
+                ],
+                applications: [
+                    'Residências',
+                    'Comércios',
+                    'Indústrias',
+                    'Condomínios',
+                    'Estacionamentos',
+                    'Áreas comuns'
+                ]
+            },
+            'Alarmes': {
+                title: 'Sistema de Alarmes de Intrusão',
+                description: 'Proteja sua propriedade contra invasões com sistemas de alarme monitorados 24 horas.',
+                features: [
+                    'Sensores de movimento PIR de alta precisão',
+                    'Sensores magnéticos para portas e janelas',
+                    'Teclado para ativação/desativação',
+                    'Sirene interna e externa de alta potência',
+                    'Comunicação GSM e internet',
+                    'Bateria de backup para 24h de autonomia',
+                    'Monitoramento remoto via central'
+                ],
+                applications: [
+                    'Proteção residencial',
+                    'Segurança comercial',
+                    'Proteção perimetral',
+                    'Áreas restritas'
+                ]
+            },
+            'Controle de Acesso': {
+                title: 'Sistema de Controle de Acesso',
+                description: 'Controle quem entra e sai de sua propriedade com sistemas modernos de controle de acesso.',
+                features: [
+                    'Leitores biométricos de digital',
+                    'Cartões de proximidade RFID',
+                    'Senhas numéricas personalizadas',
+                    'Controle de horários e escalas',
+                    'Relatórios detalhados de acesso',
+                    'Integração com CFTV e alarmes',
+                    'Bloqueio remoto em caso de emergência'
+                ],
+                applications: [
+                    'Condomínios residenciais',
+                    'Escritórios corporativos',
+                    'Áreas industriais restritas',
+                    'Estacionamentos',
+                    'Salas de servidores'
+                ]
+            },
+            'Combate a Incêndio': {
+                title: 'Sistema de Detecção e Combate a Incêndio',
+                description: 'Proteja pessoas e patrimônio com sistemas completos de prevenção e combate a incêndios.',
+                features: [
+                    'Sensores de fumaça e calor endereçáveis',
+                    'Alarmes sonoros e visuais',
+                    'Extintores e mangueiras de incêndio',
+                    'Sistema de sprinklers automáticos',
+                    'Painel de controle centralizado',
+                    'Comunicação automática com bombeiros',
+                    'Sinalização de emergência'
+                ],
+                applications: [
+                    'Edifícios comerciais',
+                    'Galpões industriais',
+                    'Condomínios residenciais',
+                    'Hospitais e escolas',
+                    'Estacionamentos cobertos'
+                ]
+            },
+            'Cerca Elétrica': {
+                title: 'Sistema de Cerca Elétrica e Concertina',
+                description: 'Proteção perimetral eficiente para impedir invasões em sua propriedade.',
+                features: [
+                    'Pulso elétrico de alta tensão e baixa corrente',
+                    'Sensores de tentativa de invasão',
+                    'Arame concertina com lâminas cortantes',
+                    'Isoladores especiais para intempéries',
+                    'Alarme sonoro integrado',
+                    'Painel de controle com display LCD',
+                    'Compatível com outros sistemas de segurança'
+                ],
+                applications: [
+                    'Muros perimetrais',
+                    'Áreas rurais e fazendas',
+                    'Galpões industriais',
+                    'Condomínios horizontais',
+                    'Propriedades de alto risco'
+                ]
+            },
+            'Vídeo-porteiros': {
+                title: 'Sistema de Interfones e Vídeo-porteiros',
+                description: 'Comunicação segura e conveniente entre portaria e unidades residenciais/comerciais.',
+                features: [
+                    'Áudio e vídeo de alta qualidade',
+                    'Abertura remota de portões e portas',
+                    'Múltiplas unidades internas',
+                    'Gravação de imagens dos visitantes',
+                    'Integração com smartphones via app',
+                    'Visão noturna por LEDs infravermelhos',
+                    'Design moderno e resistente às intempéries'
+                ],
+                applications: [
+                    'Condomínios verticais e horizontais',
+                    'Residências unifamiliares',
+                    'Escritórios comerciais',
+                    'Clínicas e consultórios',
+                    'Edifícios governamentais'
+                ]
+            }
+        };
+
+        const systemData = systems[system] || {
+            title: system,
+            description: 'Sistema de segurança personalizado conforme suas necessidades.',
+            features: ['Entre em contato para mais detalhes sobre este sistema'],
+            applications: ['Personalizável conforme necessidade']
+        };
+
+        return `
+            <h4>Descrição</h4>
+            <p>${systemData.description}</p>
+            
+            <h4 class="mt-4">Características Principais</h4>
+            <ul class="system-features">
+                ${systemData.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
+            </ul>
+            
+            <h4 class="mt-4">Aplicações</h4>
+            <ul>
+                ${systemData.applications.map(app => `<li>${app}</li>`).join('')}
+            </ul>
+            
+            <div class="alert alert-info mt-4">
+                <i class="fas fa-info-circle"></i> Entre em contato para uma avaliação personalizada e orçamento detalhado.
+            </div>
+        `;
+    }
+    </script>
+</body>
+</html>
